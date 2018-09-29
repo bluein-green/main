@@ -3,6 +3,7 @@ package seedu.address.model.ingredient;
 /**
  * Represents an ingredient that makes up a food item
  * Guarantees: TODO
+ * TODO: create interface to implement
  */
 public abstract class Ingredient {
 
