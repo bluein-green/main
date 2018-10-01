@@ -36,6 +36,12 @@ public interface IngredientModel {
     void updateIngredientQuantity(Ingredient ingredient, IngredientQuantity quantity);
 
     /**
+     * Decrements the quantity of the given {@code ingredient} by stated quantity.
+     * {@code quantity} should have an integer value that is greater than 0.
+     */
+    void decrementIngredientQuantity(Ingredient ingredient, IngredientQuantity quantity);
+
+    /**
      * Deletes given ingredient.
      * {@code ingredient} must exist in the ingredient list.
      */
