@@ -1,0 +1,33 @@
+= Jin Minjia - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Drink I/O
+
+---
+
+== Overview
+In the CS2113T Software Engineering and Object-Oriented Programming module,
+I collaborated with three other students for a group project to enhance
+an existing Address Book application. My group decided to morph the
+given existing application into a *one-stop, comprehensive inventory
+management application* - *<DrinkIO>*.
+
+<DrinkIO> is a desktop application specially tailored to
+*small-scale drink distribution companies*. Such companies
+may rely on Microsoft Excel or paper to manage their inventory and
+their book-keeping. <DrinkIO> seeks to improve this workflow and
+digitise the process. Besides managing the imports and sales of
+drinks, <DrinkIO> can help these companies analyse a their sales
+performance and set reminders to help their employees import more
+drinks should their stocks fall low. <DrinkIO> is optimised for
+Command Line Interface (CLI), where users can simply type commands
+to go about their work, but there is a Graphic User Interface (GUI)
+created with JavaFX to make it easier for users to interact with
+the app. Overall, <DrinkIO> is written in Java, and has about 10kLoC.
+
+This project portfolio documents my contributions to the project;
+you will find how the major enhancements I worked on in <DrinkIO>,
+the transaction and analysis features, can be used and the
+implementation details for the enhancement.
