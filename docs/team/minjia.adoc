@@ -42,7 +42,7 @@ implementation details for the enhancement.
 * Major enhancement 2: added the ability to compute and display the sales performance figures on demand
 ** _What it does_: calculates the overall cost, revenue and profit of the company using the transactions, when the user enters the relevant commands
 ** _Justification_:
-** _Highlights_:g
+** _Highlights_:
 
 == Contributions to the User Guide
 |===
