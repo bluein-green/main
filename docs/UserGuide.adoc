@@ -230,6 +230,7 @@ entered into *[blue]#_Drink I/O_#* +
 ==== Updating cost price
 ==== Updating sales price
 
+// tag::transactions[]
 == Managing Transactions
 Buying and selling likely occurs frequently in your company. To manage the ins and outs of your drinks,
 you can record your sales and imports of drinks into *[blue]#_Drink I/O_#*, and let *[blue]#_Drink I/O_#*
@@ -333,6 +334,7 @@ To view all transactions entered,
 You will see a list of transactions displayed in the results panel.
 
 
+// tag::analysis[]
 == Analysing Sales Performance
 Having up-to-date figures on how much you are making is definitely an important statistic to
 gauge the health of your company. *[blue]#_Drink I/O_#* can crunch the numbers from your

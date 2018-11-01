@@ -34,14 +34,15 @@ implementation details for the enhancement.
 
 == Summary of contributions
 
-* Major enhancement 1: added the ability to automatically increase stock counts when transactions are entered
-** What it does: updates the stock counts for specified drinks when a user enters a sale or import transaction.
-** Justification: Typically, a user would record a transaction, and following that, update the stock counts manually. This feature improves the workflow of the company by reducing the double-work needed to update the stock counts.
-** Highlights: +
+* *Major enhancement 1*: added the ability to automatically increase stock counts when transactions are entered
+** _What it does_: updates the stock counts for specified drinks when a user enters a sale or import transaction.
+** _Justification_: Typically, a user would record a transaction, and following that, update the stock counts manually. This feature improves the workflow of the company by reducing the double-work needed to update the stock counts.
+** _Highlights_: +
 
 * Major enhancement 2: added the ability to compute and display the sales performance figures on demand
-** What it does: calculates the overall cost, revenue and profit of the company using the transactions, when the user enters the relevant commands
-** Justification:
+** _What it does_: calculates the overall cost, revenue and profit of the company using the transactions, when the user enters the relevant commands
+** _Justification_:
+** _Highlights_:g
 
 == Contributions to the User Guide
 |===
@@ -49,6 +50,15 @@ implementation details for the enhancement.
 features in <Drink I/O>.
 |===
 
+*Major enhancement 1:*
+include::../UserGuide.adoc[tag=transactions]
+
+*Major enhancement 2:*
+include::../UserGuide.adoc[tag=analysis]
 
 == Contributions to the Developer Guide
-You will find below the sections I contributed to the Developer Guide.
+|===
+|You will find below the sections I contributed to the Developer Guide.
+|===
+
+<to be added>
