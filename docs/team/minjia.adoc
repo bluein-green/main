@@ -31,3 +31,24 @@ This project portfolio documents my contributions to the project;
 you will find how the major enhancements I worked on in <DrinkIO>,
 the transaction and analysis features, can be used and the
 implementation details for the enhancement.
+
+== Summary of contributions
+
+* Major enhancement 1: added the ability to automatically increase stock counts when transactions are entered
+** What it does: updates the stock counts for specified drinks when a user enters a sale or import transaction.
+** Justification: Typically, a user would record a transaction, and following that, update the stock counts manually. This feature improves the workflow of the company by reducing the double-work needed to update the stock counts.
+** Highlights: +
+
+* Major enhancement 2: added the ability to compute and display the sales performance figures on demand
+** What it does: calculates the overall cost, revenue and profit of the company using the transactions, when the user enters the relevant commands
+** Justification:
+
+== Contributions to the User Guide
+|===
+| Shown below are the sections I contributed to the User Guide that pertain to the transactions and analysis
+features in <Drink I/O>.
+|===
+
+
+== Contributions to the Developer Guide
+You will find below the sections I contributed to the Developer Guide.
