@@ -35,7 +35,8 @@ public class PriceTest {
         assertFalse(Price.isValidPrice("price")); // non-numeric
         assertFalse(Price.isValidPrice("9011p041")); // alphabets within digits
         assertFalse(Price.isValidPrice("9312 1534")); // spaces within digits
-        assertFalse(Price.isValidPrice("923294719586732985713091385479283579238754092389238")); // very large prices
+        assertFalse(Price.isValidPrice("123456789023456789012345678901234567890123456789012345678901234567890"));
+        // very large prices, more than Float.MAX_VALUE
         assertFalse(Price.isValidPrice("-1.25")); // negative values
 
         // valid prices
@@ -43,7 +44,7 @@ public class PriceTest {
         assertTrue(Price.isValidPrice("9")); // 1 digit
         assertTrue(Price.isValidPrice("9.2")); // 1 digit with 1 decimal digit
         assertTrue(Price.isValidPrice("9.31")); // 1 digit with 2 decimal digits
-        assertTrue(Price.isValidPrice("92231.23")); // reasonably large prices
+        assertTrue(Price.isValidPrice("92231.23")); // reasonably large prices, less than Float.MAX_VALUE
     }
 
 }
