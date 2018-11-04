@@ -2,7 +2,6 @@ package seedu.address.model.transaction;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_NAME;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_QUANTITY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRANSACTION_AMOUNT_MONEY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRANSACTION_QUANTITY;
@@ -18,7 +17,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.drink.Drink;
-import seedu.address.model.drink.Name;
 import seedu.address.model.drink.Price;
 import seedu.address.model.drink.Quantity;
 import seedu.address.model.drink.drinktestutil.DrinkBuilder;
