@@ -424,8 +424,8 @@ You should see a value displayed in the results panel.
 
 
 === Filtering popular items `[Coming in v1.4]`
-=== Viewing an item�s transactions `[Coming in v1.4]`
-=== Viewing an item�s cost, revenue and profit `[Coming in v1.4]`
+=== Viewing an item's transactions `[Coming in v1.4]`
+=== Viewing an item's cost, revenue and profit `[Coming in v1.4]`
 
 == Setting Reminders `[Coming in v1.4]`
 
