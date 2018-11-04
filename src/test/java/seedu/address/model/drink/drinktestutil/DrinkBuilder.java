@@ -15,7 +15,7 @@ import seedu.address.model.util.SampleDataUtil;
  * A utility class to help with building Drink objects.
  */
 public class DrinkBuilder {
-    public static final String DEFAULT_NAME = "Alice Pauline";
+    public static final String DEFAULT_NAME = "Coke";
     public static final String DEFAULT_COST_PRICE = "1.00";
     public static final String DEFAULT_RETAIL_PRICE = "5.00";
     public static final String DEFAULT_QUANTITY = "10";

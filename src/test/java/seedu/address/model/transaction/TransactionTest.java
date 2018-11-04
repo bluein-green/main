@@ -2,6 +2,10 @@ package seedu.address.model.transaction;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_NAME;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_QUANTITY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TRANSACTION_AMOUNT_MONEY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TRANSACTION_QUANTITY;
 import static seedu.address.model.testutil.Assert.assertThrows;
 import static seedu.address.model.transaction.TransactionType.PURCHASE;
 import static seedu.address.model.transaction.TransactionType.SALE;
@@ -17,6 +21,7 @@ import seedu.address.model.drink.Drink;
 import seedu.address.model.drink.Name;
 import seedu.address.model.drink.Price;
 import seedu.address.model.drink.Quantity;
+import seedu.address.model.drink.drinktestutil.DrinkBuilder;
 
 public class TransactionTest {
     @Rule
@@ -24,23 +29,27 @@ public class TransactionTest {
 
     @Test
     public void constructor_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Transaction(null,
-                null, null, null));
+        Drink drink = new DrinkBuilder().build();
 
+        // transaction type null
+        assertThrows(NullPointerException.class, () -> new Transaction(null,
+                drink, new Quantity(VALID_TRANSACTION_QUANTITY), new Price(VALID_TRANSACTION_AMOUNT_MONEY)));
+
+        // drink null, with transaction type sale
         assertThrows(NullPointerException.class, () -> new Transaction(SALE,
-                null, null, null));
+                null, new Quantity(VALID_DRINK_QUANTITY), new Price(VALID_TRANSACTION_AMOUNT_MONEY)));
 
+        // drink null, with transaction type purchase
         assertThrows(NullPointerException.class, () -> new Transaction(PURCHASE,
-                null, null, null));
+                null, new Quantity(VALID_DRINK_QUANTITY), new Price(VALID_TRANSACTION_AMOUNT_MONEY)));
 
-        assertThrows(NullPointerException.class, () -> new Transaction(null,
-                null, null, new Price("20.00")));
+        // quantity null
+        assertThrows(NullPointerException.class, () -> new Transaction(SALE,
+                drink, null, new Price(VALID_TRANSACTION_AMOUNT_MONEY)));
 
-        assertThrows(NullPointerException.class, () -> new Transaction(null,
-                null, new Quantity("20"), null));
-
-        assertThrows(NullPointerException.class, () -> new Transaction(null,
-                new Drink(new Name("bla")), null, null));
+        // amount money null
+        assertThrows(NullPointerException.class, () -> new Transaction(SALE,
+                drink, new Quantity(VALID_DRINK_QUANTITY), null));
     }
 
 
