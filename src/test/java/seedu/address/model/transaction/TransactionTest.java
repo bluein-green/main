@@ -19,7 +19,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.model.drink.Drink;
 import seedu.address.model.drink.Price;
 import seedu.address.model.drink.Quantity;
-import seedu.address.model.drink.drinktestutil.DrinkBuilder;
+import seedu.address.model.testutil.DrinkBuilder;
 
 public class TransactionTest {
     @Rule

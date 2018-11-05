@@ -1,4 +1,4 @@
-package seedu.address.model.drink.drinktestutil;
+package seedu.address.model.testutil;
 
 import java.util.HashSet;
 import java.util.Set;

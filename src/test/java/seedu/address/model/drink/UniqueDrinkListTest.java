@@ -8,8 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_NAME;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_QUANTITY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_RETAIL_PRICE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_TAG_SOFTDRINK;
-import static seedu.address.model.drink.drinktestutil.TypicalDrinks.GREEN_TEA;
-import static seedu.address.model.drink.drinktestutil.TypicalDrinks.PEPSI;
+import static seedu.address.model.testutil.TypicalDrinks.GREEN_TEA;
+import static seedu.address.model.testutil.TypicalDrinks.PEPSI;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,7 +19,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.drink.drinktestutil.DrinkBuilder;
+import seedu.address.model.testutil.DrinkBuilder;
 import seedu.address.model.drink.exceptions.DrinkNotFoundException;
 import seedu.address.model.drink.exceptions.DuplicateDrinkException;
 

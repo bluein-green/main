@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import seedu.address.model.drink.drinktestutil.DrinkBuilder;
+import seedu.address.model.testutil.DrinkBuilder;
 
 public class NameContainsKeywordsPredicateTest {
     @Test

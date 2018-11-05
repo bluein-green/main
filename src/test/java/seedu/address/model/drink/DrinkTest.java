@@ -8,14 +8,14 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_QUANTITY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_RETAIL_PRICE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_TAG_SOFTDRINK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_TAG_TEA;
-import static seedu.address.model.drink.drinktestutil.TypicalDrinks.FNN_GRAPE;
-import static seedu.address.model.drink.drinktestutil.TypicalDrinks.FNN_GRAPE_COPY;
+import static seedu.address.model.testutil.TypicalDrinks.FNN_GRAPE;
+import static seedu.address.model.testutil.TypicalDrinks.FNN_GRAPE_COPY;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.drink.drinktestutil.DrinkBuilder;
+import seedu.address.model.testutil.DrinkBuilder;
 
 public class DrinkTest {
     @Rule

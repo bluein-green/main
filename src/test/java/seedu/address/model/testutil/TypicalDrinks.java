@@ -1,4 +1,4 @@
-package seedu.address.model.drink.drinktestutil;
+package seedu.address.model.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_COST_PRICE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_NAME;
