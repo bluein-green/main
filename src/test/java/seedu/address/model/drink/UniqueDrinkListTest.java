@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_COST_PRICE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_NAME;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_QUANTITY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_RETAIL_PRICE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_TAG_SOFTDRINK;
@@ -132,5 +133,24 @@ public class UniqueDrinkListTest {
     public void asUnmodifiableObservableList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         uniqueDrinkList.asUnmodifiableObservableList().remove(0);
+    }
+
+    @Test
+    public void find_drinkInList_returnDrinkRef() {
+        Drink drinkToFind = PEPSI;
+        uniqueDrinkList.add(drinkToFind);
+        uniqueDrinkList.add(GREEN_TEA);
+        Drink drinkToFindCopy = new DrinkBuilder(drinkToFind).build();
+        assertEquals(drinkToFind, uniqueDrinkList.find(drinkToFindCopy));
+    }
+
+    @Test
+    public void find_drinkNotInList_throwsDrinkNotFoundException() {
+        Drink drinkToFind = PEPSI;
+        uniqueDrinkList.add(drinkToFind);
+        uniqueDrinkList.add(GREEN_TEA);
+        Drink differentDrink = new DrinkBuilder(PEPSI).withName(VALID_DRINK_NAME).build();
+        thrown.expect(DrinkNotFoundException.class);
+        uniqueDrinkList.find(differentDrink);
     }
 }

@@ -48,6 +48,7 @@ public class UniqueDrinkList implements Iterable<Drink> {
     }
 
 
+    // TODO: check if this is needed
     /**
      * Edits the {@code target} drink's name attribute.
      * {@code target} must exist in the list.
@@ -136,6 +137,7 @@ public class UniqueDrinkList implements Iterable<Drink> {
 
     /**
      * Returns true if {@code drinks} contains only unique drinks.
+     * Unique is defined by the drink's name, as in {@code isSameDrink}.
      */
     private boolean drinksAreUnique(List<Drink> drinks) {
         for (int i = 0; i < drinks.size() - 1; i++) {
