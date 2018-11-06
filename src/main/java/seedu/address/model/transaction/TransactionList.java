@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.InventoryList;
 import seedu.address.model.drink.Date;
 import seedu.address.model.drink.Price;
 
@@ -72,7 +73,6 @@ public class TransactionList {
      */
     private void updateLastUpdateDate() {
         lastUpdateDate = new Date();
-        // TODO: STUB
     }
 
     public Date getLastUpdateDate() {
@@ -86,53 +86,46 @@ public class TransactionList {
         return builder.toString();
     }
 
-    /**
-     * Calculates the total cost of all the transactions.
-     * @return total cost incurred for all transactions
-     */
-    public Price calculateTotalCost() {
-        float totalCost = 0;
-        for (Transaction transaction : transactions) {
-            if (transaction.getTransactionType() == TransactionType.PURCHASE) {
-                totalCost += transaction.getAmountMoney().getValue();
-            }
-        }
-
-        return new Price(Float.toString(totalCost));
-    }
-
-    /**
-     * Calculates the total revenue of all the transactions.
-     * @return total revenue earned for all transactions
-     */
-    public Price calculateTotalRevenue() {
-        float totalRevenue = 0;
-        for (Transaction transaction : transactions) {
-            if (transaction.getTransactionType() == TransactionType.SALE) {
-                totalRevenue += transaction.getAmountMoney().getValue();
-            }
-        }
-
-        return new Price(Float.toString(totalRevenue));
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TransactionList // instanceof handles nulls
+                && transactions.equals(((TransactionList) other).transactions));
     }
 
 
-    /**
-     * Calculates the total profit of all the transactions, using formula: total revenue - total cost
-     * @return total profit earned for all transactions
-     */
-    public Price calculateTotalProfit() {
-        float totalRevenue = 0;
-        float totalCost = 0;
-        for (Transaction transaction : transactions) {
-            if (transaction.getTransactionType() == TransactionType.SALE) {
-                totalRevenue += transaction.getAmountMoney().getValue();
-            } else {
-                totalCost += transaction.getAmountMoney().getValue();
-            }
-        }
-
-        float totalProfit = totalRevenue - totalCost;
-        return new Price(Float.toString(totalProfit));
-    }
+//    /**
+//     * Calculates the total revenue of all the transactions.
+//     * @return total revenue earned for all transactions
+//     */
+//    public Price calculateTotalRevenue() {
+//        float totalRevenue = 0;
+//        for (Transaction transaction : transactions) {
+//            if (transaction.getTransactionType() == TransactionType.SALE) {
+//                totalRevenue += transaction.getAmountMoney().getValue();
+//            }
+//        }
+//
+//        return new Price(Float.toString(totalRevenue));
+//    }
+//
+//
+//    /**
+//     * Calculates the total profit of all the transactions, using formula: total revenue - total cost
+//     * @return total profit earned for all transactions
+//     */
+//    public Price calculateTotalProfit() {
+//        float totalRevenue = 0;
+//        float totalCost = 0;
+//        for (Transaction transaction : transactions) {
+//            if (transaction.getTransactionType() == TransactionType.SALE) {
+//                totalRevenue += transaction.getAmountMoney().getValue();
+//            } else {
+//                totalCost += transaction.getAmountMoney().getValue();
+//            }
+//        }
+//
+//        float totalProfit = totalRevenue - totalCost;
+//        return new Price(Float.toString(totalProfit));
+//    }
 }

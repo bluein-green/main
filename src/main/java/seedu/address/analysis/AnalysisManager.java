@@ -25,24 +25,26 @@ public class AnalysisManager extends ComponentManager implements Analysis {
 
     @Override
     public Price analyseProfit(AnalysisPeriodType period) {
-        updateFilteredTransactionsList(period.predicateToFilter());
-        return transactionList.calculateTotalProfit();
+        updateFilteredTransactionsList(period.periodFilterPredicate());
+        // return transactionList.calculateTotalProfit();
+        return null;
     }
 
     @Override
     public Price analyseCost(AnalysisPeriodType period) {
-        updateFilteredTransactionsList(period.predicateToFilter());
+        updateFilteredTransactionsList(period.periodFilterPredicate());
         return calculateTotalCost();
     }
 
     @Override
     public Price analyseRevenue(AnalysisPeriodType period) {
-        return transactionList.calculateTotalRevenue();
+        // return transactionList.calculateTotalRevenue();
+        return null;
     }
 
-    private void updateFilteredTransactionsList(Predicate<Transaction> predicate) {
-        requireNonNull(predicate);
-        filteredTransactions.setPredicate(predicate);
+    private void updateFilteredTransactionsList(Predicate<Transaction> periodPredicate) {
+        requireNonNull(periodPredicate);
+        filteredTransactions.setPredicate(periodPredicate);
     }
 
     /**

@@ -10,24 +10,24 @@ import seedu.address.model.transaction.Transaction;
 public enum AnalysisPeriodType {
     DAY() {
         @Override
-        public Predicate<Transaction> predicateToFilter() {
+        public Predicate<Transaction> periodFilterPredicate() {
             return new TransactionInDayPredicate();
         }
     },
 
     WEEK() {
         @Override
-        public Predicate<Transaction> predicateToFilter() {
+        public Predicate<Transaction> periodFilterPredicate() {
             return new TransactionInDayPredicate();
         }
     },
 
     MONTH {
         @Override
-        public Predicate<Transaction> predicateToFilter() {
+        public Predicate<Transaction> periodFilterPredicate() {
             return new TransactionInDayPredicate();
         }
     };
 
-    public abstract Predicate<Transaction> predicateToFilter();
+    public abstract Predicate<Transaction> periodFilterPredicate();
 }
