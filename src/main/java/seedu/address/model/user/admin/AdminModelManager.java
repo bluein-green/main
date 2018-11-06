@@ -5,7 +5,6 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.analysis.AnalysisPeriodType;
-import seedu.address.commons.events.model.TransactionListChangedEvent;
 import seedu.address.model.LoginInfoManager;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyInventoryList;
@@ -28,10 +27,9 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     }
 
     @Override
-    public boolean isValid () {
+    public boolean isValid() {
         return false;
     }
-
 
 
     //=====================Stock taker commands====================
@@ -85,22 +83,16 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         return transactionList.toString();
     }
 
-    /**
-     * Raises an event to indicate the transactions have changed
-     */
-    protected void indicateTransactionListChanged() {
-        raise(new TransactionListChangedEvent(transactionList));
-    }
 
     //=====================Manager command=========================
     @Override
-    public void createNewAccount (UserName userName, Password password, AuthenticationLevel authenticationLevel) {
-        loginInfoManager.createNewAccount (userName, password, authenticationLevel);
+    public void createNewAccount(UserName userName, Password password, AuthenticationLevel authenticationLevel) {
+        loginInfoManager.createNewAccount(userName, password, authenticationLevel);
     }
 
     @Override
-    public void deleteAccount (UserName userName) {
-        loginInfoManager.deleteAccount (userName);
+    public void deleteAccount(UserName userName) {
+        loginInfoManager.deleteAccount(userName);
     }
 
     //=====================Accountant command======================

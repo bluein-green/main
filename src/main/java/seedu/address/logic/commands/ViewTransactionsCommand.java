@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TRANSACTIONS;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
@@ -16,7 +17,7 @@ public class ViewTransactionsCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": View all transactions recorded in Drink I/O ";
 
-    public static final String MESSAGE_SUCCESS = "Listed all transactions: %s";
+    public static final String MESSAGE_SUCCESS = "Listed all %s";
 
 
     @Override
@@ -26,8 +27,11 @@ public class ViewTransactionsCommand extends Command {
         StockTakerModel stockTakerModel = (StockTakerModel) model;
         //TransactionList transactionList = model.getTransactionList();
         // String.format(MESSAGE_SUCCESS, model.getTransactions.size());
-        String result = stockTakerModel.getTransactions();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, result));
+
+        stockTakerModel.updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
+        String numTransactions = Integer.toString(stockTakerModel.getTransactionList().size());
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, numTransactions + " transactions"));
     }
 
     @Override

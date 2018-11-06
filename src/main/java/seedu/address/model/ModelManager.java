@@ -14,7 +14,9 @@ import seedu.address.analysis.AnalysisManager;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LoginInfo;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.ViewTransactionsEvent;
 import seedu.address.commons.events.model.InventoryListChangedEvent;
+import seedu.address.commons.events.model.TransactionListChangedEvent;
 import seedu.address.model.drink.Drink;
 import seedu.address.model.transaction.Transaction;
 import seedu.address.model.transaction.TransactionList;
@@ -123,6 +125,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredDrinks.setPredicate(predicate);
     }
 
+
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -150,7 +154,23 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredTransactions);
     }
 
+    @Override
+    public void updateFilteredTransactionList(Predicate<Transaction> predicate) {
+        requireNonNull(predicate);
+        filteredTransactions.setPredicate(predicate);
+        indicateViewTransactions();
+    }
 
+    /**
+     * Raises an event to indicate the transactions have changed
+     */
+    protected void indicateTransactionListChanged() {
+        raise(new TransactionListChangedEvent(transactionList));
+    }
+
+    protected void indicateViewTransactions() {
+        raise(new ViewTransactionsEvent());
+    }
     //=========== Login feature command ==============================================
 
     @Override

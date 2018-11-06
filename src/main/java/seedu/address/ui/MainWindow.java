@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.TransactionListChangedEvent;
+import seedu.address.commons.events.logic.ViewTransactionsEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.InventoryPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
@@ -37,7 +37,7 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    //private BrowserPanel browserPanel;
+    private BrowserPanel browserPanel;
     private TransactionsPanel transactionsPanel;
     private DrinkListPanel drinkListPanel;
     private BatchListPanel batchListPanel;
@@ -128,7 +128,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this loginWindow.
      */
     void fillInnerParts() {
-//        browserPanel = new BrowserPanel();
+        browserPanel = new BrowserPanel();
 //        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         transactionsPanel = new TransactionsPanel(logic.getFilteredTransactionList());
@@ -161,6 +161,13 @@ public class MainWindow extends UiPart<Stage> {
         batchListPanel = new BatchListPanel(
                 event.getNewSelection().getObservableBatchList());
         batchListPanelPlaceholder.getChildren().add(batchListPanel.getRoot());
+        transactionsPanelPlaceholder.getChildren().add(browserPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleViewTransactionsEvent(ViewTransactionsEvent event) {
+        System.out.println("handling view trans event");
+        transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
     }
 
 

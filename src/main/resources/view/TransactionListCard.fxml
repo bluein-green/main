@@ -27,15 +27,11 @@
                     </minWidth>
                 </Label>
                 <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
-            <Label alignment="CENTER_RIGHT" fx:id="transType">
-               <font>
-                  <Font name="System Italic" size="13.0" />
-               </font>
-            </Label>
             </HBox>
+            <Label fx:id="transType" text="transType" />
          <GridPane>
            <columnConstraints>
-             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+             <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
            </columnConstraints>
            <rowConstraints>

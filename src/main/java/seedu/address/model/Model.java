@@ -19,6 +19,7 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
 
     Predicate<Drink> PREDICATE_SHOW_ALL_DRINKS = unused -> true;
+    Predicate<Transaction> PREDICATE_SHOW_ALL_TRANSACTIONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyInventoryList newData);
@@ -64,7 +65,14 @@ public interface Model {
     // =============== transactions commands =====================
 
     // ================ analysis commands ==========================
+    /** Returns an unmodifiable view of the filtered transaction list */
     ObservableList<Transaction> getFilteredTransactionList();
+
+    /**
+     * Updates the filter of the filtered drink list
+     * @param predicate
+     */
+    void updateFilteredTransactionList(Predicate<Transaction> predicate);
 
 
 

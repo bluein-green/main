@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.transaction.Transaction;
@@ -43,9 +44,9 @@ public class TransactionCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(transaction.getDrinkTransacted().getName().toString());
         transType.setText(transaction.getTransactionType().getValue());
-        transQuantity.setText("Quantity in stock: " + Integer.toString(transaction.getQuantityTransacted().getValue()));
-        transAmount.setText("Cost Price: $" + transaction.getAmountMoney().toString());
-        transDate.setText("Date: " + transaction.getTransactionDate().toString());
+        transQuantity.setText(Integer.toString(transaction.getQuantityTransacted().getValue()));
+        transAmount.setText("$" + transaction.getAmountMoney().toString());
+        transDate.setText(transaction.getTransactionDate().toString());
     }
 
     @Override
