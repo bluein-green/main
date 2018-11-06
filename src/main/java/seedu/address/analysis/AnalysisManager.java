@@ -15,7 +15,7 @@ public class AnalysisManager extends ComponentManager implements Analysis {
     }
 
     @Override
-    public Price analyseProfit() {
+    public Price analyseProfit(Analysis'') {
         return transactionList.calculateTotalProfit();
     }
 
