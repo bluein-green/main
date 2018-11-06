@@ -1,7 +1,10 @@
 package seedu.address.analysis;
 
+import java.util.function.Predicate;
+
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.model.drink.Price;
+import seedu.address.model.transaction.Transaction;
 import seedu.address.model.transaction.TransactionList;
 
 /**
@@ -28,6 +31,4 @@ public class AnalysisManager extends ComponentManager implements Analysis {
     public Price analyseRevenue(AnalysisPeriodType period) {
         return transactionList.calculateTotalRevenue();
     }
-
-
 }

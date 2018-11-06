@@ -4,6 +4,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.analysis.AnalysisPeriodType;
 import seedu.address.model.LoginInfoManager;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyInventoryList;
@@ -94,10 +95,10 @@ public class AdminModelManager extends ModelManager implements AdminModel {
 
     //=====================Accountant command======================
     @Override
-    public Price analyseCosts() {
-        return analysis.analyseCost();
+    public Price analyseCosts(AnalysisPeriodType period) {
+        return analysis.analyseCost(period);
     }
-
+/*
     @Override
     public Price analyseRevenue() {
         return analysis.analyseRevenue();
@@ -107,5 +108,5 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     public Price analyseProfit() {
         return analysis.analyseProfit();
     }
-
+*/
 }

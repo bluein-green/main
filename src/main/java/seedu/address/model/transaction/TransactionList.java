@@ -69,6 +69,10 @@ public class TransactionList {
         // TODO: STUB
     }
 
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
