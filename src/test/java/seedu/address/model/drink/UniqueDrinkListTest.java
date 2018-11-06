@@ -19,9 +19,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.testutil.DrinkBuilder;
 import seedu.address.model.drink.exceptions.DrinkNotFoundException;
 import seedu.address.model.drink.exceptions.DuplicateDrinkException;
+import seedu.address.model.testutil.DrinkBuilder;
 
 public class UniqueDrinkListTest {
     @Rule
