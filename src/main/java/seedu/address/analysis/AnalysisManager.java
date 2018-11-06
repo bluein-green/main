@@ -35,9 +35,7 @@ public class AnalysisManager extends ComponentManager implements Analysis {
             }
         }
 
-        Price totalCostInPrice = new Price(Float.toString(totalCost));
-
-        return totalCostInPrice;
+        return new Price(Float.toString(totalCost));
     }
 
     @Override
@@ -50,8 +48,7 @@ public class AnalysisManager extends ComponentManager implements Analysis {
             }
         }
 
-        Price totalRevenueInPrice = new Price(Float.toString(totalRevenue));
-        return totalRevenueInPrice;
+        return new Price(Float.toString(totalRevenue));
     }
 
 
