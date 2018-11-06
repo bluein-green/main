@@ -15,17 +15,17 @@ public class AnalysisManager extends ComponentManager implements Analysis {
     }
 
     @Override
-    public Price analyseProfit(Analysis'') {
+    public Price analyseProfit(AnalysisPeriodType period) {
         return transactionList.calculateTotalProfit();
     }
 
     @Override
-    public Price analyseCost() {
+    public Price analyseCost(AnalysisPeriodType period) {
         return transactionList.calculateTotalCost();
     }
 
     @Override
-    public Price analyseRevenue() {
+    public Price analyseRevenue(AnalysisPeriodType period) {
         return transactionList.calculateTotalRevenue();
     }
 

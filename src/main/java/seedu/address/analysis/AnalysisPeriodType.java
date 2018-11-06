@@ -6,5 +6,5 @@ package seedu.address.analysis;
 public enum AnalysisPeriodType {
     DAY,
     WEEK,
-    MONTH;
+    MONTH
 }
