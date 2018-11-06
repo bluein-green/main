@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_COST_PRICE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_NAME_COCA_COLA;
 import static seedu.address.model.testutil.TypicalDrinks.GREEN_TEA;
 import static seedu.address.model.testutil.TypicalDrinks.PEPSI;
 import static seedu.address.model.testutil.TypicalDrinks.getTypicalInventoryList;
@@ -21,7 +20,6 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.drink.Drink;
-import seedu.address.model.drink.exceptions.DrinkNotFoundException;
 import seedu.address.model.drink.exceptions.DuplicateDrinkException;
 import seedu.address.model.testutil.DrinkBuilder;
 
@@ -89,7 +87,6 @@ public class InventoryListTest {
         thrown.expect(UnsupportedOperationException.class);
         inventoryList.getDrinkList().remove(0);
     }
-
 
 
     /**

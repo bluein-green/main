@@ -20,6 +20,7 @@ import seedu.address.model.drink.Drink;
 import seedu.address.model.drink.Price;
 import seedu.address.model.drink.Quantity;
 import seedu.address.model.testutil.DrinkBuilder;
+import seedu.address.model.transaction.testutil.TransactionBuilder;
 
 public class TransactionTest {
     @Rule
@@ -57,7 +58,8 @@ public class TransactionTest {
         assertEquals(SALE_COKE_1, SALE_COKE_1);
 
         // same values , but different id based on time -> return false
-        assertNotEquals(SALE_COKE_1, SALE_COKE_2);
+        Transaction transaction = new TransactionBuilder(SALE_COKE_2).build();
+        assertNotEquals(SALE_COKE_1, transaction);
 
         // different drink -> return false
         assertNotEquals(SALE_COKE_1, SALE_PEPSI);
