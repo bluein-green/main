@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_COST_PRICE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_NAME;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_NAME_COCA_COLA;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_QUANTITY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_RETAIL_PRICE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DRINK_TAG_SOFTDRINK;
@@ -141,7 +141,7 @@ public class UniqueDrinkListTest {
         uniqueDrinkList.add(drinkToFind);
         uniqueDrinkList.add(GREEN_TEA);
         Drink drinkToFindCopy = new DrinkBuilder(drinkToFind).build();
-        assertEquals(drinkToFind, uniqueDrinkList.find(drinkToFindCopy));
+        assertEquals(drinkToFind, uniqueDrinkList.findByName(drinkToFindCopy));
     }
 
     @Test
@@ -149,8 +149,8 @@ public class UniqueDrinkListTest {
         Drink drinkToFind = PEPSI;
         uniqueDrinkList.add(drinkToFind);
         uniqueDrinkList.add(GREEN_TEA);
-        Drink differentDrink = new DrinkBuilder(PEPSI).withName(VALID_DRINK_NAME).build();
+        Drink differentDrink = new DrinkBuilder(PEPSI).withName(VALID_DRINK_NAME_COCA_COLA).build();
         thrown.expect(DrinkNotFoundException.class);
-        uniqueDrinkList.find(differentDrink);
+        uniqueDrinkList.findByName(differentDrink);
     }
 }
