@@ -61,4 +61,9 @@ public class AnalysisManager extends ComponentManager implements Analysis {
 
         return new Price(Float.toString(totalCost));
     }
+
+    public FilteredList<Transaction> getFilteredTransactions() {
+        return filteredTransactions;
+    }
+
 }

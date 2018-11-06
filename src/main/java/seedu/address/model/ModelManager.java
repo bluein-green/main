@@ -16,6 +16,7 @@ import seedu.address.commons.core.LoginInfo;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.InventoryListChangedEvent;
 import seedu.address.model.drink.Drink;
+import seedu.address.model.transaction.Transaction;
 import seedu.address.model.transaction.TransactionList;
 import seedu.address.model.user.Password;
 import seedu.address.model.user.UserName;
@@ -30,6 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
     protected final FilteredList<Drink> filteredDrinks;
     protected final InventoryList inventoryList;
     protected final TransactionList transactionList;
+    protected final FilteredList<Transaction> filteredTransactions;
     protected final Analysis analysis;
 
     /**
@@ -48,6 +50,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.loginInfoManager = loginInfoManager;
         this.transactionList = transactionList;
         analysis = new AnalysisManager(transactionList);
+        filteredTransactions = ((AnalysisManager) analysis).getFilteredTransactions();
         // TODO: transaction manager, facade for transactions
     }
 
@@ -142,6 +145,10 @@ public class ModelManager extends ComponentManager implements Model {
 
 
     // ========== Accountant commands =================================================
+    @Override
+    public ObservableList<Transaction> getFilteredTransactionList() {
+        return FXCollections.unmodifiableObservableList(filteredTransactions);
+    }
 
 
     //=========== Login feature command ==============================================

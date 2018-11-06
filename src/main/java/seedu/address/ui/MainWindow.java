@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.TransactionListChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.InventoryPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
@@ -36,15 +37,16 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    //private PersonListPanel personListPanel;
+    //private BrowserPanel browserPanel;
+    private TransactionsPanel transactionsPanel;
     private DrinkListPanel drinkListPanel;
     private BatchListPanel batchListPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
     @FXML
-    private StackPane browserPlaceholder;
+    //private StackPane browserPlaceholder;
+    private StackPane transactionsPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -53,7 +55,6 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    //private StackPane personListPanelPlaceholder;
     private StackPane drinkListPanelPlaceholder;
 
     @FXML
@@ -127,8 +128,11 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this loginWindow.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+//        browserPanel = new BrowserPanel();
+//        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        transactionsPanel = new TransactionsPanel(logic.getFilteredTransactionList());
+        transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
 
 
         //personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -158,6 +162,9 @@ public class MainWindow extends UiPart<Stage> {
                 event.getNewSelection().getObservableBatchList());
         batchListPanelPlaceholder.getChildren().add(batchListPanel.getRoot());
     }
+
+
+
 
     void hide() {
         primaryStage.hide();
@@ -219,8 +226,10 @@ public class MainWindow extends UiPart<Stage> {
         return drinkListPanel;
     }
 
+    public TransactionsPanel getTransactionsPanel() { return transactionsPanel; }
+
     void releaseResources() {
-        browserPanel.freeResources();
+        //browserPanel.freeResources();
     }
 
     @Subscribe

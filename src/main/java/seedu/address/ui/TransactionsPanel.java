@@ -1,17 +1,23 @@
 package seedu.address.ui;
 
-import javafx.application.Platform;
+import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.TransactionListChangedEvent;
 import seedu.address.model.transaction.Transaction;
 
 /**
  * Pane containing Transactions
  */
 public class TransactionsPanel extends UiPart<Region> {
-    private static final String FXML = "TransactionsPanel.fxml";
+    private static final String FXML = "TransactionsListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(TransactionsPanel.class);
 
     @javafx.fxml.FXML
     private ListView<Transaction> transactionListView;
@@ -28,21 +34,13 @@ public class TransactionsPanel extends UiPart<Region> {
         // setEventHandlerForSelectionChangeEvent();
     }
 
-//    /**
-//     * Scrolls to the {@code DrinkCard} at the {@code index} and selects it.
-//     */
-//    private void scrollTo(int index) {
-//        Platform.runLater(() -> {
-//            transactionListView.scrollTo(index);
-//            transactionListView.getSelectionModel().clearAndSelect(index);
-//        });
-//    }
+    @Subscribe
+    private void handleTransactionListChangedEvent(TransactionListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
-//    @Subscribe
-//    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-//        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-//        scrollTo(event.targetIndex);
-//    }
+        // insert
+        transactionListView.setItems(event.getData().getTransactionsAsObservableList());
+    }
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Transaction} using a {@code TransactionCard}.

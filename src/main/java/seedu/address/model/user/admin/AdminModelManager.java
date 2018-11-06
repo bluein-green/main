@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.analysis.AnalysisPeriodType;
+import seedu.address.commons.events.model.TransactionListChangedEvent;
 import seedu.address.model.LoginInfoManager;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyInventoryList;
@@ -46,6 +47,7 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         inventoryList.decreaseQuantity(transaction.getDrinkTransacted(), transaction.getQuantityTransacted());
         indicateInventoryListChanged();
         updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
+        indicateTransactionListChanged();
     }
 
     @Override
@@ -60,6 +62,7 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         inventoryList.increaseDrinkQuantity(transaction.getDrinkTransacted(), transaction.getQuantityTransacted());
         indicateInventoryListChanged();
         updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
+        indicateTransactionListChanged();
     }
 
     private void recordTransaction(Transaction transaction) {
@@ -82,6 +85,13 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         return transactionList.toString();
     }
 
+    /**
+     * Raises an event to indicate the transactions have changed
+     */
+    protected void indicateTransactionListChanged() {
+        raise(new TransactionListChangedEvent(transactionList));
+    }
+
     //=====================Manager command=========================
     @Override
     public void createNewAccount (UserName userName, Password password, AuthenticationLevel authenticationLevel) {
@@ -96,6 +106,7 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     //=====================Accountant command======================
     @Override
     public Price analyseCosts(AnalysisPeriodType period) {
+        indicateTransactionListChanged();
         return analysis.analyseCost(period);
     }
 /*

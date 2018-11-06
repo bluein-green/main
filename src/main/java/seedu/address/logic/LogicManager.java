@@ -15,6 +15,7 @@ import seedu.address.logic.parser.user.ManagerParser;
 import seedu.address.logic.parser.user.StockTakerParser;
 import seedu.address.model.Model;
 import seedu.address.model.drink.Drink;
+import seedu.address.model.transaction.Transaction;
 import seedu.address.model.user.accountant.AccountantModel;
 import seedu.address.model.user.admin.AdminModel;
 import seedu.address.model.user.manager.ManagerModel;
@@ -77,5 +78,10 @@ public class LogicManager extends ComponentManager implements Logic {
 
     public void changeModelAfterReLogin(Model model) {
         this.model = model;
+    }
+
+    @Override
+    public ObservableList<Transaction> getFilteredTransactionList() {
+        return model.getFilteredTransactionList();
     }
 }

@@ -27,7 +27,7 @@
                     </minWidth>
                 </Label>
                 <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
-            <Label alignment="CENTER_RIGHT" text="\$transType">
+            <Label alignment="CENTER_RIGHT" fx:id="transType">
                <font>
                   <Font name="System Italic" size="13.0" />
                </font>
@@ -44,9 +44,9 @@
              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
            </rowConstraints>
             <children>
-                  <Label fx:id="stock" styleClass="cell_small_label" text="\\$transDate" GridPane.columnIndex="1" />
-                  <Label fx:id="costPrice" styleClass="cell_small_label" text="\\$transQuantity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label fx:id="retailPrice" styleClass="cell_small_label" text="\\$transAmount" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="transDate" styleClass="cell_small_label" text="\\$transDate" GridPane.columnIndex="1" />
+                  <Label fx:id="transQuantity" styleClass="cell_small_label" text="\\$transQuantity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="transAmount" styleClass="cell_small_label" text="\\$transAmount" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                <Label text="Transaction Date:">
                   <font>
                      <Font name="System Bold" size="13.0" />
