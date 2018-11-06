@@ -11,7 +11,7 @@ import seedu.address.model.transaction.TransactionList;
  * Represents the in-memory model of the accountant command
  */
 public class AccountantModelManager extends ModelManager implements AccountantModel {
-    public AccountantModelManager(ReadOnlyInventoryList inventoryList ,
+    public AccountantModelManager(ReadOnlyInventoryList inventoryList,
                                   UserPrefs userPrefs, LoginInfoManager loginInfoManager,
                                   TransactionList transactionList) {
         super(inventoryList, userPrefs, loginInfoManager, transactionList);
@@ -20,6 +20,16 @@ public class AccountantModelManager extends ModelManager implements AccountantMo
     @Override
     public Price analyseCosts() {
         return analysis.analyseCost();
+    }
+
+    @Override
+    public Price analyseRevenue() {
+        return analysis.analyseRevenue();
+    }
+
+    @Override
+    public Price analyseProfit() {
+        return analysis.analyseProfit();
     }
 
 }

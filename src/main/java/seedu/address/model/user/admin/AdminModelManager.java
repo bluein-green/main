@@ -98,4 +98,14 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         return analysis.analyseCost();
     }
 
+    @Override
+    public Price analyseRevenue() {
+        return analysis.analyseRevenue();
+    }
+
+    @Override
+    public Price analyseProfit() {
+        return analysis.analyseProfit();
+    }
+
 }

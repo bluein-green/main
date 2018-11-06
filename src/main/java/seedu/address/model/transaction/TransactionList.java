@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.model.drink.Date;
+import seedu.address.model.drink.Price;
 
 /**
  * Represents a list of transactions for (currently) eternity, until cleared.
@@ -53,9 +54,9 @@ public class TransactionList {
 
     /**
      * Adds {@code transaction} to the list of transactions
-     * Guarantees: transaction is accurately generated.
      */
     public void addTransaction(Transaction transaction) {
+        requireNonNull(transaction);
         transactions.add(transaction);
         updateLastUpdateDate();
     }
@@ -73,5 +74,55 @@ public class TransactionList {
         final StringBuilder builder = new StringBuilder();
         transactions.forEach(builder::append);
         return builder.toString();
+    }
+
+    /**
+     * Calculates the total cost of all the transactions.
+     * @return total cost incurred for all transactions
+     */
+    public Price calculateTotalCost() {
+        float totalCost = 0;
+        for (Transaction transaction : transactions) {
+            if (transaction.getTransactionType() == TransactionType.PURCHASE) {
+                totalCost += transaction.getAmountMoney().getValue();
+            }
+        }
+
+        return new Price(Float.toString(totalCost));
+    }
+
+    /**
+     * Calculates the total revenue of all the transactions.
+     * @return total revenue earned for all transactions
+     */
+    public Price calculateTotalRevenue() {
+        float totalRevenue = 0;
+        for (Transaction transaction : transactions) {
+            if (transaction.getTransactionType() == TransactionType.SALE) {
+                totalRevenue += transaction.getAmountMoney().getValue();
+            }
+        }
+
+        return new Price(Float.toString(totalRevenue));
+    }
+
+
+    /**
+     * Calculates the total profit of all the transactions, using formula: total revenue - total cost
+     * @return total profit earned for all transactions
+     */
+    public Price calculateTotalProfit() {
+        float totalRevenue = 0;
+        float totalCost = 0;
+        for (Transaction transaction : transactions) {
+            if (transaction.getTransactionType() == TransactionType.SALE) {
+                totalRevenue += transaction.getAmountMoney().getValue();
+            } else {
+                totalCost += transaction.getAmountMoney().getValue();
+            }
+        }
+
+        float totalProfit = totalRevenue - totalCost;
+        return new Price(Float.toString(totalProfit));
     }
 }
