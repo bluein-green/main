@@ -90,23 +90,6 @@ public class InventoryListTest {
         inventoryList.getDrinkList().remove(0);
     }
 
-/*
-    @Test
-    public void findDrinkByName_drinkNotFound_throwsDrinkNotFoundException() {
-        thrown.expect(DrinkNotFoundException.class);
-        inventoryList.addDrink(GREEN_TEA);
-        inventoryList.findDrinkByName(PEPSI);
-    }
-
-    @Test
-    public void findDrinkByName_drinkInList_returnDrinkReference() {
-        Drink drinkInList = new DrinkBuilder(GREEN_TEA).build();
-        inventoryList.addDrink(drinkInList);
-        Drink drinkToFind = new DrinkBuilder(GREEN_TEA).withCostPrice("0.5").build();
-        Drink drinkFound = inventoryList.findDrinkByName(drinkToFind);
-        assertEquals(drinkInList, drinkFound);
-    }
-*/
 
 
     /**

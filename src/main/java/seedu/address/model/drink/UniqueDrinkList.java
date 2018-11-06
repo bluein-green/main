@@ -192,5 +192,4 @@ public class UniqueDrinkList implements Iterable<Drink> {
         return actualDrink.getCostPrice();
     }
 
-
 }

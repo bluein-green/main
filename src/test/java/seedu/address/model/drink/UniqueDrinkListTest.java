@@ -136,7 +136,7 @@ public class UniqueDrinkListTest {
     }
 
     @Test
-    public void find_drinkInList_returnDrinkRef() {
+    public void findByName_drinkInList_returnDrinkRef() {
         Drink drinkToFind = PEPSI;
         uniqueDrinkList.add(drinkToFind);
         uniqueDrinkList.add(GREEN_TEA);
@@ -145,7 +145,7 @@ public class UniqueDrinkListTest {
     }
 
     @Test
-    public void find_drinkNotInList_throwsDrinkNotFoundException() {
+    public void findByName_drinkNotInList_throwsDrinkNotFoundException() {
         Drink drinkToFind = PEPSI;
         uniqueDrinkList.add(drinkToFind);
         uniqueDrinkList.add(GREEN_TEA);
