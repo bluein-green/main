@@ -8,9 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.InventoryList;
 import seedu.address.model.drink.Date;
-import seedu.address.model.drink.Price;
 
 /**
  * Represents a list of transactions for (currently) eternity, until cleared.
