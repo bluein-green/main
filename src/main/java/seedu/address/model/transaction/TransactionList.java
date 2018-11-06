@@ -6,6 +6,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.model.drink.Date;
 import seedu.address.model.drink.Price;
 
@@ -50,6 +52,10 @@ public class TransactionList {
 
     public List<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public ObservableList<Transaction> getTransactionsAsObservableList() {
+        return FXCollections.observableList(transactions);
     }
 
     /**
