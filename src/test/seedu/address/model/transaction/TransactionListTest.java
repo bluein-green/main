@@ -1,7 +1,7 @@
 package seedu.address.model.transaction;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.model.transaction.testutil.TypicalTransactions.getTypicalTransactionList;
+import static seedu.address.testutil.transaction.TypicalTransactions.getTypicalTransactionList;
 
 import java.util.Collections;
 
