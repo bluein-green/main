@@ -4,7 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import seedu.address.model.transaction.Transaction;
+import seedu.address.model.transaction.TransactionType;
 
 /**
  * An UI component that displays information of a {@code Transaction}.
@@ -43,9 +45,12 @@ public class TransactionCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(transaction.getDrinkTransacted().getName().toString());
         transType.setText(transaction.getTransactionType().getValue());
-        transQuantity.setText(Integer.toString(transaction.getQuantityTransacted().getValue()));
-        transAmount.setText("$" + transaction.getAmountMoney().toString());
-        transDate.setText(transaction.getTransactionDate().toString());
+        if (transaction.getTransactionType() == TransactionType.SALE) {
+            transType.setStyle("-fx-background-color:LIGHTSEAGREEN");
+        }
+        transQuantity.setText("Quantity transacted: " + transaction.getQuantityTransacted());
+        transAmount.setText("Amount transacted: $" + transaction.getAmountMoney());
+        transDate.setText("Date of transaction: " + transaction.getTransactionDate());
     }
 
     @Override
