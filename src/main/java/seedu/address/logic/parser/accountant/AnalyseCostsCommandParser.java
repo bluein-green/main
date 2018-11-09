@@ -2,11 +2,7 @@
 package seedu.address.logic.parser.accountant;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.HYPHEN_DAY;
-import static seedu.address.logic.parser.CliSyntax.HYPHEN_MONTH;
-import static seedu.address.logic.parser.CliSyntax.HYPHEN_WEEK;
 
-import seedu.address.analysis.Analysis;
 import seedu.address.analysis.AnalysisPeriodType;
 import seedu.address.logic.commands.accountant.AnalyseCostsCommand;
 import seedu.address.logic.parser.Parser;
@@ -25,11 +21,10 @@ public class AnalyseCostsCommandParser implements Parser<AnalyseCostsCommand> {
      */
 
 
-
     @Override
     public AnalyseCostsCommand parse(String args) throws ParseException {
         AnalysisPeriodType period;
-        if (args.length () > 3) {
+        if (args.length() > 3) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AnalyseCostsCommand.MESSAGE_USAGE));
         }
 

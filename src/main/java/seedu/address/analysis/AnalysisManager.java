@@ -47,6 +47,12 @@ public class AnalysisManager extends ComponentManager implements Analysis {
         filteredTransactions.setPredicate(periodPredicate);
     }
 
+    private void updateFilteredTransactionsList(Predicate<Transaction> periodPredicate,
+                                                Predicate<Transaction> analysisType) {
+        requireNonNull(periodPredicate);
+        filteredTransactions.setPredicate(periodPredicate.and(analysisType));
+    }
+
     /**
      * Calculates the total cost of all the transactions.
      * @return total cost incurred for all transactions
