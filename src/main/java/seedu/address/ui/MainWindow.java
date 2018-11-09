@@ -17,6 +17,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.logic.ViewTransactionsEvent;
+import seedu.address.commons.events.model.DrinkAttributeChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.InventoryPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
@@ -37,16 +38,19 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private TransactionsPanel transactionsPanel;
+    private DrinkDetailPane drinkDetailPane;
     private DrinkListPanel drinkListPanel;
     private BatchListPanel batchListPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
+
+    // @FXML
+    // private StackPane transactionsPanelPlaceholder;
+
     @FXML
-    //private StackPane browserPlaceholder;
-    private StackPane transactionsPanelPlaceholder;
+    private StackPane drinkDetailPanePlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -128,15 +132,12 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this loginWindow.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-//        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
-        transactionsPanel = new TransactionsPanel(logic.getFilteredTransactionList());
-        transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
+        //transactionsPanel = new TransactionsPanel(logic.getFilteredTransactionList());
+        //transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
 
 
-        //personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        //personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        // drinkDetailPane = new DrinkDetailPane(null);
+        // drinkDetailPanePlaceholder.getChildren().add(drinkDetailPane.getRoot());
 
         drinkListPanel = new DrinkListPanel(logic.getFilteredDrinkList());
         drinkListPanelPlaceholder.getChildren().add(drinkListPanel.getRoot());
@@ -158,20 +159,26 @@ public class MainWindow extends UiPart<Stage> {
     private void handleInventoryPanelSelectionChangedEvent(InventoryPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         // insert what to do here
+        drinkDetailPane = new DrinkDetailPane(event.getNewSelection());
+        drinkDetailPanePlaceholder.getChildren().add(drinkDetailPane.getRoot());
         batchListPanel = new BatchListPanel(
                 event.getNewSelection().getObservableBatchList());
         batchListPanelPlaceholder.getChildren().add(batchListPanel.getRoot());
-        transactionsPanelPlaceholder.getChildren().add(browserPanel.getRoot());
+        //transactionsPanelPlaceholder.getChildren().add(browserPanel.getRoot());
     }
 
     @Subscribe
     private void handleViewTransactionsEvent(ViewTransactionsEvent event) {
         System.out.println("handling view trans event");
-        transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
+        //transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
     }
 
-
-
+    @Subscribe
+    private void handleDrinkAttributeChangedEvent(DrinkAttributeChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        drinkListPanel = new DrinkListPanel(logic.getFilteredDrinkList());
+        drinkListPanelPlaceholder.getChildren().add(drinkListPanel.getRoot());
+    }
 
     void hide() {
         primaryStage.hide();
@@ -225,19 +232,13 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    //public PersonListPanel getPersonListPanel() {
-    //    return personListPanel;
-    //}
-
     public DrinkListPanel getDrinkListPanel() {
         return drinkListPanel;
     }
 
+
     public TransactionsPanel getTransactionsPanel() { return transactionsPanel; }
 
-    void releaseResources() {
-        //browserPanel.freeResources();
-    }
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
