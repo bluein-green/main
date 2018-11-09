@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.accountant;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.HYPHEN_DAY;
 import static seedu.address.logic.parser.CliSyntax.HYPHEN_MONTH;
 import static seedu.address.logic.parser.CliSyntax.HYPHEN_WEEK;
 
@@ -19,9 +20,12 @@ import seedu.address.model.user.accountant.AccountantModel;
 public class AnalyseCostsCommand extends Command {
     public static final String COMMAND_WORD = "costs";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Analyse the total cost recorded in Drink I/O."
-                                                + "optional + " + COMMAND_WORD + " " + HYPHEN_WEEK
-                                                + "\n or" + COMMAND_WORD + " " + HYPHEN_MONTH;
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Analyse the total cost recorded in Drink I/O for given period.\n"
+            + " Possible formats:\n"
+            + " * " + COMMAND_WORD + " " + HYPHEN_DAY + ": for a day\n"
+            + " * " + COMMAND_WORD + " " + HYPHEN_WEEK + ": for 7 days\n"
+            + " * " + COMMAND_WORD + " " + HYPHEN_MONTH + ": for 30 days\n";
 
     public static final String MESSAGE_SUCCESS = "Total costs: $%1$s";
 
