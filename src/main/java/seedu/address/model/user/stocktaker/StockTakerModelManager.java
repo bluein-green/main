@@ -70,9 +70,4 @@ public class StockTakerModelManager extends ModelManager implements StockTakerMo
         List<Transaction> transactions = transactionList.getTransactions();
         return FXCollections.unmodifiableObservableList(FXCollections.observableList(transactions));
     }
-
-    @Override
-    public String getTransactions() {
-        return transactionList.toString();
-    }
 }

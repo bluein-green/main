@@ -23,6 +23,5 @@ public interface StockTakerModel extends Model {
      * Returns an unmodifiable view of the transaction list
      */
     ObservableList<Transaction> getTransactionList();
-    String getTransactions(); //TODO: will be removed when UI is up
 
 }

@@ -164,13 +164,27 @@ public class MainWindow extends UiPart<Stage> {
         batchListPanel = new BatchListPanel(
                 event.getNewSelection().getObservableBatchList());
         batchListPanelPlaceholder.getChildren().add(batchListPanel.getRoot());
-        //transactionsPanelPlaceholder.getChildren().add(browserPanel.getRoot());
     }
 
     @Subscribe
     private void handleViewTransactionsEvent(ViewTransactionsEvent event) {
         System.out.println("handling view trans event");
         //transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
+        transactionsPanel = new TransactionsPanel(event.getData().getTransactionsAsObservableList());
+        drinkDetailPanePlaceholder.getChildren().add(transactionsPanel.getRoot());
+        // TODO: deselect the drink panel and the batch
+        deselectDrinkListPanel();
+        hideBatchListCards();
+
+    }
+
+    private void deselectDrinkListPanel() {
+        drinkListPanel = new DrinkListPanel(logic.getFilteredDrinkList());
+        drinkListPanelPlaceholder.getChildren().add(drinkListPanel.getRoot());
+    }
+
+    private void hideBatchListCards() {
+        // TODO
     }
 
     @Subscribe
@@ -237,7 +251,9 @@ public class MainWindow extends UiPart<Stage> {
     }
 
 
-    public TransactionsPanel getTransactionsPanel() { return transactionsPanel; }
+    public TransactionsPanel getTransactionsPanel() {
+        return transactionsPanel;
+    }
 
 
     @Subscribe

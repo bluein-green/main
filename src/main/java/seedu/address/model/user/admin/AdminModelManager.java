@@ -39,6 +39,7 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     protected void indicateDrinkAttributesChanged(Drink drink) {
         raise(new DrinkAttributeChangedEvent(drink));
     }
+
     //===============manager command====================//
     @Override
     public void deleteDrink(Drink target) {
@@ -80,7 +81,6 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         transaction.setAmountMoney(defaultAmountTransacted);
         recordTransaction(transaction);
 
-        inventoryList.increaseDrinkQuantity(transaction.getDrinkTransacted(), transaction.getQuantityTransacted());
         indicateInventoryListChanged();
         updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
         indicateTransactionListChanged();
@@ -103,12 +103,6 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         return FXCollections.unmodifiableObservableList(FXCollections.observableList(transactions));
     }
 
-    @Override
-    public String getTransactions() {
-        return transactionList.toString();
-    }
-
-
     //=====================Manager command=========================
     @Override
     public void createNewAccount(UserName userName, Password password, AuthenticationLevel authenticationLevel) {
@@ -127,7 +121,7 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         indicateTransactionListChanged();
         return analysis.analyseCost(period);
     }
-/*
+    /*
     @Override
     public Price analyseRevenue() {
         return analysis.analyseRevenue();
@@ -137,5 +131,5 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     public Price analyseProfit() {
         return analysis.analyseProfit();
     }
-*/
+    */
 }

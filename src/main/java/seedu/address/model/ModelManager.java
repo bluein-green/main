@@ -157,7 +157,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     protected void indicateViewTransactions() {
-        raise(new ViewTransactionsEvent());
+        raise(new ViewTransactionsEvent(transactionList));
     }
     //=========== Login feature command ==============================================
 
