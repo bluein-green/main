@@ -70,7 +70,7 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         indicateInventoryListChanged();
         updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
 
-        updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
+        updateFilteredTransactionListToShowAll();
 
         indicateDrinkAttributesChanged(transaction.getDrinkTransacted());
     }
@@ -88,7 +88,7 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         indicateInventoryListChanged();
         //updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
 
-        updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
+        updateFilteredTransactionListToShowAll();
 
         indicateDrinkAttributesChanged(transaction.getDrinkTransacted());
 
