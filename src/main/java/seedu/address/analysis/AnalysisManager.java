@@ -2,6 +2,7 @@ package seedu.address.analysis;
 
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.model.drink.NegativePrice;
 import seedu.address.model.drink.Price;
 import seedu.address.model.transaction.Transaction;
 import seedu.address.model.transaction.TransactionList;
@@ -22,8 +23,7 @@ public class AnalysisManager extends ComponentManager implements Analysis {
 
     @Override
     public Price analyseProfit(AnalysisPeriodType period) {
-        // return transactionList.calculateTotalProfit();
-        return null;
+        return calculateTotalProfit();
     }
 
     @Override
@@ -59,14 +59,39 @@ public class AnalysisManager extends ComponentManager implements Analysis {
      * @return total revenue earned for the transactions listed.
      */
     private Price calculateTotalRevenue() {
-        float totalCost = 0;
+        float totalRevenue = 0;
         for (Transaction transaction : filteredTransactions) {
             if (transaction.getTransactionType() == TransactionType.SALE) {
+                totalRevenue += transaction.getAmountMoney().getValue();
+            }
+        }
+
+        return new Price(Float.toString(totalRevenue));
+    }
+
+
+    /**
+     * Calculates the total profit from the transactions in the {@code filteredTransactions}.
+     *
+     * @return total profit earned for the transactions listed.
+     */
+    private Price calculateTotalProfit() {
+        float totalCost = 0;
+        float totalRevenue = 0;
+        for (Transaction transaction : filteredTransactions) {
+            if (transaction.getTransactionType() == TransactionType.SALE) {
+                totalRevenue += transaction.getAmountMoney().getValue();
+            } else {
                 totalCost += transaction.getAmountMoney().getValue();
             }
         }
 
-        return new Price(Float.toString(totalCost));
+        float totalProfit = totalRevenue - totalCost;
+        if (totalProfit < 0) {
+            return new NegativePrice(Float.toString(-1 * totalProfit));
+        } else {
+            return new Price(Float.toString(totalProfit));
+        }
     }
 
 

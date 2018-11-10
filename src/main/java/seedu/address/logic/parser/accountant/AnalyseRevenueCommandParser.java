@@ -15,8 +15,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class AnalyseRevenueCommandParser implements Parser<AnalyseRevenueCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AnalyseCostsCommand
-     * and returns an AnalyseCostsCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the AnalyseRevenueCommand
+     * and returns an AnalyseRevenueCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
      */

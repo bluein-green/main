@@ -125,6 +125,12 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         return analysis.analyseRevenue(period);
     }
 
+    @Override
+    public Price analyseProfit(AnalysisPeriodType period) {
+        updateFilteredTransactionListToShowAll();
+        return analysis.analyseProfit(period);
+    }
+
     /**
      * Updates the {@code filteredTransactions} with Purchase predicate and {@code period} predicate.
      */
@@ -139,10 +145,9 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         updateFilteredTransactionList(period.getPeriodFilterPredicate().and(new SaleTransactionPredicate()));
     }
 
-    /*
-    @Override
-    public Price analyseProfit() {
-        return analysis.analyseProfit();
+
+    private void updateFilteredTransactionListToShowAll() {
+        updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
     }
-    */
+
 }
