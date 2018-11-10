@@ -5,11 +5,9 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TRANSACTIONS;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
-import seedu.address.model.user.stocktaker.StockTakerModel;
 
 /**
  * Sell a drink from inventory.
- * // TODO: STUB
  */
 public class ViewTransactionsCommand extends Command {
 
@@ -23,12 +21,10 @@ public class ViewTransactionsCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        assert model instanceof StockTakerModel;
-        StockTakerModel stockTakerModel = (StockTakerModel) model;
 
-        stockTakerModel.updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
+        model.updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, stockTakerModel.getTransactionList()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, model.getTransactionList()));
     }
 
     @Override
