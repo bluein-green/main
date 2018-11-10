@@ -3,8 +3,6 @@ package seedu.address.model.transaction;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.drink.Date;
@@ -14,11 +12,11 @@ import seedu.address.model.drink.Date;
  */
 public class TransactionList implements ReadOnlyTransactionList {
 
-    private ObservableList<Transaction> transactions;
+    private ObservableList<Transaction> transactions = FXCollections.observableArrayList();
     private Date lastUpdateDate;
 
     public TransactionList() {
-        transactions = FXCollections.observableArrayList();
+        lastUpdateDate = new Date();
     }
 
     /**
@@ -71,7 +69,11 @@ public class TransactionList implements ReadOnlyTransactionList {
 
     @Override
     public String toString() {
-        return transactions.size() + " transactions";
+        if (transactions.size() == 1) {
+            return transactions.size() + " transaction";
+        } else {
+            return transactions.size() + " transactions";
+        }
     }
 
     @Override
@@ -83,6 +85,6 @@ public class TransactionList implements ReadOnlyTransactionList {
 
     @Override
     public ObservableList<Transaction> getTransactionList() {
-        return FXCollections.unmodifiableObservableList(transactions);
+        return transactions;
     }
 }

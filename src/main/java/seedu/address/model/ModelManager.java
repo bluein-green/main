@@ -40,7 +40,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Initializes a ModelManager with the given inventoryList, userPrefs and transactionList
      */
     public ModelManager(ReadOnlyInventoryList readOnlyInventoryList, UserPrefs userPrefs,
-                        LoginInfoManager loginInfoManager, TransactionList transactionList) {
+                        LoginInfoManager loginInfoManager, TransactionList readOnlyTransactionList) {
 
         super();
         requireAllNonNull(readOnlyInventoryList, userPrefs);
@@ -50,7 +50,7 @@ public class ModelManager extends ComponentManager implements Model {
         inventoryList = new InventoryList(readOnlyInventoryList);
         filteredDrinks = new FilteredList<>(inventoryList.getDrinkList());
         this.loginInfoManager = loginInfoManager;
-        this.transactionList = transactionList;
+        this.transactionList = new TransactionList(readOnlyTransactionList);
         //analysis = new AnalysisManager(transactionList);
         filteredTransactions = new FilteredList<>(transactionList.getTransactionList());
         // TODO: transaction manager, facade for transactions

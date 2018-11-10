@@ -1,9 +1,5 @@
 package seedu.address.model.user.admin;
 
-import java.util.List;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import seedu.address.analysis.AnalysisPeriodType;
 import seedu.address.commons.events.model.DrinkAttributeChangedEvent;
 import seedu.address.model.LoginInfoManager;
@@ -13,6 +9,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.drink.Drink;
 import seedu.address.model.drink.Price;
 import seedu.address.model.drink.exceptions.InsufficientQuantityException;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
 import seedu.address.model.transaction.Transaction;
 import seedu.address.model.transaction.TransactionList;
 import seedu.address.model.user.AuthenticationLevel;
@@ -91,7 +88,6 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     private void recordTransaction(Transaction transaction) {
         transactionList.addTransaction(transaction);
     }
-
 
 
     //=====================Manager command=========================

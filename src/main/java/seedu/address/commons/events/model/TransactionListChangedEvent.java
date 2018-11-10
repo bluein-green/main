@@ -1,16 +1,16 @@
 package seedu.address.commons.events.model;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.transaction.TransactionList;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
 
 /**
  * Indicates the InventoryList in the model has changed
  */
 public class TransactionListChangedEvent extends BaseEvent {
 
-    public final TransactionList data;
+    public final ReadOnlyTransactionList data;
 
-    public TransactionListChangedEvent(TransactionList data) {
+    public TransactionListChangedEvent(ReadOnlyTransactionList data) {
         this.data = data;
     }
 
@@ -19,7 +19,7 @@ public class TransactionListChangedEvent extends BaseEvent {
         return "number of transactions: " + data.getTransactionList().size();
     }
 
-    public TransactionList getData() {
+    public ReadOnlyTransactionList getData() {
         return data;
     }
 }

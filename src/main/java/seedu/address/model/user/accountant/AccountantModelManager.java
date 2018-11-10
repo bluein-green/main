@@ -12,6 +12,7 @@ import seedu.address.model.transaction.TransactionList;
  * Represents the in-memory model of the accountant command
  */
 public class AccountantModelManager extends ModelManager implements AccountantModel {
+
     public AccountantModelManager(ReadOnlyInventoryList inventoryList,
                                   UserPrefs userPrefs, LoginInfoManager loginInfoManager,
                                   TransactionList transactionList) {
