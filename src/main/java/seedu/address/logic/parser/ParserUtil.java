@@ -14,6 +14,7 @@ import seedu.address.analysis.AnalysisPeriodType;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.drink.Date;
 import seedu.address.model.drink.Price;
 import seedu.address.model.drink.Quantity;
 import seedu.address.model.tag.Tag;
@@ -151,6 +152,22 @@ public class ParserUtil {
             throw new ParseException(Quantity.MESSAGE_QUANTITY_CONSTRAINTS);
         }
         return new Quantity(trimmedQuantity);
+    }
+
+
+    /**
+     * Parses {@code String date} into a {@code Date}.
+     */
+    public static Date parseDate(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!Date.isValidDate(trimmedDate)) {
+            throw new ParseException(Date.MESSAGE_DATE_CONSTRAINTS);
+        }
+        if (!Date.isExistingDate(trimmedDate)) {
+            throw new ParseException(Date.MESSAGE_NON_EXISTING_DATE);
+        }
+        return new Date(trimmedDate);
     }
 
 

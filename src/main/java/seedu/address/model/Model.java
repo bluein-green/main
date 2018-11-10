@@ -21,6 +21,8 @@ public interface Model {
     Predicate<Drink> PREDICATE_SHOW_ALL_DRINKS = unused -> true;
     Predicate<Transaction> PREDICATE_SHOW_ALL_TRANSACTIONS = unused -> true;
 
+    Predicate<Drink> PREDICATE_SHOW_NO_DRINKS = unused -> false;
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyInventoryList newData);
 
@@ -36,7 +38,7 @@ public interface Model {
     // ================ filtered drinks =======================
     /** Returns an unmodifiable view of the filtered inventory list */
     ObservableList<Drink> getFilteredDrinkList();
-
+    //=============common command==========================/
     /**
      * Updates the filter of the filtered drink list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

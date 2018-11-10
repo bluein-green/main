@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -117,14 +118,14 @@ public class ModelManager extends ComponentManager implements Model {
                 && inventoryList.equals(other.inventoryList);
     }
 
-    // ========== stockTaker commands ====================================
-
-
-    // ========== transactions  =================================================
+    // ========== common commands ====================================
     @Override
     public ReadOnlyTransactionList getTransactionList() {
         return transactionList;
     }
+
+    // ========== transactions  =================================================
+
 
     @Override
     public ObservableList<Transaction> getFilteredTransactionList() {
