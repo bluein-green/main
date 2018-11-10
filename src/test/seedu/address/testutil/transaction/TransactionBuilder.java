@@ -62,6 +62,16 @@ public class TransactionBuilder {
     }
 
     /**
+     * Sets the {@code Date} of the {@code Transaction} that we are building to the current date
+     */
+    public TransactionBuilder withDateToday() {
+        transactionDate = new Date();
+        return this;
+    }
+
+
+
+    /**
      * Sets the {@code Date} of the {@code Transaction} that we are building.
      */
     public TransactionBuilder withDrink(String drinkName) {
