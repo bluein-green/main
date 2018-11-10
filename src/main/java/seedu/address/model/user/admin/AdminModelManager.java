@@ -1,6 +1,9 @@
 package seedu.address.model.user.admin;
 
+import seedu.address.analysis.Analysis;
+import seedu.address.analysis.AnalysisManager;
 import seedu.address.analysis.AnalysisPeriodType;
+import seedu.address.analysis.PurchaseTransactionPredicate;
 import seedu.address.commons.events.model.DrinkAttributeChangedEvent;
 import seedu.address.model.LoginInfoManager;
 import seedu.address.model.ModelManager;
@@ -9,7 +12,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.drink.Drink;
 import seedu.address.model.drink.Price;
 import seedu.address.model.drink.exceptions.InsufficientQuantityException;
-import seedu.address.model.transaction.ReadOnlyTransactionList;
 import seedu.address.model.transaction.Transaction;
 import seedu.address.model.transaction.TransactionList;
 import seedu.address.model.user.AuthenticationLevel;
@@ -20,6 +22,8 @@ import seedu.address.model.user.UserName;
  * This is the API model for Admin command
  */
 public class AdminModelManager extends ModelManager implements AdminModel {
+    //private final Analysis analysis = new AnalysisManager(transactionList, filteredTransactions);
+
     public AdminModelManager(ReadOnlyInventoryList inventoryList, UserPrefs userPrefs,
                              LoginInfoManager loginInfoManager, TransactionList transactionList) {
         super(inventoryList, userPrefs, loginInfoManager, transactionList);
@@ -101,10 +105,11 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         loginInfoManager.deleteAccount(userName);
     }
 
-    //=====================Accountant command======================
+    //===================== Accountant commands ======================
     @Override
     public Price analyseCosts(AnalysisPeriodType period) {
         //Price costs = analysis.analyseCost(period);
+        updateFilteredTransactionList(period.getPeriodFilterPredicate().and(new PurchaseTransactionPredicate()));
         indicateTransactionListChanged();
         //return costs;
         return null;

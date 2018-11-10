@@ -9,8 +9,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import seedu.address.analysis.Analysis;
-import seedu.address.analysis.AnalysisManager;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LoginInfo;
 import seedu.address.commons.core.LogsCenter;
@@ -34,7 +32,7 @@ public class ModelManager extends ComponentManager implements Model {
     protected final InventoryList inventoryList;
     protected final FilteredList<Transaction> filteredTransactions;
     protected final TransactionList transactionList;
-    //protected final Analysis analysis;
+
 
     /**
      * Initializes a ModelManager with the given inventoryList, userPrefs and transactionList
@@ -51,9 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredDrinks = new FilteredList<>(inventoryList.getDrinkList());
         this.loginInfoManager = loginInfoManager;
         this.transactionList = new TransactionList(readOnlyTransactionList);
-        //analysis = new AnalysisManager(transactionList);
         filteredTransactions = new FilteredList<>(transactionList.getTransactionList());
-        // TODO: transaction manager, facade for transactions
     }
 
     public ModelManager() {
@@ -83,17 +79,6 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(drink);
         return inventoryList.hasDrink(drink);
     }
-
-
-    /*
-    @Override
-    public void updateDrink(Drink target, Drink editedDrink) {
-        requireAllNonNull(target, editedDrink);
-
-        inventoryList.updateDrink(target, editedDrink);
-        indicateInventoryListChanged();
-    }
-    */
 
 
     //=========== Filtered Drink List Accessors =============================================================
@@ -156,7 +141,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Raises an event to indicate the transactions have changed
      */
     protected void indicateTransactionListChanged() {
-        raise(new TransactionListChangedEvent(transactionList));
+        raise(new TransactionListChangedEvent(filteredTransactions));
     }
 
 

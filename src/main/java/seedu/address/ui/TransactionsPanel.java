@@ -40,7 +40,7 @@ public class TransactionsPanel extends UiPart<Region> {
         System.out.println("TRANSACTION LIST CHANGED!!!");
 
         // insert
-        transactionListView.setItems(event.getData().getTransactionList());
+        transactionListView.setItems(event.getData());
     }
 
     /**

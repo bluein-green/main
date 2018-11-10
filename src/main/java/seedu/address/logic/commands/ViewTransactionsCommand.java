@@ -17,7 +17,7 @@ public class ViewTransactionsCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": View all transactions recorded in Drink I/O ";
 
-    public static final String MESSAGE_SUCCESS = "Listed all %s";
+    public static final String MESSAGE_SUCCESS = "Listed all transactions: %s";
 
 
     @Override
@@ -28,7 +28,7 @@ public class ViewTransactionsCommand extends Command {
 
         stockTakerModel.updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS + stockTakerModel.getTransactionList()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, stockTakerModel.getTransactionList()));
     }
 
     @Override

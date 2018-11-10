@@ -30,6 +30,7 @@ public class AnalyseCostsCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Total costs: $%1$s";
 
     private AnalysisPeriodType period;
+
     /**
      * Creates an AnalyseCostsCommand to compute total costs incurred.
      */

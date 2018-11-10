@@ -18,9 +18,9 @@ public class AnalysisManager extends ComponentManager implements Analysis {
     private TransactionList transactionList;
     private FilteredList<Transaction> filteredTransactions;
 
-    public AnalysisManager(TransactionList transactionList) {
+    public AnalysisManager(TransactionList transactionList, FilteredList<Transaction> filteredTransactions) {
         this.transactionList = transactionList;
-        filteredTransactions = new FilteredList<>(transactionList.getTransactionList());
+        this.filteredTransactions = filteredTransactions;
     }
 
     @Override
