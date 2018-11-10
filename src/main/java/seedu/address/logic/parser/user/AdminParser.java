@@ -70,6 +70,10 @@ public class AdminParser {
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
+
+        case EditCommand.COMMAND_WORD:
+            return new EditCommandParser().parse(arguments);
+
         // ========= stock taker commands ==================
         case SellDrinkCommand.COMMAND_WORD:
             return new SellDrinkCommandParser().parse(arguments);
@@ -80,9 +84,6 @@ public class AdminParser {
 
 
         // ========= accountant commands ==================
-
-
-
         case AnalyseCostsCommand.COMMAND_WORD:
             return new AnalyseCostsCommandParser ().parse (arguments);
 
@@ -93,7 +94,6 @@ public class AdminParser {
             return new AnalyseRevenueCommandParser ().parse (arguments);
 
         // ==========login related command===============//
-
         case ChangePasswordCommand.COMMAND_WORD:
             return new ChangePasswordCommandParser().parse(arguments);
 
@@ -107,10 +107,6 @@ public class AdminParser {
 
         case LogoutCommand.COMMAND_WORD:
             return new LogoutCommand();
-
-        // ============ TODO: EDIT DRINK ATTRIBUTES COMMANDS ========
-        case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
 
 
         //=============general command==================//

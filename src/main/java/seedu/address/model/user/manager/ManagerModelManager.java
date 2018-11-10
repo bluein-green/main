@@ -2,6 +2,7 @@ package seedu.address.model.user.manager;
 
 import java.util.Set;
 
+import seedu.address.commons.events.model.DrinkAttributeChangedEvent;
 import seedu.address.model.LoginInfoManager;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyInventoryList;
@@ -51,19 +52,28 @@ public class ManagerModelManager extends ModelManager implements ManagerModel {
     }
 
     // ================ EDIT DRINK DETAILS COMMANDS =========================
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    protected void indicateDrinkAttributesChanged(Drink drink) {
+        raise(new DrinkAttributeChangedEvent(drink));
+    }
 
     @Override
     public void updateSellingPrice(Drink drinkToEdit, Price newSellingPrice) {
-        // TODO: copy from admin
+        inventoryList.updateSellingPrice(drinkToEdit, newSellingPrice);
+        indicateDrinkAttributesChanged(drinkToEdit);
     }
 
     @Override
     public void updateCostPrice(Drink drinkToEdit, Price newCostPrice) {
-        // TODO: copy from admin
+        inventoryList.updateCostPrice(drinkToEdit, newCostPrice);
+        indicateDrinkAttributesChanged(drinkToEdit);
     }
 
     @Override
     public void updateTags(Drink drinkToEdit, Set<Tag> newTags) {
-        // TODO: copy from admin
+        inventoryList.updateTags(drinkToEdit, newTags);
+        indicateDrinkAttributesChanged(drinkToEdit);
     }
 }
