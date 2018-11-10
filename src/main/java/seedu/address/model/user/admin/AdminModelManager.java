@@ -71,25 +71,25 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
 
         updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
-        indicateTransactionListChanged();
 
         indicateDrinkAttributesChanged(transaction.getDrinkTransacted());
     }
 
     @Override
     public void buyDrink(Transaction transaction) {
-        Price defaultCostPrice = inventoryList.getDefaultCostPrice(transaction.getDrinkTransacted());
         inventoryList.increaseDrinkQuantity(transaction.getDrinkTransacted(), transaction.getQuantityTransacted());
+
+        Price defaultCostPrice = inventoryList.getDefaultCostPrice(transaction.getDrinkTransacted());
         Price defaultAmountTransacted = new Price(Float.toString(defaultCostPrice.getValue()
                 * transaction.getQuantityTransacted().getValue()));
         transaction.setAmountMoney(defaultAmountTransacted);
         recordTransaction(transaction);
 
         indicateInventoryListChanged();
-        updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
+        //updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
 
         updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
-        indicateTransactionListChanged();
+
         indicateDrinkAttributesChanged(transaction.getDrinkTransacted());
 
     }
@@ -142,7 +142,6 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     private void updateFilteredTransactionListToShowSales(AnalysisPeriodType period) {
         updateFilteredTransactionList(period.getPeriodFilterPredicate().and(new SaleTransactionPredicate()));
     }
-
 
     private void updateFilteredTransactionListToShowAll() {
         updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
