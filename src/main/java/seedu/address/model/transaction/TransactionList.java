@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,13 +12,13 @@ import seedu.address.model.drink.Date;
 /**
  * Represents a list of transactions for (currently) eternity, until cleared.
  */
-public class TransactionList {
+public class TransactionList implements ReadOnlyTransactionList {
 
-    private List<Transaction> transactions;
+    private ObservableList<Transaction> transactions;
     private Date lastUpdateDate;
 
     public TransactionList() {
-        transactions = new ArrayList<>();
+        transactions = FXCollections.observableArrayList();
     }
 
     /**
@@ -36,26 +35,19 @@ public class TransactionList {
     public void resetData(TransactionList newData) {
         requireNonNull(newData);
 
-        setTransactions(newData.getTransactions());
+        setTransactions(newData.getTransactionList());
     }
 
     /**
      * Replaces the contents of the inventory list with {@code drinks}.
      * {@code drinks} must not contain duplicate drinks.
      */
-    public void setTransactions(List<Transaction> transactions) {
+    public void setTransactions(ObservableList<Transaction> transactions) {
         requireAllNonNull(transactions);
 
         this.transactions = transactions;
     }
 
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public ObservableList<Transaction> getTransactionsAsObservableList() {
-        return FXCollections.observableList(transactions);
-    }
 
     /**
      * Adds {@code transaction} to the list of transactions
@@ -79,9 +71,7 @@ public class TransactionList {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        transactions.forEach(builder::append);
-        return builder.toString();
+        return transactions.size() + " transactions";
     }
 
     @Override
@@ -91,39 +81,8 @@ public class TransactionList {
                 && transactions.equals(((TransactionList) other).transactions));
     }
 
-
-    //    /**
-    //     * Calculates the total revenue of all the transactions.
-    //     * @return total revenue earned for all transactions
-    //     */
-    //    public Price calculateTotalRevenue() {
-    //        float totalRevenue = 0;
-    //        for (Transaction transaction : transactions) {
-    //            if (transaction.getTransactionType() == TransactionType.SALE) {
-    //                totalRevenue += transaction.getAmountMoney().getValue();
-    //            }
-    //        }
-    //
-    //        return new Price(Float.toString(totalRevenue));
-    //    }
-    //
-    //
-    //    /**
-    //     * Calculates the total profit of all the transactions, using formula: total revenue - total cost
-    //     * @return total profit earned for all transactions
-    //     */
-    //    public Price calculateTotalProfit() {
-    //        float totalRevenue = 0;
-    //        float totalCost = 0;
-    //        for (Transaction transaction : transactions) {
-    //            if (transaction.getTransactionType() == TransactionType.SALE) {
-    //                totalRevenue += transaction.getAmountMoney().getValue();
-    //            } else {
-    //                totalCost += transaction.getAmountMoney().getValue();
-    //            }
-    //        }
-    //
-    //        float totalProfit = totalRevenue - totalCost;
-    //        return new Price(Float.toString(totalProfit));
-    //    }
+    @Override
+    public ObservableList<Transaction> getTransactionList() {
+        return FXCollections.unmodifiableObservableList(transactions);
+    }
 }

@@ -93,15 +93,6 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     }
 
 
-    /**
-     * Returns an unmodifiable view of the list of {@code Transaction} backed by the internal list of
-     * {@code transactionList}
-     */
-    @Override
-    public ObservableList<Transaction> getTransactionList() {
-        List<Transaction> transactions = transactionList.getTransactions();
-        return FXCollections.unmodifiableObservableList(FXCollections.observableList(transactions));
-    }
 
     //=====================Manager command=========================
     @Override
@@ -117,10 +108,10 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     //=====================Accountant command======================
     @Override
     public Price analyseCosts(AnalysisPeriodType period) {
-        Price costs = analysis.analyseCost(period);
+        //Price costs = analysis.analyseCost(period);
         indicateTransactionListChanged();
-        indicateViewTransactions();
-        return costs;
+        //return costs;
+        return null;
     }
     /*
     @Override

@@ -25,13 +25,10 @@ public class ViewTransactionsCommand extends Command {
         requireNonNull(model);
         assert model instanceof StockTakerModel;
         StockTakerModel stockTakerModel = (StockTakerModel) model;
-        //TransactionList transactionList = model.getTransactionList();
-        // String.format(MESSAGE_SUCCESS, model.getTransactions.size());
 
         stockTakerModel.updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
-        String numTransactions = Integer.toString(stockTakerModel.getTransactionList().size());
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, numTransactions + " transactions"));
+        return new CommandResult(String.format(MESSAGE_SUCCESS + stockTakerModel.getTransactionList()));
     }
 
     @Override

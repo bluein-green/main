@@ -20,7 +20,7 @@ public class AnalysisManager extends ComponentManager implements Analysis {
 
     public AnalysisManager(TransactionList transactionList) {
         this.transactionList = transactionList;
-        filteredTransactions = new FilteredList<>(transactionList.getTransactionsAsObservableList());
+        filteredTransactions = new FilteredList<>(transactionList.getTransactionList());
     }
 
     @Override

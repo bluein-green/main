@@ -14,10 +14,10 @@ import seedu.address.analysis.AnalysisManager;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LoginInfo;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.logic.ViewTransactionsEvent;
 import seedu.address.commons.events.model.InventoryListChangedEvent;
 import seedu.address.commons.events.model.TransactionListChangedEvent;
 import seedu.address.model.drink.Drink;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
 import seedu.address.model.transaction.Transaction;
 import seedu.address.model.transaction.TransactionList;
 import seedu.address.model.user.Password;
@@ -32,9 +32,9 @@ public class ModelManager extends ComponentManager implements Model {
     protected LoginInfoManager loginInfoManager;
     protected final FilteredList<Drink> filteredDrinks;
     protected final InventoryList inventoryList;
-    protected final TransactionList transactionList;
     protected final FilteredList<Transaction> filteredTransactions;
-    protected final Analysis analysis;
+    protected final TransactionList transactionList;
+    //protected final Analysis analysis;
 
     /**
      * Initializes a ModelManager with the given inventoryList, userPrefs and transactionList
@@ -51,8 +51,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredDrinks = new FilteredList<>(inventoryList.getDrinkList());
         this.loginInfoManager = loginInfoManager;
         this.transactionList = transactionList;
-        analysis = new AnalysisManager(transactionList);
-        filteredTransactions = ((AnalysisManager) analysis).getFilteredTransactions();
+        //analysis = new AnalysisManager(transactionList);
+        filteredTransactions = new FilteredList<>(transactionList.getTransactionList());
         // TODO: transaction manager, facade for transactions
     }
 
@@ -114,7 +114,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -136,7 +135,12 @@ public class ModelManager extends ComponentManager implements Model {
     // ========== stockTaker commands ====================================
 
 
-    // ========== Accountant commands =================================================
+    // ========== transactions  =================================================
+    @Override
+    public ReadOnlyTransactionList getTransactionList() {
+        return transactionList;
+    }
+
     @Override
     public ObservableList<Transaction> getFilteredTransactionList() {
         return FXCollections.unmodifiableObservableList(filteredTransactions);
@@ -146,7 +150,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredTransactionList(Predicate<Transaction> predicate) {
         requireNonNull(predicate);
         filteredTransactions.setPredicate(predicate);
-        indicateViewTransactions();
     }
 
     /**
@@ -156,9 +159,6 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new TransactionListChangedEvent(transactionList));
     }
 
-    protected void indicateViewTransactions() {
-        raise(new ViewTransactionsEvent(transactionList));
-    }
 
     //=========== Login feature command ==============================================
 
