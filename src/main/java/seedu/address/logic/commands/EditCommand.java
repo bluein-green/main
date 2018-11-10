@@ -20,6 +20,8 @@ import seedu.address.model.Model;
 import seedu.address.model.drink.Drink;
 import seedu.address.model.drink.Price;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.user.admin.AdminModel;
+import seedu.address.model.user.manager.ManagerModel;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -57,6 +59,9 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute (Model model , CommandHistory history) throws CommandException {
         requireNonNull(model);
+        assert model instanceof ManagerModel;
+        ManagerModel managerModel = (ManagerModel) model;
+
         List<Drink> lastShownList = model.getFilteredDrinkList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -66,15 +71,15 @@ public class EditCommand extends Command {
         Drink drinkToEdit = lastShownList.get(index.getZeroBased());
 
         if (editDrinkDescriptor.getSellingPrice().isPresent()) {
-            //model.editSellingPrice(drinkToEdit, editDrinkDescriptor.getSellingPrice().get());
+            managerModel.updateSellingPrice(drinkToEdit, editDrinkDescriptor.getSellingPrice().get());
         }
 
         if (editDrinkDescriptor.getCostPrice().isPresent()) {
-            //model.editCostPrice(drinkToEdit, editDrinkDescriptor.getCostPrice().get());
+            managerModel.updateCostPrice(drinkToEdit, editDrinkDescriptor.getCostPrice().get());
         }
 
         if (editDrinkDescriptor.getTags().isPresent()) {
-            // model.editTags(drinkToEdit, editDrinkDescriptor.getTags().get());
+            managerModel.updateTags(drinkToEdit, editDrinkDescriptor.getTags().get());
         }
 
         model.updateFilteredDrinkList(Model.PREDICATE_SHOW_ALL_DRINKS);

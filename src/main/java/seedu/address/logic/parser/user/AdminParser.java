@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -27,6 +28,7 @@ import seedu.address.logic.commands.user.CreateAccountCommand;
 import seedu.address.logic.commands.user.DeleteAccountCommand;
 import seedu.address.logic.commands.user.LogoutCommand;
 import seedu.address.logic.parser.DeleteCommandParser;
+import seedu.address.logic.parser.EditCommandParser;
 import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.SelectCommandParser;
 import seedu.address.logic.parser.accountant.AnalyseCostsCommandParser;
@@ -105,6 +107,12 @@ public class AdminParser {
 
         case LogoutCommand.COMMAND_WORD:
             return new LogoutCommand();
+
+        // ============ TODO: EDIT DRINK ATTRIBUTES COMMANDS ========
+        case EditCommand.COMMAND_WORD:
+            return new EditCommandParser().parse(arguments);
+
+
         //=============general command==================//
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);

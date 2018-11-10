@@ -1,10 +1,13 @@
 package seedu.address.model;
 
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LoginInfo;
 import seedu.address.model.drink.Drink;
+import seedu.address.model.drink.Price;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.transaction.ReadOnlyTransactionList;
 import seedu.address.model.transaction.Transaction;
 import seedu.address.model.user.Password;
@@ -78,4 +81,7 @@ public interface Model {
      * Check a userName exist in list
      */
     boolean isUserNameExist(UserName userName);
+
+
+
 }
