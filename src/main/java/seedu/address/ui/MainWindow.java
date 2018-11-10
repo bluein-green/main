@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.logic.ViewTransactionsEvent;
 import seedu.address.commons.events.model.DrinkAttributeChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.InventoryPanelSelectionChangedEvent;
@@ -55,6 +54,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane drinkDetailPanePlaceholder;
+
+    @FXML
+    private StackPane transactionsPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -136,9 +138,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this loginWindow.
      */
     void fillInnerParts() {
-        //transactionsPanel = new TransactionsPanel(logic.getFilteredTransactionList());
-        //transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
-
+        transactionsPanel = new TransactionsPanel(logic.getFilteredTransactionList());
+        transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
 
         // drinkDetailPane = new DrinkDetailPane(null);
         // drinkDetailPanePlaceholder.getChildren().add(drinkDetailPane.getRoot());
@@ -171,26 +172,7 @@ public class MainWindow extends UiPart<Stage> {
         drinkSelection = event.getNewSelection();
     }
 
-    @Subscribe
-    private void handleViewTransactionsEvent(ViewTransactionsEvent event) {
-        System.out.println("handling view trans event");
-        //transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
-        transactionsPanel = new TransactionsPanel(logic.getFilteredTransactionList());
-        drinkDetailPanePlaceholder.getChildren().add(transactionsPanel.getRoot());
-        // TODO: deselect the drink panel and the batch
-        deselectDrinkListPanel();
-        hideBatchListCards();
 
-    }
-
-    private void deselectDrinkListPanel() {
-        drinkListPanel = new DrinkListPanel(logic.getFilteredDrinkList());
-        drinkListPanelPlaceholder.getChildren().add(drinkListPanel.getRoot());
-    }
-
-    private void hideBatchListCards() {
-        // TODO
-    }
 
     @Subscribe
     private void handleDrinkAttributeChangedEvent(DrinkAttributeChangedEvent event) {
