@@ -148,7 +148,7 @@ public class AdminModelManager extends ModelManager implements AdminModel {
 
     // ================ EDIT DRINK DETAILS COMMANDS =========================
     @Override
-    public void updateSellingPrice(Drink drinkToEdit, Price newSellingPrice ) {
+    public void updateSellingPrice(Drink drinkToEdit, Price newSellingPrice) {
         inventoryList.updateSellingPrice(drinkToEdit, newSellingPrice);
         indicateDrinkAttributesChanged(drinkToEdit);
     }

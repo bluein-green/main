@@ -210,6 +210,9 @@ public class UniqueDrinkList implements Iterable<Drink> {
         actualDrink.setCostPrice(newCostPrice);
     }
 
+    /**
+     * Replaces the original tags of {@code drink} with {@code newTags}
+     */
     public void updateTags(Drink drink, Set<Tag> newTags) {
         Drink actualDrink = findByName(drink);
         actualDrink.setTags(newTags);

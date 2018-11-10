@@ -20,7 +20,6 @@ import seedu.address.model.Model;
 import seedu.address.model.drink.Drink;
 import seedu.address.model.drink.Price;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.user.admin.AdminModel;
 import seedu.address.model.user.manager.ManagerModel;
 
 /**
@@ -46,7 +45,7 @@ public class EditCommand extends Command {
     private final EditDrinkDescriptor editDrinkDescriptor;
 
     /**
-     * @param index of the person in the filtered drink list to edit
+     * @param index               of the person in the filtered drink list to edit
      * @param editDrinkDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditDrinkDescriptor editDrinkDescriptor) {
@@ -57,7 +56,7 @@ public class EditCommand extends Command {
     }
 
     @Override
-    public CommandResult execute (Model model , CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         assert model instanceof ManagerModel;
         ManagerModel managerModel = (ManagerModel) model;
@@ -114,7 +113,8 @@ public class EditCommand extends Command {
         private Price sellingPrice;
         private Set<Tag> tags;
 
-        public EditDrinkDescriptor() {}
+        public EditDrinkDescriptor() {
+        }
 
         /**
          * Copy constructor.
