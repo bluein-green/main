@@ -31,7 +31,8 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_DRINK_COST_PRICE, PREFIX_DRINK_DEFAULT_SELLING_PRICE);
+                ArgumentTokenizer.tokenize(args, PREFIX_DRINK_COST_PRICE, PREFIX_DRINK_DEFAULT_SELLING_PRICE,
+                        PREFIX_DRINK_TAG);
 
         Index index;
 
