@@ -23,7 +23,9 @@ import seedu.address.logic.commands.manager.AddDrinkCommand;
 import seedu.address.model.InventoryList;
 import seedu.address.model.ReadOnlyInventoryList;
 import seedu.address.model.drink.Drink;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
 import seedu.address.model.transaction.Transaction;
+import seedu.address.model.transaction.TransactionList;
 import seedu.address.model.user.AuthenticationLevel;
 import seedu.address.model.user.Password;
 import seedu.address.model.user.UserName;
@@ -138,6 +140,11 @@ public class AddDrinkCommandTest {
         }
 
         // TODO: to review
+        @Override
+        public ReadOnlyTransactionList getTransactionList() {
+            return new TransactionList();
+        }
+
         @Override
         public ObservableList<Transaction> getFilteredTransactionList() {
             return FXCollections.observableList(getTypicalTransactions());

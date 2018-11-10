@@ -17,7 +17,7 @@ public class TransactionListTest {
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), transactionList.getTransactions());
+        assertEquals(Collections.emptyList(), transactionList.getTransactionList());
     }
 
     @Test
