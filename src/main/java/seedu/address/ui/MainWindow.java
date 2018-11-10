@@ -175,7 +175,7 @@ public class MainWindow extends UiPart<Stage> {
     private void handleViewTransactionsEvent(ViewTransactionsEvent event) {
         System.out.println("handling view trans event");
         //transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
-        transactionsPanel = new TransactionsPanel(event.getData().getTransactionsAsObservableList());
+        transactionsPanel = new TransactionsPanel(logic.getFilteredTransactionList());
         drinkDetailPanePlaceholder.getChildren().add(transactionsPanel.getRoot());
         // TODO: deselect the drink panel and the batch
         deselectDrinkListPanel();

@@ -37,6 +37,7 @@ public class TransactionsPanel extends UiPart<Region> {
     @Subscribe
     private void handleTransactionListChangedEvent(TransactionListChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        System.out.println("TRANSACTION LIST CHANGED!!!");
 
         // insert
         transactionListView.setItems(event.getData().getTransactionsAsObservableList());

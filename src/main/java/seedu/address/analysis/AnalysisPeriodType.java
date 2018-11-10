@@ -17,21 +17,21 @@ import seedu.address.model.transaction.Transaction;
 public enum AnalysisPeriodType {
     DAY() {
         @Override
-        public Predicate<Transaction> periodFilterPredicate() {
+        public Predicate<Transaction> getPeriodFilterPredicate() {
             return new TransactionInDayPredicate();
         }
     },
 
     WEEK() {
         @Override
-        public Predicate<Transaction> periodFilterPredicate() {
+        public Predicate<Transaction> getPeriodFilterPredicate() {
             return new TransactionInDayPredicate();
         }
     },
 
     MONTH {
         @Override
-        public Predicate<Transaction> periodFilterPredicate() {
+        public Predicate<Transaction> getPeriodFilterPredicate() {
             return new TransactionInDayPredicate();
         }
     };
@@ -39,7 +39,7 @@ public enum AnalysisPeriodType {
 
     public static final String WRONG_PERIOD_MESSAGE = "You have entered an invalid period";
 
-    public abstract Predicate<Transaction> periodFilterPredicate();
+    public abstract Predicate<Transaction> getPeriodFilterPredicate();
 
     public static AnalysisPeriodType getPeriod(String test) throws ParseException {
         test = test.replaceAll("\\s+", "");

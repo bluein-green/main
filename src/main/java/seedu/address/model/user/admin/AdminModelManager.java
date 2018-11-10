@@ -65,7 +65,6 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         transaction.setAmountMoney(defaultAmountTransacted);
         recordTransaction(transaction);
 
-        inventoryList.decreaseQuantity(transaction.getDrinkTransacted(), transaction.getQuantityTransacted());
         indicateInventoryListChanged();
         updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
         indicateTransactionListChanged();
@@ -118,9 +117,10 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     //=====================Accountant command======================
     @Override
     public Price analyseCosts(AnalysisPeriodType period) {
-
+        Price costs = analysis.analyseCost(period);
         indicateTransactionListChanged();
-        return analysis.analyseCost(period);
+        indicateViewTransactions();
+        return costs;
     }
     /*
     @Override
