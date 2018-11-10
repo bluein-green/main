@@ -2,15 +2,14 @@ package seedu.address.model.drink;
 
 /**
  * Represents a NegativePrice, for use in financial analysis.
- * Guarantees: Is valid as declared in {@link #isValidPrice(String)}
- * Note that Price value is limited to Float.MAX_VALUE
+ * Note that NegativePrice value is limited to Float.MAX_VALUE
  */
 public class NegativePrice extends Price {
 
     /**
      * Constructs a {@code NegativePrice}.
      *
-     * @param input A valid Price.
+     * @param input A valid Price. Validity of the input is as declared in {@link #isValidPrice(String)}
      */
     public NegativePrice(String input) {
         super(input);
