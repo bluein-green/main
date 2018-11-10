@@ -21,6 +21,8 @@ public class Transaction {
     private Price amountMoney;
     private long id;
 
+    public Transaction() {}
+
     public Transaction(TransactionType transactionType, Drink drinkTransacted,
                        Quantity quantityTransacted, Price amountMoney) {
         requireAllNonNull(transactionType, drinkTransacted, quantityTransacted, amountMoney);
@@ -41,6 +43,17 @@ public class Transaction {
         amountMoney = new Price("0");
         transactionDate = new Date();
         id = new java.util.Date().getTime();
+    }
+
+    public Transaction(TransactionType transactionType, Drink drinkTransacted,
+                       Quantity quantityTransacted, Price amountMoney, Date transactionDate, long id) {
+        requireAllNonNull(transactionType, drinkTransacted, quantityTransacted, transactionDate, id);
+        this.transactionType = transactionType;
+        this.drinkTransacted = drinkTransacted;
+        this.quantityTransacted = quantityTransacted;
+        this.amountMoney = amountMoney;
+        this.transactionDate = transactionDate;
+        this.id = id;
     }
 
     public TransactionType getTransactionType() {
