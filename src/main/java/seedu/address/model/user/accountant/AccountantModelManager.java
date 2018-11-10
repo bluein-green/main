@@ -22,13 +22,18 @@ public class AccountantModelManager extends ModelManager implements AccountantMo
     @Override
     public Price analyseCosts(AnalysisPeriodType period) {
         //return analysis.analyseCost(period);
+        // TODO: COPY FROM ADMIN
         return null;
     }
-    /*
-        @Override
-        public Price analyseRevenue(AnalysisPeriodType period) {
-            return analysis.analyseRevenue(period);
-        }
+
+    @Override
+    public Price analyseRevenue(AnalysisPeriodType period) {
+        return null;
+        // TODO: COPY FROM ADMIN
+        //return analysis.analyseRevenue(period);
+    }
+
+        /*
         @Override
         public Price analyseProfit(AnalysisPeriodType period) {
             return analysis.analyseProfit(period);

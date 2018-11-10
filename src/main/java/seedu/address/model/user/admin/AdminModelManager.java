@@ -4,6 +4,7 @@ import seedu.address.analysis.Analysis;
 import seedu.address.analysis.AnalysisManager;
 import seedu.address.analysis.AnalysisPeriodType;
 import seedu.address.analysis.PurchaseTransactionPredicate;
+import seedu.address.analysis.SaleTransactionPredicate;
 import seedu.address.commons.events.model.DrinkAttributeChangedEvent;
 import seedu.address.model.LoginInfoManager;
 import seedu.address.model.ModelManager;
@@ -22,7 +23,7 @@ import seedu.address.model.user.UserName;
  * This is the API model for Admin command
  */
 public class AdminModelManager extends ModelManager implements AdminModel {
-    //private final Analysis analysis = new AnalysisManager(transactionList, filteredTransactions);
+    private final Analysis analysis = new AnalysisManager(transactionList, filteredTransactions);
 
     public AdminModelManager(ReadOnlyInventoryList inventoryList, UserPrefs userPrefs,
                              LoginInfoManager loginInfoManager, TransactionList transactionList) {
@@ -68,6 +69,8 @@ public class AdminModelManager extends ModelManager implements AdminModel {
 
         indicateInventoryListChanged();
         updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
+
+        updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
         indicateTransactionListChanged();
 
         indicateDrinkAttributesChanged(transaction.getDrinkTransacted());
@@ -84,6 +87,8 @@ public class AdminModelManager extends ModelManager implements AdminModel {
 
         indicateInventoryListChanged();
         updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
+
+        updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
         indicateTransactionListChanged();
         indicateDrinkAttributesChanged(transaction.getDrinkTransacted());
 
@@ -108,18 +113,33 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     //===================== Accountant commands ======================
     @Override
     public Price analyseCosts(AnalysisPeriodType period) {
-        //Price costs = analysis.analyseCost(period);
-        updateFilteredTransactionList(period.getPeriodFilterPredicate().and(new PurchaseTransactionPredicate()));
+        updateFilteredTransactionListToShowPurchases(period);
         indicateTransactionListChanged();
-        //return costs;
-        return null;
-    }
-    /*
-    @Override
-    public Price analyseRevenue() {
-        return analysis.analyseRevenue();
+        return analysis.analyseCost(period);
     }
 
+    @Override
+    public Price analyseRevenue(AnalysisPeriodType period) {
+        updateFilteredTransactionListToShowSales(period);
+        indicateTransactionListChanged();
+        return analysis.analyseRevenue(period);
+    }
+
+    /**
+     * Updates the {@code filteredTransactions} with Purchase predicate and {@code period} predicate.
+     */
+    private void updateFilteredTransactionListToShowPurchases(AnalysisPeriodType period) {
+        updateFilteredTransactionList(period.getPeriodFilterPredicate().and(new PurchaseTransactionPredicate()));
+    }
+
+    /**
+     * Updates the {@code filteredTransactions} with Sale predicate and {@code period} predicate.
+     */
+    private void updateFilteredTransactionListToShowSales(AnalysisPeriodType period) {
+        updateFilteredTransactionList(period.getPeriodFilterPredicate().and(new SaleTransactionPredicate()));
+    }
+
+    /*
     @Override
     public Price analyseProfit() {
         return analysis.analyseProfit();
