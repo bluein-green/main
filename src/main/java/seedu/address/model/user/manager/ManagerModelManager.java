@@ -24,6 +24,12 @@ public class ManagerModelManager extends ModelManager implements ManagerModel {
                                ReadOnlyTransactionList transactionList) {
         super(inventoryList, userPrefs, loginInfoManager, transactionList);
     }
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    public void indicateDrinkAttributesChanged(Drink drink) {
+        raise(new DrinkAttributeChangedEvent(drink));
+    }
 
     //===============login command ============================//
     @Override
@@ -41,6 +47,7 @@ public class ManagerModelManager extends ModelManager implements ManagerModel {
     public void deleteDrink(Drink target) {
         inventoryList.removeDrink(target);
         indicateInventoryListChanged();
+        indicateDrinkAttributesChanged(target);
     }
 
     @Override
@@ -48,17 +55,10 @@ public class ManagerModelManager extends ModelManager implements ManagerModel {
         inventoryList.addDrink(drink);
         updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
         indicateInventoryListChanged();
+        indicateDrinkAttributesChanged(drink);
     }
 
-    // ================ EDIT DRINK DETAILS COMMANDS =========================
-
-    /**
-     * Raises an event to indicate the model has changed
-     */
-    protected void indicateDrinkAttributesChanged(Drink drink) {
-        raise(new DrinkAttributeChangedEvent(drink));
-    }
-
+    // ================ EDIT DRINK DETAILS COMMANDS ========================
     @Override
     public void updateSellingPrice(Drink drinkToEdit, Price newSellingPrice) {
         inventoryList.updateSellingPrice(drinkToEdit, newSellingPrice);
