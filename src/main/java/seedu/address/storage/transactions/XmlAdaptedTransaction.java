@@ -13,6 +13,7 @@ import seedu.address.model.drink.Quantity;
 import seedu.address.model.transaction.Transaction;
 import seedu.address.model.transaction.TransactionId;
 import seedu.address.model.transaction.TransactionType;
+import seedu.address.storage.XmlAdaptedDrink;
 
 /**
  * JAXB-friendly version of the Transaction.
@@ -61,7 +62,7 @@ public class XmlAdaptedTransaction {
     public XmlAdaptedTransaction(Transaction source) {
         transactionType = source.getTransactionType().toString();
         transactionDate = source.getTransactionDate().toString();
-        drinkTransacted = source.getDrinkTransacted().toString();
+        drinkTransacted = source.getDrinkTransacted().getName().toString();
         quantityTransacted = source.getQuantityTransacted().toString();
         amountMoney = source.getAmountMoney().toString();
         id = source.getTransactionId().toString();
@@ -94,9 +95,10 @@ public class XmlAdaptedTransaction {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Drink.class.getSimpleName()));
         }
         if (!Name.isValidName(drinkTransacted)) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
-        final Drink modelDrink = new Drink(new Name(drinkTransacted));
+        final Drink modelDrinkTransacted = new Drink(new Name(drinkTransacted));
+
 
 
         if (quantityTransacted == null) {
@@ -125,7 +127,7 @@ public class XmlAdaptedTransaction {
         }
         final TransactionId modelTransactionId = new TransactionId(id);
 
-        return new Transaction(modelTransactionType, modelTransactionDate, modelDrink, modelQuantityTransactied,
+        return new Transaction(modelTransactionType, modelTransactionDate, modelDrinkTransacted, modelQuantityTransactied,
                 modelAmountMoney, modelTransactionId);
     }
 
