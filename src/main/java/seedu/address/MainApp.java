@@ -1,5 +1,6 @@
 //@@author liu-tianhang
 package seedu.address;
+
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
@@ -16,33 +17,33 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.LogoutEvent;
+import seedu.address.commons.events.ui.StopUiEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.init.InventoryListInitializer;
 import seedu.address.logic.Logic;
 import seedu.address.model.LoginInfoManager;
-import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
-import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.InventoryListStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlInventoryListStorage;
 import seedu.address.storage.logininfo.JsonLoginInfoStorage;
 import seedu.address.storage.logininfo.LoginInfoStorage;
+import seedu.address.storage.transactions.TransactionListStorage;
+import seedu.address.storage.transactions.XmlTransactionListStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiPart;
 import seedu.address.ui.controller.LoginController;
-
 
 
 /**
@@ -56,7 +57,6 @@ public class MainApp extends Application {
     protected Ui ui;
     protected Logic logic;
     protected Storage storage;
-    protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
     protected Stage loginWindow;
@@ -68,21 +68,22 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing DRINK I/O ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
         config = initConfig(appParameters.getConfigPath());
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        LoginInfoStorage loginInfoStorage = new JsonLoginInfoStorage (config.getUserLoginInfoilePath ());
-        loginInfoList = initLoginInfo (loginInfoStorage);
-        loginPathPath = config.getLoginPagePath ().toString ();
+        LoginInfoStorage loginInfoStorage = new JsonLoginInfoStorage(config.getUserLoginInfoFilePath());
+        loginInfoList = initLoginInfo(loginInfoStorage);
+        loginPathPath = config.getLoginPagePath().toString();
+        InventoryListStorage inventoryListStorage = new XmlInventoryListStorage(userPrefs.getInventoryListFilePath());
+        TransactionListStorage transactionListStorage =
+                new XmlTransactionListStorage(userPrefs.getTransactionListFilePath());
+        storage = new StorageManager(inventoryListStorage, userPrefsStorage, loginInfoStorage, transactionListStorage);
 
-        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage, loginInfoStorage);
-
-        inventoryListInitializer = new InventoryListInitializer (config, storage, userPrefs, loginInfoList);
+        inventoryListInitializer = new InventoryListInitializer(config, storage, userPrefs, loginInfoList);
         initLogging(config);
         fxmlLoader = new FXMLLoader();
         initEventsCenter();
@@ -92,16 +93,18 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         loginWindow = primaryStage;
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting Drink I/O " + MainApp.VERSION);
         showLoginPage();
     }
 
     @Override
     public void stop() {
         saveUserPrefs ();
+        saveLoginInfo();
         Platform.exit();
         System.exit(0);
     }
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -144,40 +147,42 @@ public class MainApp extends Application {
         }
         return initializedConfig;
     }
+
     /**
      * Returns a {@code LoginInfoManager} using the file at {@code storage}'s login info file path,
      * or a new {@code LoginInfoManager} with default configuration if errors occur when
      * reading from the file.
      */
     protected LoginInfoManager initLoginInfo(LoginInfoStorage storage) {
-        Path loginInfoFilePath = storage.getLoginInfoFilePath ();
+        Path loginInfoFilePath = storage.getLoginInfoFilePath();
         logger.info("Using Login information file : " + loginInfoFilePath);
 
         LoginInfoManager initLoginInfoManager;
         try {
             Optional<LoginInfoManager> loginInfoOptional = storage.readLoginInfo();
-            initLoginInfoManager = loginInfoOptional.orElse(new LoginInfoManager ());
+            initLoginInfoManager = loginInfoOptional.orElse(new LoginInfoManager());
         } catch (DataConversionException e) {
             logger.warning("Login Info file at " + loginInfoFilePath + " is not in the correct format. "
                     + "Using empty database");
-            initLoginInfoManager = new LoginInfoManager ();
+            initLoginInfoManager = new LoginInfoManager();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Please find ADMIN");
-            initLoginInfoManager = new LoginInfoManager ();
+            initLoginInfoManager = new LoginInfoManager();
         } catch (Exception e) {
-            e.fillInStackTrace ();
-            initLoginInfoManager = new LoginInfoManager ();
+            e.fillInStackTrace();
+            initLoginInfoManager = new LoginInfoManager();
         }
 
         //Update prefs file in case it was missing to begin with or there are new/unused fields
         try {
-            storage.saveLoginInfo (initLoginInfoManager);
+            storage.saveLoginInfo(initLoginInfoManager);
         } catch (IOException e) {
             logger.warning("Failed to save LoginInfoManager file : " + StringUtil.getDetails(e));
         }
 
         return initLoginInfoManager;
     }
+
 
     /**
      * Returns a {@code UserPrefs} using the file at {@code storage}'s user prefs file path,
@@ -223,6 +228,7 @@ public class MainApp extends Application {
         settingUpLoginWindow();
         settingUpLoginController();
     }
+
     private void settingUpLoginWindow() {
         URL fxmlLoginFileUrl = UiPart.getFxmlFileUrl(loginPathPath);
         Parent root = loadFxmlFile(fxmlLoginFileUrl, loginWindow);
@@ -231,8 +237,9 @@ public class MainApp extends Application {
         loginWindow.setScene(new Scene(root));
         loginWindow.show();
     }
+
     private void settingUpLoginController() {
-        loginController = new LoginController ();
+        loginController = new LoginController();
         passInLoginList();
     }
 
@@ -240,8 +247,9 @@ public class MainApp extends Application {
      * pass the loginInfoManager to controller
      */
     private void passInLoginList() {
-        loginController.getLoginInfoList (loginInfoList);
+        loginController.getLoginInfoList(loginInfoList);
     }
+
     /**
      * loads the file from {@code location}, set {@code stage} and return the {@code root}
      */
@@ -251,7 +259,7 @@ public class MainApp extends Application {
         fxmlLoader.setLocation(location);
         Parent root;
         try {
-            root = fxmlLoader.load ();
+            root = fxmlLoader.load();
 
         } catch (IOException e) {
 
@@ -264,31 +272,33 @@ public class MainApp extends Application {
     @Subscribe
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        stop();
+        stop ();
     }
+
     @Subscribe
     public void handleLogoutEvent(LogoutEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         hideCurrentWindow();
-        saveUserPrefs ();
         saveLoginInfo();
+        saveUserPrefs ();
         showLoginWindow();
     }
 
     private void showLoginWindow() {
-        loginWindow.show ();
+        loginWindow.show();
     }
+
     /**
-     *  Hide the current stage that is showing
+     * Hide the current stage that is showing
      */
     private void hideCurrentWindow() {
-        Window currentStage = Stage.getWindows().filtered(window -> window.isShowing()).get (0);
-        currentStage.hide ();
+        EventsCenter.getInstance ().post (new StopUiEvent ());
     }
+
     /**
-     *  Save UserPref into storage
+     * Save UserPref into storage
      */
-    private void saveUserPrefs () {
+    private void saveUserPrefs() {
         logger.info("============================ [ Stopping DRINK I/O ] =============================");
         try {
             storage.saveUserPrefs(userPrefs);
@@ -298,11 +308,11 @@ public class MainApp extends Application {
     }
 
     /**
-     *  Save Login information into storage
+     * Save Login information into storage
      */
-    private void saveLoginInfo () {
+    private void saveLoginInfo() {
         try {
-            storage.saveLoginInfo (loginInfoList);
+            storage.saveLoginInfo(loginInfoList);
         } catch (IOException e) {
             logger.severe("Failed to save Login information " + StringUtil.getDetails(e));
         }

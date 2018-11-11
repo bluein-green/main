@@ -22,13 +22,13 @@ import seedu.address.commons.events.model.InitInventoryListEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
 import seedu.address.model.InventoryList;
 import seedu.address.model.LoginInfoManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyInventoryList;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
 import seedu.address.model.transaction.TransactionList;
 import seedu.address.model.user.accountant.AccountantModelManager;
 import seedu.address.model.user.admin.AdminModelManager;
@@ -73,13 +73,13 @@ public class InventoryListInitializer {
         model = initModelManager(storage, userPrefs, loginInfoList);
         logic = new LogicManager (model);
         ui = new UiManager (logic, config, userPrefs);
-
     }
 
     @Subscribe
-    public void handleinitInventoryListEvent(InitInventoryListEvent event) {
+    public void handleInitInventoryListEvent(InitInventoryListEvent event) {
         initAfterLogin ();
     }
+
     @Subscribe
     public void handleChangeModelEvent(ChangeModelEvent event) {
         model = initModelManager(storage, userPrefs, loginInfoList);
@@ -87,58 +87,60 @@ public class InventoryListInitializer {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Returns a {@code ModelManager} with the data from {@code storage}'s inventory list and {@code userPrefs}. <br>
+     * The data from the sample inventory list will be used instead if {@code storage}'s inventory list is not found,
+     * or an empty inventory list will be used instead if errors occur when reading {@code storage}'s inventory list.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs, LoginInfoManager loginInfoManager) {
+        Optional<ReadOnlyInventoryList> inventoryListOptional;
+        ReadOnlyInventoryList initialData;
 
-        ReadOnlyAddressBook addressBookData = initData(storage);
-        return chooseModelAccordingToAuthentication(loginInfoManager);
-    }
+        Optional<ReadOnlyTransactionList> transactionListOptional;
+        ReadOnlyTransactionList initialTransactionData;
 
-    /**
-     * Return data for new addressbook
-     */
-    private ReadOnlyAddressBook initData(Storage storage) {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+            inventoryListOptional = storage.readInventoryList();
+            if (!inventoryListOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample Inventory List");
             }
-            return addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = inventoryListOptional.orElseGet(SampleDataUtil::getSampleInventoryList);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            return new AddressBook ();
+            logger.warning("Data file not in the correct format. Will be starting with an empty Inventory List");
+            initialData = new InventoryList();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            return new AddressBook();
+            logger.warning("Problem while reading from the file. Will be starting with an empty Inventory List");
+            initialData = new InventoryList();
         }
-    }
-    /**
-     * Returns the respective {@code model} according to Authentication level.
-     *
-     */
-    private Model chooseModelAccordingToAuthentication(LoginInfoManager loginInfoManager) {
 
-        switch (CurrentUser.getAuthenticationLevel ()) {
+        try {
+            transactionListOptional = storage.readTransactionList();
+            if (!transactionListOptional.isPresent()) {
+                logger.info("Transaction data file not found. Will be starting with a sample Transaction List");
+            }
+            initialTransactionData = transactionListOptional.orElseGet(SampleDataUtil::getSampleTransactionList);
+        } catch (DataConversionException e) {
+            logger.warning("Transaction data file not in the correct format."
+                    + " Will be starting with an empty Transaction List");
+            initialTransactionData = new TransactionList();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the transaction datafile."
+                    + "Will be starting with an empty Transaction List");
+            initialTransactionData = new TransactionList();
+        }
+
+        switch (CurrentUser.getAuthenticationLevel()) {
         case AUTH_ADMIN:
-            return new AdminModelManager (new InventoryList (), userPrefs, loginInfoManager, new TransactionList());
+            return new AdminModelManager(initialData, userPrefs, loginInfoManager, initialTransactionData);
         case AUTH_MANAGER:
-            return new ManagerModelManager (new InventoryList (), userPrefs, loginInfoManager, new TransactionList());
+            return new ManagerModelManager(initialData, userPrefs, loginInfoManager, initialTransactionData);
         case AUTH_STOCK_TAKER:
-            return new StockTakerModelManager (new InventoryList () , userPrefs, loginInfoManager,
-                    new TransactionList());
+            return new StockTakerModelManager(initialData, userPrefs, loginInfoManager, initialTransactionData);
         case AUTH_ACCOUNTANT:
-            return new AccountantModelManager (new InventoryList (), userPrefs, loginInfoManager,
-                    new TransactionList());
-        default: {
-            logger.severe ("Database authentication level do not match with predefined authentication level");
-            return new ModelManager (new InventoryList (), userPrefs, loginInfoManager,
-                    new TransactionList());
-        }
+            return new AccountantModelManager(initialData, userPrefs, loginInfoManager, initialTransactionData);
+        default:
+            logger.severe("Database authentication level do not match with predefined authentication level");
+            return new ModelManager(initialData, userPrefs, loginInfoManager,
+                   new TransactionList());
         }
     }
-
 }

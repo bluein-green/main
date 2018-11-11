@@ -19,7 +19,7 @@ public class Transaction {
     private Drink drinkTransacted;
     private Quantity quantityTransacted;
     private Price amountMoney;
-    private long id;
+    private TransactionId id;
 
     public Transaction() {}
 
@@ -31,7 +31,7 @@ public class Transaction {
         this.quantityTransacted = quantityTransacted;
         this.amountMoney = amountMoney;
         transactionDate = new Date();
-        id = new java.util.Date().getTime();
+        id = new TransactionId();
     }
 
     public Transaction(TransactionType transactionType, Drink drinkTransacted,
@@ -42,17 +42,22 @@ public class Transaction {
         this.quantityTransacted = quantityTransacted;
         amountMoney = new Price("0");
         transactionDate = new Date();
-        id = new java.util.Date().getTime();
+        id = new TransactionId();
     }
 
-    public Transaction(TransactionType transactionType, Drink drinkTransacted,
-                       Quantity quantityTransacted, Price amountMoney, Date transactionDate, long id) {
-        requireAllNonNull(transactionType, drinkTransacted, quantityTransacted, transactionDate, id);
+
+    /**
+     * Constructor for use when loading transactions from storage.
+     */
+    public Transaction(TransactionType transactionType, Date transactionDate, Drink drinkTransacted,
+                       Quantity quantityTransacted, Price amountMoney, TransactionId id) {
+        requireAllNonNull(transactionType, transactionDate, drinkTransacted, quantityTransacted,
+                amountMoney, id);
         this.transactionType = transactionType;
+        this.transactionDate = transactionDate;
         this.drinkTransacted = drinkTransacted;
         this.quantityTransacted = quantityTransacted;
         this.amountMoney = amountMoney;
-        this.transactionDate = transactionDate;
         this.id = id;
     }
 
@@ -76,7 +81,7 @@ public class Transaction {
         return quantityTransacted;
     }
 
-    private long getId() {
+    public TransactionId getTransactionId() {
         return id;
     }
 
@@ -100,13 +105,13 @@ public class Transaction {
                 && getDrinkTransacted().isSameDrink(that.getDrinkTransacted())
                 && getQuantityTransacted().equals(that.getQuantityTransacted())
                 && getAmountMoney().equals(that.getAmountMoney())
-                && getId() == (that.getId());
+                && getTransactionId() == (that.getTransactionId());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getTransactionType(), getTransactionDate(), getDrinkTransacted(),
-                getQuantityTransacted(), getAmountMoney(), getId());
+                getQuantityTransacted(), getAmountMoney(), getTransactionId());
     }
 
     @Override
@@ -123,7 +128,7 @@ public class Transaction {
                 .append(", Amount transacted: $")
                 .append(getAmountMoney())
                 .append(", ID: ")
-                .append(getId());
+                .append(getTransactionId());
 
         return builder.toString();
     }

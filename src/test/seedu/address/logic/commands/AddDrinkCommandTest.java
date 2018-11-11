@@ -28,8 +28,6 @@ import seedu.address.model.drink.Price;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.transaction.ReadOnlyTransactionList;
 import seedu.address.model.transaction.Transaction;
-import seedu.address.model.transaction.TransactionList;
-import seedu.address.model.user.AuthenticationLevel;
 import seedu.address.model.user.Password;
 import seedu.address.model.user.UserName;
 import seedu.address.model.user.manager.ManagerModel;
@@ -56,8 +54,8 @@ public class AddDrinkCommandTest {
 
         CommandResult commandResult = new AddDrinkCommand(validDrink).execute (modelStub, commandHistory);
 
-        assertEquals(String.format(AddDrinkCommand.MESSAGE_SUCCESS, validDrink.getName ().toString (),
-                                    validDrink.getRetailPrice ().toString ()), commandResult.feedbackToUser);
+        assertEquals(String.format(AddDrinkCommand.MESSAGE_SUCCESS, validDrink.toString ()),
+                                    commandResult.feedbackToUser);
         assertEquals (Arrays.asList (validDrink), modelStub.drinksAdded);
         assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
     }
@@ -98,7 +96,7 @@ public class AddDrinkCommandTest {
     private class ManagerModelStub implements ManagerModel {
 
         @Override
-        public void createNewAccount (UserName userName, Password password, AuthenticationLevel authenticationLevel) {
+        public void createNewAccount (LoginInfo loginInfo) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -142,10 +140,9 @@ public class AddDrinkCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        // TODO: to review
         @Override
-        public ReadOnlyTransactionList getTransactionList() {
-            return new TransactionList();
+        public ReadOnlyTransactionList getTransactionList () {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -156,28 +153,24 @@ public class AddDrinkCommandTest {
         @Override
         public void updateFilteredTransactionList(Predicate<Transaction> predicate) {
             requireNonNull(predicate);
-            //filteredTransactions.setPredicate(predicate);
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void updateSellingPrice(Drink drinkToEdit, Price newSellingPrice) {
-            //inventoryList.updateSellingPrice(drinkToEdit, newSellingPrice);
-            //indicateDrinkAttributesChanged(drinkToEdit);
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void updateCostPrice(Drink drinkToEdit, Price newCostPrice) {
-            //inventoryList.updateCostPrice(drinkToEdit, newCostPrice);
-            //indicateDrinkAttributesChanged(drinkToEdit);
+            throw new AssertionError("This method should not be called.");
+
         }
 
         @Override
         public void updateTags(Drink drinkToEdit, Set<Tag> newTags) {
-            //inventoryList.updateTags(drinkToEdit, newTags);
-            //indicateDrinkAttributesChanged(drinkToEdit);
+            throw new AssertionError("This method should not be called.");
         }
-
-        // TODO: end of review area
         @Override
         public void changePassword (UserName userName, Password newHashedPassword) {
             throw new AssertionError("This method should not be called.");

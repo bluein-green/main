@@ -20,6 +20,7 @@ import seedu.address.commons.events.model.DrinkAttributeChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.InventoryPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.StopUiEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.drink.Drink;
@@ -48,9 +49,6 @@ public class MainWindow extends UiPart<Stage> {
 
     // @FXML
     // private StackPane transactionsPanelPlaceholder;
-
-    // Stores current selection
-    private Drink drinkSelection;
 
     @FXML
     private StackPane drinkDetailPanePlaceholder;
@@ -141,9 +139,6 @@ public class MainWindow extends UiPart<Stage> {
         transactionsPanel = new TransactionsPanel(logic.getFilteredTransactionList());
         transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
 
-        // drinkDetailPane = new DrinkDetailPane(null);
-        // drinkDetailPanePlaceholder.getChildren().add(drinkDetailPane.getRoot());
-
         drinkListPanel = new DrinkListPanel(logic.getFilteredDrinkList());
         drinkListPanelPlaceholder.getChildren().add(drinkListPanel.getRoot());
 
@@ -153,7 +148,7 @@ public class MainWindow extends UiPart<Stage> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getInventoryListFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -169,7 +164,6 @@ public class MainWindow extends UiPart<Stage> {
         batchListPanel = new BatchListPanel(
                 event.getNewSelection().getObservableBatchList());
         batchListPanelPlaceholder.getChildren().add(batchListPanel.getRoot());
-        drinkSelection = event.getNewSelection();
     }
 
 
@@ -235,6 +229,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleExit() {
+        raise (new StopUiEvent ());
         raise(new ExitAppRequestEvent());
     }
 
