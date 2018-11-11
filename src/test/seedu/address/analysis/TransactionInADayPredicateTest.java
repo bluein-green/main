@@ -26,34 +26,5 @@ public class TransactionInADayPredicateTest {
     }
 
     // TODO: test for failure, but with Transaction initialising date to current date, it is not possible to test
-//    @Test
-//    public void test_isNotWithinDay_returnsFalse() {
-//        TransactionInDayPredicate predicate = new TransactionInDayPredicate();
-//        Transaction transactionToday = new TransactionBuilder().withDrink("Pepsi").withDateToday()
-//                .withTransactionType("sale")
-//                .withAmountMoney("5.00")
-//                .withQuantity("40")
-//                .build();
-//    }
-//
-//
-//    private class TransactionStub extends Transaction {
-//        private TransactionType transactionType;
-//        private Date transactionDate;
-//        private Drink drinkTransacted;
-//        private Quantity quantityTransacted;
-//        private Price amountMoney;
-//        private long id;
-//
-//        public TransactionStub(TransactionType transactionType, Drink drinkTransacted,
-//                               Quantity quantityTransacted, Price amountMoney, Date date) {
-//            requireAllNonNull(transactionType, drinkTransacted, quantityTransacted, amountMoney);
-//            this.transactionType = transactionType;
-//            this.drinkTransacted = drinkTransacted;
-//            this.quantityTransacted = quantityTransacted;
-//            this.amountMoney = amountMoney;
-//            this.transactionDate = date;
-//            id = new java.util.Date().getTime();
-//        }
-//    }
+
 }

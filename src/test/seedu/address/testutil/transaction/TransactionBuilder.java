@@ -43,6 +43,7 @@ public class TransactionBuilder {
         drinkTransacted = transactionToCopy.getDrinkTransacted();
         quantityTransacted = transactionToCopy.getQuantityTransacted();
         amountMoney = transactionToCopy.getAmountMoney();
+        transactionDate = transactionToCopy.getTransactionDate();
     }
 
     /**
