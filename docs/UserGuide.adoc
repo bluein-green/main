@@ -721,9 +721,10 @@ The transactions list will also show the relevant transactions included in the a
 * Words in UPPER_CASE are the parameters supplied by users
 * Use underscore for spaces for fields other than `NAME`
 * Parameters can be supplied in any order as tags are specified
-** *e.g.* `t/` for item, `n/` for name
+** *e.g.* `p/` for selling price, `n/` for name
 * Parameters in square brackets are optional
 ====
+
 === Global Commands
 
 ==== Exiting Program: `exit`
