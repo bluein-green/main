@@ -72,15 +72,15 @@ public class SampleDataUtil {
 
     public static Drink[] getSampleDrinks() {
         return new Drink[] {
-            new Drink(new Name("Coke"), new Price("1.5"), new Price("0.8"), cokeBatches,
-                    getTagSet("Popular")),
-            new Drink(new Name("Green Tea"), new Price("1.5"), new Price("0.7"), greenTeaBatches ,
-                    getTagSet("Popular")),
-            new Drink(new Name("Sprite"), new Price("1.5"), new Price("0.7"), spriteBatches ,
-                    getTagSet("Popular")),
-            new Drink(new Name("Milk Coffee"), new Price("1.8"), new Price("1.0"), milkCoffeeBatches,
-                    getTagSet()),
-            new Drink(new Name("Milk Tea"), new Price("1.8"), new Price("1.0"), milkTeaBatches, getTagSet())
+                new Drink(new Name("Coke"), new Price("19.2"), new Price("36"), cokeBatches,
+                        getTagSet("Popular")),
+                new Drink(new Name("Green Tea"), new Price("16.8"), new Price("36"), greenTeaBatches ,
+                        getTagSet("Popular")),
+                new Drink(new Name("Sprite"), new Price("16.8"), new Price("36"), spriteBatches ,
+                        getTagSet("Popular")),
+                new Drink(new Name("Milk Coffee"), new Price("24"), new Price("43.2"), milkCoffeeBatches,
+                        getTagSet()),
+                new Drink(new Name("Milk Tea"), new Price("24"), new Price("43.2"), milkTeaBatches, getTagSet())
         };
     }
 
