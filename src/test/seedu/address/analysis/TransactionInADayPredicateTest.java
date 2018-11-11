@@ -1,16 +1,12 @@
 package seedu.address.analysis;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.testutil.transaction.TypicalTransactions.SALE_PEPSI;
 
 import org.junit.Test;
 
-import seedu.address.model.drink.Date;
-import seedu.address.model.drink.Drink;
-import seedu.address.model.drink.Price;
-import seedu.address.model.drink.Quantity;
 import seedu.address.model.transaction.Transaction;
-import seedu.address.model.transaction.TransactionType;
 import seedu.address.testutil.transaction.TransactionBuilder;
 
 public class TransactionInADayPredicateTest {
@@ -25,6 +21,11 @@ public class TransactionInADayPredicateTest {
         assertTrue(predicate.test(transactionToday));
     }
 
-    // TODO: test for failure, but with Transaction initialising date to current date, it is not possible to test
+    @Test
+    public void test_isNotWithinDay_returnsFalse() {
+        TransactionInDayPredicate predicate = new TransactionInDayPredicate();
+        Transaction transaction = new TransactionBuilder(SALE_PEPSI).build();
+        assertFalse(predicate.test(transaction));
+    }
 
 }
