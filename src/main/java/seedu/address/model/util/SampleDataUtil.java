@@ -1,6 +1,8 @@
 package seedu.address.model.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +18,7 @@ import seedu.address.model.drink.UniqueBatchList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.transaction.ReadOnlyTransactionList;
 import seedu.address.model.transaction.Transaction;
+import seedu.address.model.transaction.TransactionId;
 import seedu.address.model.transaction.TransactionList;
 import seedu.address.model.transaction.TransactionType;
 
@@ -36,11 +39,11 @@ public class SampleDataUtil {
             .withDate("11/11/2018").build();
     //Green Tea
     public static final Batch GT1 = new SampleBatchBuilder().withId("0004").withQuantity("10")
-            .withDate("01/11/2018").build();
+            .withDate("03/10/2018").build();
     public static final Batch GT2 = new SampleBatchBuilder().withId("0005").withQuantity("20")
-            .withDate("02/11/2018").build();
+            .withDate("17/10/2018").build();
     public static final Batch GT3 = new SampleBatchBuilder().withId("0006").withQuantity("40")
-            .withDate("20/11/2018").build();
+            .withDate("10/11/2018").build();
     //Sprite
     public static final Batch SPRITE1 = new SampleBatchBuilder().withId("0007").withQuantity("30")
             .withDate("01/11/2018").build();
@@ -103,39 +106,56 @@ public class SampleDataUtil {
 
     // TransactionType transactionType, Date transactionDate, Drink drinkTransacted,
     // Quantity quantityTransacted, Price amountMoney, long id
+    // Coke Transactions
     public static final Transaction BUY_COKE_1 = new Transaction(TransactionType.PURCHASE, new Date("01/10/2018"),
-            new Drink(new Name("COKE")), new Quantity("10"), new Price("")
+            new Drink(new Name("Coke")), new Quantity("30"), new Price("576"), new TransactionId("10923"));
 
-    /*
-    public static final Batch COKE1 = new SampleBatchBuilder().withId("0001").withQuantity("10")
-            .withDate("01/10/2018").build();
-    public static final Batch COKE2 = new SampleBatchBuilder().withId("0002").withQuantity("20")
-            .withDate("19/10/2018").build();
-    public static final Batch COKE3 = new SampleBatchBuilder().withId("0003").withQuantity("30")
-            .withDate("11/11/2018").build();
+    public static final Transaction SALE_COKE_1 = new Transaction(TransactionType.SALE, new Date("15/10/2018"),
+            new Drink(new Name("Coke")), new Quantity("10"), new Price("360"), new TransactionId("12305"));
 
-    */
+    public static final Transaction BUY_COKE_2 = new Transaction(TransactionType.PURCHASE, new Date("19/10/2018"),
+            new Drink(new Name("Coke")), new Quantity("10"), new Price("192"), new TransactionId("14203"));
+    public static final Transaction BUY_COKE_3 = new Transaction(TransactionType.PURCHASE, new Date("19/10/2018"),
+            new Drink(new Name("Coke")), new Quantity("10"), new Price("192"), new TransactionId("14593"));
+
+    public static final Transaction SALE_COKE_2 = new Transaction(TransactionType.SALE, new Date("25/10/2018"),
+            new Drink(new Name("Coke")), new Quantity("10"), new Price("360"), new TransactionId("16550"));
+
+    public static final Transaction BUY_COKE_4 = new Transaction(TransactionType.PURCHASE, new Date("11/11/2018"),
+            new Drink(new Name("Coke")), new Quantity("30"), new Price("576"), new TransactionId("20395"));
+
+    // Green Tea Transactions
+    public static final Transaction BUY_GT_1 = new Transaction(TransactionType.PURCHASE, new Date("03/10/2018"),
+            new Drink(new Name("Green Tea")), new Quantity("20"), new Price("336"), new TransactionId("11232"));
+
+    public static final Transaction BUY_GT_2 = new Transaction(TransactionType.PURCHASE, new Date("17/10/2018"),
+            new Drink(new Name("Green Tea")), new Quantity("20"), new Price("336"), new TransactionId("13213"));
+
+    public static final Transaction SALE_GT_1 = new Transaction(TransactionType.SALE, new Date("8/11/2018"),
+            new Drink(new Name("Green Tea")), new Quantity("10"), new Price("360"), new TransactionId("11232"));
+
+    public static final Transaction BUY_GT_3 = new Transaction(TransactionType.PURCHASE, new Date("10/11/2018"),
+            new Drink(new Name("Green Tea")), new Quantity("40"), new Price("672"), new TransactionId("19933"));
 
 
-
-
-
-
-
-
-
-
-
-    public static Transaction[] getSampleTransactions() {
-
+    private static List<Transaction> getSampleTransactions() {
+        return new ArrayList<>(Arrays.asList(
+                BUY_COKE_1, SALE_COKE_1, BUY_COKE_2, BUY_COKE_3, SALE_COKE_2, BUY_COKE_4,
+                BUY_GT_1, BUY_GT_2, SALE_GT_1, BUY_GT_3));
     }
 
 
     public static ReadOnlyTransactionList getSampleTransactionList() {
         TransactionList sampleTl = new TransactionList();
 
+        List<Transaction> transactions = getSampleTransactions();
+        transactions.sort((t1, t2) -> t1.getTransactionDate().compareTo(t2.getTransactionDate()));
 
-        return null;
+        for (Transaction transaction : transactions) {
+            sampleTl.addTransaction(transaction);
+        }
+
+        return sampleTl;
     }
 
     /**

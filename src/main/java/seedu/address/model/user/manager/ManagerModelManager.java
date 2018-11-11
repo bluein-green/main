@@ -11,7 +11,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.drink.Drink;
 import seedu.address.model.drink.Price;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.transaction.TransactionList;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
 import seedu.address.model.user.UserName;
 
 /**
@@ -21,7 +21,7 @@ public class ManagerModelManager extends ModelManager implements ManagerModel {
 
     public ManagerModelManager(ReadOnlyInventoryList inventoryList,
                                UserPrefs userPrefs, LoginInfoManager loginInfoManager,
-                               TransactionList transactionList) {
+                               ReadOnlyTransactionList transactionList) {
         super(inventoryList, userPrefs, loginInfoManager, transactionList);
     }
 
@@ -51,6 +51,7 @@ public class ManagerModelManager extends ModelManager implements ManagerModel {
     }
 
     // ================ EDIT DRINK DETAILS COMMANDS =========================
+
     /**
      * Raises an event to indicate the model has changed
      */

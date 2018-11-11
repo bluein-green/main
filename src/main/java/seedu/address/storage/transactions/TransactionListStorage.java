@@ -6,19 +6,18 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.transaction.ReadOnlyTransactionList;
-import seedu.address.model.transaction.TransactionList;
 
 /**
  * Represents a storage for {@link seedu.address.model.transaction.TransactionList}.
  */
 public interface TransactionListStorage {
     /**
-     * Returns the file path of the TransactionList data file.
+     * Returns the file path of the data file.
      */
     Path getTransactionListFilePath();
 
     /**
-     * Returns TransactionList data from storage.
+     * Returns Transaction List data as a {@link seedu.address.model.transaction.ReadOnlyTransactionList}.
      * Returns {@code Optional.empty()} if storage file is not found.
      *
      * @throws DataConversionException if the data in storage is not in the expected format.
@@ -27,10 +26,20 @@ public interface TransactionListStorage {
     Optional<ReadOnlyTransactionList> readTransactionList() throws DataConversionException, IOException;
 
     /**
-     * Saves the given {@link seedu.address.model.transaction.TransactionList} to the storage.
+     * @see #getTransactionListFilePath()
+     */
+    Optional<ReadOnlyTransactionList> readTransactionList(Path filePath) throws DataConversionException, IOException;
+
+    /**
+     * Saves the given {@link ReadOnlyTransactionList} to the storage.
      *
      * @param transactionList cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
     void saveTransactionList(ReadOnlyTransactionList transactionList) throws IOException;
+
+    /**
+     * @see #saveTransactionList(ReadOnlyTransactionList)
+     */
+    void saveTransactionList(ReadOnlyTransactionList transactionList, Path filePath) throws IOException;
 }

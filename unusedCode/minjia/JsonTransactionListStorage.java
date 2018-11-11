@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.transaction.ReadOnlyTransactionList;
+import seedu.address.model.transaction.Transaction;
 import seedu.address.model.transaction.TransactionList;
 
 public class JsonTransactionListStorage implements TransactionListStorage {

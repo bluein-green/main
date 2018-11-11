@@ -13,7 +13,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private Path inventoryListFilePath = Paths.get("data" , "inventorylist.xml");
-    private Path transactionListFilePath = Paths.get("data", "transactionlist.json");
+    private Path transactionListFilePath = Paths.get("data", "transactionlist.xml");
 
     public UserPrefs() {
         setGuiSettings(500, 500, 0, 0);

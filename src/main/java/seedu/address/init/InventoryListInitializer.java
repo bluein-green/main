@@ -118,7 +118,7 @@ public class InventoryListInitializer {
             if (!transactionListOptional.isPresent()) {
                 logger.info("Transaction data file not found. Will be starting with a sample Transaction List");
             }
-            //initialTransactionData = transactionListOptional.orElseGet(SampleDataUtil::getSampleInventoryList);
+            initialTransactionData = transactionListOptional.orElseGet(SampleDataUtil::getSampleTransactionList);
         } catch (DataConversionException e) {
             logger.warning("Transaction data file not in the correct format. Will be starting with an empty Transaction List");
             initialTransactionData = new TransactionList();
@@ -129,13 +129,13 @@ public class InventoryListInitializer {
 
         switch (CurrentUser.getAuthenticationLevel()) {
         case AUTH_ADMIN:
-            return new AdminModelManager(initialData, userPrefs, loginInfoManager, transactionList);
+            return new AdminModelManager(initialData, userPrefs, loginInfoManager, initialTransactionData);
         case AUTH_MANAGER:
-            return new ManagerModelManager(initialData, userPrefs, loginInfoManager, transactionList);
+            return new ManagerModelManager(initialData, userPrefs, loginInfoManager, initialTransactionData);
         case AUTH_STOCK_TAKER:
-            return new StockTakerModelManager(initialData, userPrefs, loginInfoManager, transactionList);
+            return new StockTakerModelManager(initialData, userPrefs, loginInfoManager, initialTransactionData);
         case AUTH_ACCOUNTANT:
-            return new AccountantModelManager(initialData, userPrefs, loginInfoManager, transactionList);
+            return new AccountantModelManager(initialData, userPrefs, loginInfoManager, initialTransactionData);
         default:
             logger.severe("Database authentication level do not match with predefined authentication level");
             return new ModelManager(initialData, userPrefs, loginInfoManager,

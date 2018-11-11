@@ -163,17 +163,29 @@ public class StorageManager extends ComponentManager implements Storage {
         return transactionListStorage.getTransactionListFilePath();
     }
 
+
     @Override
     public Optional<ReadOnlyTransactionList> readTransactionList() throws DataConversionException, IOException {
-        logger.fine("Attempting to write to transaction data file");
-        return transactionListStorage.readTransactionList();
+        return readTransactionList(transactionListStorage.getTransactionListFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyTransactionList> readTransactionList(Path filePath)
+            throws DataConversionException, IOException {
+        logger.fine("Attempting to read transaction data from file: " + filePath);
+        return transactionListStorage.readTransactionList(filePath);
     }
 
     @Override
     public void saveTransactionList(ReadOnlyTransactionList transactionList) throws IOException {
-        transactionListStorage.saveTransactionList(transactionList);
+        saveTransactionList(transactionList, transactionListStorage.getTransactionListFilePath());
     }
 
+    @Override
+    public void saveTransactionList(ReadOnlyTransactionList transactionList, Path filePath) throws IOException {
+        logger.fine("Attempting to write to transaction data file: " + filePath);
+        transactionListStorage.saveTransactionList(transactionList, filePath);
+    }
 
     @Override
     @Subscribe
