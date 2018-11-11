@@ -21,10 +21,11 @@ By: `CS2113T-W12-4`      Since: `Jun 2016`      Licence: `MIT`
 
 
 == Introduction
+image::drink_io_logo.png[width="790"]
 
 *[blue]#_Drink I/O_#* is a desktop application that helps you to manage your drink distribution company.
-You can use *[blue]#_Drink I/O_#* to keep track of your inventory and analyse your company�s sales performance.
-*[blue]#_Drink I/O_#* is optimised for Command Line Interface (CLI), allowing you to manage your store
+You can use *[blue]#_Drink I/O_#* to keep track of your inventory and analyse your company's sales performance.
+*[blue]#_Drink I/O_#* is optimised for Command Line Interface (CLI), allowing you to manage your company
 faster than traditional Graphical User Interface (GUI) apps, while retaining the benefits of a GUI
 
 This user guide provides comprehensive documentation on the *[blue]#_Drink I/O_#* setup process, the features you can
@@ -33,7 +34,24 @@ get instructions and learn to improve your workflow with Drink I/O.
 
 === How to use this guide
 
+
+
+====
+*General Command Format*
+
+* Words in UPPER_CASE are the parameters supplied by users
+* Use underscore for spaces for fields other than `NAME`
+* Parameters can be supplied in any order as tags are specified
+** *e.g.* `p/' for selling price, `n/` for name
+* Parameters in square brackets are optional
+====
+
+
+
 === How to navigate Drink I/O's interface
+
+
+image::Ui.png[width="790"]
 
 
 == Quick Start
@@ -678,9 +696,9 @@ The transactions list will also show the relevant transactions included in the a
 // insert picture
 
 
-=== Filtering popular items `[Coming in v2.0]`
-=== Viewing an item's transactions `[Coming in v2.0]`
-=== Viewing an item's cost, revenue and profit `[Coming in v2.0]`
+=== Filtering popular drinks `[Coming in v2.0]`
+=== Viewing a drink's transactions `[Coming in v2.0]`
+=== Viewing a drink's cost, revenue and profit `[Coming in v2.0]`
 
 == Setting Reminders `[Coming in v2.0]`
 
@@ -701,7 +719,7 @@ The transactions list will also show the relevant transactions included in the a
 *General Command Format*
 
 * Words in UPPER_CASE are the parameters supplied by users
-* Use underscore for spaces when for fields other than `NAME`
+* Use underscore for spaces for fields other than `NAME`
 * Parameters can be supplied in any order as tags are specified
 ** *e.g.* `t/` for item, `n/` for name
 * Parameters in square brackets are optional
@@ -740,16 +758,6 @@ Add a new drink to the drink inventory.
 All the drinks added will be in a predefined list. As such, stock taker only able to add batches that is in this predefined list.
 ====
 
-
-////
-==== View history of actions: `history`
-Displays list of actions done by user over a specified time frame.
-	Format: `history START_DATE END_DATE`
-[NOTE]
-====
-Start date must be earlier than end date
-====
-////
 
 [#stocktaker-commandSummary]
 === Stock Taker Commands
@@ -818,15 +826,6 @@ View the variation tendency of the cost of every ingredient in a period specifie
 Update the cost of ingredients every time they change to keep track.
 	Format: `editcost INGREDIENT_NAME UNIT_COST`
 
-==== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
 
 ////
 ==== Clearing all entries : `clear`
