@@ -636,6 +636,7 @@ You can check the total costs incurred by your company, over a specified period.
 
 You should see the value of the total costs displayed in the results panel.
 
+
 * To view the total costs incurred within the *past 7 days* (inclusive of current day):
 . Enter `costs -w` into the command box
 . Press kbd:[enter]
@@ -645,6 +646,7 @@ You should see the value of the total costs incurred over the week displayed in 
 * To view the total costs incurred within the *past 30 days* (inclusive of current day):
 . Enter `costs -m` into the command box
 . Press kbd:[enter]
+
 
 You should see the value of the total costs incurred over the past 30 days displayed in the results panel.
 The transactions list will also show the relevant transactions included in the analysis.
