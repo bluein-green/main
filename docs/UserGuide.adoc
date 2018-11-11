@@ -557,6 +557,7 @@ You should see the value of the total costs incurred over the week displayed in 
 . Press kbd:[enter]
 
 You should see the value of the total costs incurred over the past 30 days displayed in the results panel.
+The transactions list will also show the relevant transactions included in the analysis.
 
 // insert picture
 
@@ -576,41 +577,44 @@ To view the total revenue earned,
 
 . Enter `revenue` into the command box
 . Append a desired period parameter
+ * e.g. `-w`, `-m` (see <<Indicating time period for analysis>>)
 . Press kbd:[enter]
 
-You should see a value displayed in the results panel.
+You should see the value of the total revenue earned in the specified period displayed in the results panel.
+The transactions list will also show the relevant transactions included in the analysis.
 
 // insert picture
 
 === Viewing overall profit
-*[blue]#_Drink I/O_#* can calculate the total profit your company has earned
-since the beginning of using *[blue]#_Drink I/O_#* for you.
+You can check the total profit earned by your company, over a specified period.
 
 [TIP]
 ====
 *_Summary_* +
 
 *Command format*:
-`analyseProfits`
+`proft [PERIOD_PARAMETER]`
 ====
 
 *Step by Step Instructions* +
 To view the total profit earned,
 
-. Enter `analyseProfits` into the command box
-
+. Enter `profit` into the command box
+. Append a desired period parameter
+ * e.g. `-w`, `-m` (see <<Indicating time period for analysis>>)
 . Press kbd:[enter]
 
-You should see a value displayed in the results panel.
+You should see the value of the total profit earned displayed in the results panel.
+The transactions list will also show the relevant transactions included in the analysis.
 
 // insert picture
 
 
-=== Filtering popular items `[Coming in v1.4]`
-=== Viewing an item's transactions `[Coming in v1.4]`
-=== Viewing an item's cost, revenue and profit `[Coming in v1.4]`
+=== Filtering popular items `[Coming in v2.0]`
+=== Viewing an item's transactions `[Coming in v2.0]`
+=== Viewing an item's cost, revenue and profit `[Coming in v2.0]`
 
-== Setting Reminders `[Coming in v1.4]`
+== Setting Reminders `[Coming in v2.0]`
 
 
 
@@ -629,9 +633,9 @@ You should see a value displayed in the results panel.
 *General Command Format*
 
 * Words in UPPER_CASE are the parameters supplied by users
-* Use underscore for spaces
+* Use underscore for spaces when for fields other than `NAME`
 * Parameters can be supplied in any order as tags are specified
-** *e.g.* t/ for item, c/ for characteristic
+** *e.g.* `t/` for item, `n/` for name
 * Parameters in square brackets are optional
 ====
 === Global Commands
@@ -792,59 +796,7 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
 ////
-==== Undoing previous command : `undo`
-
-<TO BE EDITED FURTHER> +
-Restores the FrozenBook to the state before the previous _undoable_ command was executed. +
-Format: `undo`
-
-[NOTE]
-====
-Undoable commands: those commands that modify the FrozenBook's content (`add`, `delete`, `edit` and `clear`).
-====
-
-Examples:
-
-* `delete 1` +
-`viewall` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`viewall` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-==== Redoing the previously undone command : `redo`
-
-<TO BE EDITED FURTHER> +
-Reverses the most recent `undo` command. +
-Format: `redo`
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
 ==== Clearing all entries : `clear`
 
 Clears all data from the inventory. +
@@ -861,16 +813,12 @@ Creates a new Drink I/O account.
     Format: `createAccount u/USER_NAME p/PASSWORD a/AUTHENTICATION_LEVEL`
 
 
-=== Saving the data `[Coming in v1.4]`
+=== Saving the data
 
-DrinkIO data is saved in the hard disk automatically after any command that changes the data. +
+*[blue]#_Drink I/O_#* data is saved in the hard disk automatically after any command that changes the drinks data
+or updates the transactions. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
 
 == Upcoming Features in Future Releases
 
