@@ -564,6 +564,8 @@ the transaction will not be entered into the system.
 - The recording will fail if `QUANTITY` is more than the available stock in *[blue]#_Drink I/O_#*.
 ====
 
+// end::transactions[]
+
 === Viewing transactions
 You can view all the transactions entered into *[blue]#_Drink I/O_#* to verify their accuracy.
 
@@ -695,6 +697,7 @@ The transactions list will also show the relevant transactions included in the a
 
 // insert picture
 
+// end::analysis[]
 
 === Filtering popular drinks `[Coming in v2.0]`
 === Viewing a drink's transactions `[Coming in v2.0]`
