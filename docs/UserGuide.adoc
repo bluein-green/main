@@ -1,5 +1,5 @@
 :product_name : Drink I/O
-= AddressBook Level 4 - User Guide
+= Drink I/O -  User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -23,8 +23,7 @@ By: `CS2113T-W12-4`      Since: `Jun 2016`      Licence: `MIT`
 == Introduction
 
 *[blue]#_Drink I/O_#* is a desktop application that helps you to manage your drink distribution company.
-You can use *[blue]#_Drink I/O_#* to keep track of your inventory, analyse your company�s sales performance and
-set reminders to help you purchase more goods should their stocks fall low.
+You can use *[blue]#_Drink I/O_#* to keep track of your inventory and analyse your company�s sales performance.
 *[blue]#_Drink I/O_#* is optimised for Command Line Interface (CLI), allowing you to manage your store
 faster than traditional Graphical User Interface (GUI) apps, while retaining the benefits of a GUI
 
