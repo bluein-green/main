@@ -38,6 +38,8 @@ import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlInventoryListStorage;
 import seedu.address.storage.logininfo.JsonLoginInfoStorage;
 import seedu.address.storage.logininfo.LoginInfoStorage;
+import seedu.address.storage.transactions.JsonTransactionListStorage;
+import seedu.address.storage.transactions.TransactionListStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiPart;
 import seedu.address.ui.controller.LoginController;
@@ -66,7 +68,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing Drink I/O ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -77,7 +79,8 @@ public class MainApp extends Application {
         loginInfoList = initLoginInfo (loginInfoStorage);
         loginPathPath = config.getLoginPagePath ().toString ();
         InventoryListStorage inventoryListStorage = new XmlInventoryListStorage(userPrefs.getInventoryListFilePath());
-        storage = new StorageManager(inventoryListStorage, userPrefsStorage, loginInfoStorage);
+        TransactionListStorage transactionListStorage = new JsonTransactionListStorage(userPrefs.getTransactionListFilePath());
+        storage = new StorageManager(inventoryListStorage, userPrefsStorage, loginInfoStorage, transactionListStorage);
 
         inventoryListInitializer = new InventoryListInitializer (config, storage, userPrefs, loginInfoList);
         initLogging(config);
@@ -89,7 +92,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         loginWindow = primaryStage;
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting Drink I/O " + MainApp.VERSION);
         showLoginPage();
     }
 
@@ -265,6 +268,7 @@ public class MainApp extends Application {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         stop();
     }
+
     @Subscribe
     public void handleLogoutEvent(LogoutEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

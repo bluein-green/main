@@ -10,12 +10,16 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.InventoryListChangedEvent;
+import seedu.address.commons.events.model.TransactionListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.LoginInfoManager;
 import seedu.address.model.ReadOnlyInventoryList;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
+import seedu.address.model.transaction.TransactionList;
 import seedu.address.storage.logininfo.LoginInfoStorage;
+import seedu.address.storage.transactions.TransactionListStorage;
 
 /**
  * Manages storage of Inventory List data in local storage.
@@ -26,14 +30,16 @@ public class StorageManager extends ComponentManager implements Storage {
     private InventoryListStorage inventoryListStorage;
     private UserPrefsStorage userPrefsStorage;
     private LoginInfoStorage loginInfoStorage;
+    private TransactionListStorage transactionListStorage;
 
     public StorageManager(InventoryListStorage inventoryListStorage, UserPrefsStorage userPrefsStorage,
-                          LoginInfoStorage loginInfoStorage) {
+                          LoginInfoStorage loginInfoStorage, TransactionListStorage transactionListStorage) {
         super();
         // this.addressBookStorage = addressBookStorage;
         this.inventoryListStorage = inventoryListStorage;
         this.userPrefsStorage = userPrefsStorage;
         this.loginInfoStorage = loginInfoStorage;
+        this.transactionListStorage = transactionListStorage;
     }
 
     // ================ LoginInfoManager methods ==============================
@@ -140,11 +146,41 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
 
+    @Override
     @Subscribe
     public void handleInventoryListChangedEvent(InventoryListChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveInventoryList(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    // ================ Transaction List methods ==============================
+    @Override
+    public Path getTransactionListFilePath() {
+        return transactionListStorage.getTransactionListFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyTransactionList> readTransactionList() throws DataConversionException, IOException {
+        logger.fine("Attempting to write to transaction data file");
+        return transactionListStorage.readTransactionList();
+    }
+
+    @Override
+    public void saveTransactionList(ReadOnlyTransactionList transactionList) throws IOException {
+        transactionListStorage.saveTransactionList(transactionList);
+    }
+
+
+    @Override
+    @Subscribe
+    public void handleTransactionListChangedEvent(TransactionListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to transaction file"));
+        try {
+            saveTransactionList(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

@@ -14,18 +14,6 @@ import seedu.address.model.drink.Quantity;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Transaction {
-    /*
-    What this class does: records the transaction made by stocktaker or seller
-    types of transactions: sale OR import (buying)
-    what to record:
-    - type of transaction
-    - date of transaction
-    - what drink (singular) is bought / sold
-    - number of cartons bought / sold
-    - amount spent / earned in this transaction
-        (this is the total amount)
-     */
-
     private TransactionType transactionType;
     private Date transactionDate;
     private Drink drinkTransacted;
@@ -56,10 +44,20 @@ public class Transaction {
         id = new java.util.Date().getTime();
     }
 
-    /*
-    methods to implement: (other than getters cos transactions (finance) are immutable so no setters)
-    1. VIEW the transaction details
+    /**
+     * Constructor for use when loading transactions from storage.
      */
+    public Transaction(TransactionType transactionType, Date transactionDate, Drink drinkTransacted,
+                       Quantity quantityTransacted, Price amountMoney, long id) {
+        requireAllNonNull(transactionType, transactionDate, drinkTransacted, quantityTransacted,
+                amountMoney, id);
+        this.transactionType = transactionType;
+        this.transactionDate = transactionDate;
+        this.drinkTransacted = drinkTransacted;
+        this.quantityTransacted = quantityTransacted;
+        this.amountMoney = amountMoney;
+        this.id = id;
+    }
 
     public TransactionType getTransactionType() {
         return transactionType;

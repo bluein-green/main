@@ -69,6 +69,7 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         updateFilteredTransactionListToShowAll();
 
         indicateDrinkAttributesChanged(transaction.getDrinkTransacted());
+        indicateTransactionListChanged();
     }
 
     @Override
@@ -87,6 +88,7 @@ public class AdminModelManager extends ModelManager implements AdminModel {
         updateFilteredTransactionListToShowAll();
 
         indicateDrinkAttributesChanged(transaction.getDrinkTransacted());
+        indicateTransactionListChanged();
 
     }
 

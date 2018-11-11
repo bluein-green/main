@@ -34,15 +34,6 @@ public class TransactionsPanel extends UiPart<Region> {
         // setEventHandlerForSelectionChangeEvent();
     }
 
-    @Subscribe
-    private void handleTransactionListChangedEvent(TransactionListChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        System.out.println("TRANSACTION LIST CHANGED!!!");
-
-        // insert
-        transactionListView.setItems(event.getData());
-    }
-
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Transaction} using a {@code TransactionCard}.
      */

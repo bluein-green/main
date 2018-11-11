@@ -7,11 +7,17 @@ import java.util.stream.Collectors;
 import seedu.address.model.InventoryList;
 import seedu.address.model.ReadOnlyInventoryList;
 import seedu.address.model.drink.Batch;
+import seedu.address.model.drink.Date;
 import seedu.address.model.drink.Drink;
 import seedu.address.model.drink.Name;
 import seedu.address.model.drink.Price;
+import seedu.address.model.drink.Quantity;
 import seedu.address.model.drink.UniqueBatchList;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
+import seedu.address.model.transaction.Transaction;
+import seedu.address.model.transaction.TransactionList;
+import seedu.address.model.transaction.TransactionType;
 
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
@@ -23,11 +29,11 @@ public class SampleDataUtil {
      */
     // Coke
     public static final Batch COKE1 = new SampleBatchBuilder().withId("0001").withQuantity("10")
-            .withDate("01/11/2018").build();
+            .withDate("01/10/2018").build();
     public static final Batch COKE2 = new SampleBatchBuilder().withId("0002").withQuantity("20")
-            .withDate("02/11/2018").build();
+            .withDate("19/10/2018").build();
     public static final Batch COKE3 = new SampleBatchBuilder().withId("0003").withQuantity("30")
-            .withDate("20/11/2018").build();
+            .withDate("11/11/2018").build();
     //Green Tea
     public static final Batch GT1 = new SampleBatchBuilder().withId("0004").withQuantity("10")
             .withDate("01/11/2018").build();
@@ -84,6 +90,52 @@ public class SampleDataUtil {
             sampleIl.addDrink(sampleDrink);
         }
         return sampleIl;
+    }
+
+    /**
+     * Initialising sample transactions for use
+     */
+    // Coke
+    //Green Tea
+    //Sprite
+    //Milk Coffee
+    //Milk Tea
+
+    // TransactionType transactionType, Date transactionDate, Drink drinkTransacted,
+    // Quantity quantityTransacted, Price amountMoney, long id
+    public static final Transaction BUY_COKE_1 = new Transaction(TransactionType.PURCHASE, new Date("01/10/2018"),
+            new Drink(new Name("COKE")), new Quantity("10"), new Price("")
+
+    /*
+    public static final Batch COKE1 = new SampleBatchBuilder().withId("0001").withQuantity("10")
+            .withDate("01/10/2018").build();
+    public static final Batch COKE2 = new SampleBatchBuilder().withId("0002").withQuantity("20")
+            .withDate("19/10/2018").build();
+    public static final Batch COKE3 = new SampleBatchBuilder().withId("0003").withQuantity("30")
+            .withDate("11/11/2018").build();
+
+    */
+
+
+
+
+
+
+
+
+
+
+
+    public static Transaction[] getSampleTransactions() {
+
+    }
+
+
+    public static ReadOnlyTransactionList getSampleTransactionList() {
+        TransactionList sampleTl = new TransactionList();
+
+
+        return null;
     }
 
     /**

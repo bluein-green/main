@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.JsonUtil;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
 import seedu.address.model.transaction.TransactionList;
 
 public class JsonTransactionListStorage implements TransactionListStorage {
@@ -21,8 +22,14 @@ public class JsonTransactionListStorage implements TransactionListStorage {
     }
 
     @Override
-    public Optional<TransactionList> readTransactionList() throws DataConversionException {
-        return readTransactionList(filePath);
+    public Optional<ReadOnlyTransactionList> readTransactionList() throws DataConversionException {
+        //return readTransactionList(filePath);
+        if (readTransactionList(filePath).isPresent()) {
+            ReadOnlyTransactionList transactionList = readTransactionList(filePath).get();
+            return Optional.of(transactionList);
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**
@@ -35,7 +42,7 @@ public class JsonTransactionListStorage implements TransactionListStorage {
     }
 
     @Override
-    public void saveTransactionList(TransactionList transactionList) throws IOException {
+    public void saveTransactionList(ReadOnlyTransactionList transactionList) throws IOException {
         JsonUtil.saveJsonFile(transactionList, filePath);
     }
 }
