@@ -1,59 +1,97 @@
 package seedu.address.model.user.admin;
 
-import java.util.List;
+import java.util.Set;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import seedu.address.analysis.Analysis;
+import seedu.address.analysis.AnalysisManager;
+import seedu.address.analysis.AnalysisPeriodType;
+import seedu.address.analysis.PurchaseTransactionPredicate;
+import seedu.address.analysis.SaleTransactionPredicate;
+import seedu.address.commons.core.LoginInfo;
+import seedu.address.commons.events.model.DrinkAttributeChangedEvent;
 import seedu.address.model.LoginInfoManager;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyInventoryList;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.drink.Drink;
 import seedu.address.model.drink.Price;
+import seedu.address.model.drink.exceptions.InsufficientQuantityException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
 import seedu.address.model.transaction.Transaction;
-import seedu.address.model.transaction.TransactionList;
-import seedu.address.model.user.AuthenticationLevel;
-import seedu.address.model.user.Password;
 import seedu.address.model.user.UserName;
 
 /**
  * This is the API model for Admin command
  */
 public class AdminModelManager extends ModelManager implements AdminModel {
+    private final Analysis analysis = new AnalysisManager(transactionList, filteredTransactions);
+
     public AdminModelManager(ReadOnlyInventoryList inventoryList, UserPrefs userPrefs,
-                             LoginInfoManager loginInfoManager, TransactionList transactionList) {
+                             LoginInfoManager loginInfoManager, ReadOnlyTransactionList transactionList) {
         super(inventoryList, userPrefs, loginInfoManager, transactionList);
     }
 
-    @Override
-    public boolean isValid () {
-        return false;
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    public void indicateDrinkAttributesChanged(Drink drink) {
+        raise(new DrinkAttributeChangedEvent(drink));
     }
 
+    //===============manager command====================//
+    @Override
+    public void deleteDrink(Drink target) {
+        inventoryList.removeDrink(target);
+        indicateInventoryListChanged();
+        indicateDrinkAttributesChanged(target);
+    }
 
+    @Override
+    public void addDrink(Drink drink) {
+        inventoryList.addDrink(drink);
+        updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
+        indicateInventoryListChanged();
+        indicateDrinkAttributesChanged(drink);
+    }
 
     //=====================Stock taker commands====================
     @Override
-    public void sellDrink(Transaction transaction) {
+    public void sellDrink(Transaction transaction) throws InsufficientQuantityException {
         Price defaultSalePrice = inventoryList.getDefaultSellingPrice(transaction.getDrinkTransacted());
-
+        inventoryList.decreaseQuantity(transaction.getDrinkTransacted(), transaction.getQuantityTransacted());
         Price defaultAmountTransacted = new Price(Float.toString(defaultSalePrice.getValue()
                 * transaction.getQuantityTransacted().getValue()));
         transaction.setAmountMoney(defaultAmountTransacted);
         recordTransaction(transaction);
 
-        inventoryList.decreaseQuantity(transaction.getDrinkTransacted(), transaction.getQuantityTransacted());
+        indicateInventoryListChanged();
+        updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
+
+        updateFilteredTransactionListToShowAll();
+
+        indicateDrinkAttributesChanged(transaction.getDrinkTransacted());
+        indicateTransactionListChanged();
     }
 
     @Override
-    public void importDrink(Transaction transaction) {
-        Price defaultCostPrice = inventoryList.getDefaultCostPrice(transaction.getDrinkTransacted());
+    public void buyDrink(Transaction transaction) {
+        inventoryList.increaseDrinkQuantity(transaction.getDrinkTransacted(), transaction.getQuantityTransacted());
 
+        Price defaultCostPrice = inventoryList.getDefaultCostPrice(transaction.getDrinkTransacted());
         Price defaultAmountTransacted = new Price(Float.toString(defaultCostPrice.getValue()
                 * transaction.getQuantityTransacted().getValue()));
         transaction.setAmountMoney(defaultAmountTransacted);
         recordTransaction(transaction);
 
-        inventoryList.increaseQuantity(transaction.getDrinkTransacted(), transaction.getQuantityTransacted());
+        indicateInventoryListChanged();
+        updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
+
+        updateFilteredTransactionListToShowAll();
+
+        indicateDrinkAttributesChanged(transaction.getDrinkTransacted());
+        indicateTransactionListChanged();
+
     }
 
     private void recordTransaction(Transaction transaction) {
@@ -61,36 +99,80 @@ public class AdminModelManager extends ModelManager implements AdminModel {
     }
 
 
-    /**
-     * Returns an unmodifiable view of the list of {@code Transaction} backed by the internal list of
-     * {@code transactionList}
-     */
-    @Override
-    public ObservableList<Transaction> getTransactionList() {
-        List<Transaction> transactions = transactionList.getTransactions();
-        return FXCollections.unmodifiableObservableList(FXCollections.observableList(transactions));
-    }
-
-    @Override
-    public String getTransactions() {
-        return transactionList.toString();
-    }
-
     //=====================Manager command=========================
     @Override
-    public void createNewAccount (UserName userName, Password password, AuthenticationLevel authenticationLevel) {
-        loginInfoManager.createNewAccount (userName, password, authenticationLevel);
+    public void createNewAccount(LoginInfo loginInfo) {
+        loginInfoManager.createNewAccount(loginInfo);
     }
 
     @Override
-    public void deleteAccount (UserName userName) {
-        loginInfoManager.deleteAccount (userName);
+    public void deleteAccount(UserName userName) {
+        loginInfoManager.deleteAccount(userName);
     }
 
-    //=====================Accountant command======================
+    //===================== Accountant commands ======================
     @Override
-    public Price analyseCosts() {
-        return analysis.analyseCost();
+    public Price analyseCosts(AnalysisPeriodType period) {
+        updateFilteredTransactionListToShowPurchases(period);
+        return analysis.analyseCost(period);
+    }
+
+    @Override
+    public Price analyseRevenue(AnalysisPeriodType period) {
+        updateFilteredTransactionListToShowSales(period);
+        return analysis.analyseRevenue(period);
+    }
+
+    @Override
+    public Price analyseProfit(AnalysisPeriodType period) {
+        updateFilteredTransactionListToShowProfitPeriod(period);
+        return analysis.analyseProfit(period);
+    }
+
+    /**
+     * Updates the {@code filteredTransactions} with Purchase predicate and {@code period} predicate.
+     */
+    private void updateFilteredTransactionListToShowPurchases(AnalysisPeriodType period) {
+        updateFilteredTransactionList(period.getPeriodFilterPredicate().and(new PurchaseTransactionPredicate()));
+    }
+
+    /**
+     * Updates the {@code filteredTransactions} with Sale predicate and {@code period} predicate.
+     */
+    private void updateFilteredTransactionListToShowSales(AnalysisPeriodType period) {
+        updateFilteredTransactionList(period.getPeriodFilterPredicate().and(new SaleTransactionPredicate()));
+    }
+
+    /**
+     * Updates the {@code filteredTransactions} with {@code period} predicate.
+     * For use by Profit analysis.
+     */
+    private void updateFilteredTransactionListToShowProfitPeriod(AnalysisPeriodType period) {
+        updateFilteredTransactionList(period.getPeriodFilterPredicate());
+    }
+
+    private void updateFilteredTransactionListToShowAll() {
+        updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
+    }
+
+
+    // ================ EDIT DRINK DETAILS COMMANDS =========================
+    @Override
+    public void updateSellingPrice(Drink drinkToEdit, Price newSellingPrice) {
+        inventoryList.updateSellingPrice(drinkToEdit, newSellingPrice);
+        indicateDrinkAttributesChanged(drinkToEdit);
+    }
+
+    @Override
+    public void updateCostPrice(Drink drinkToEdit, Price newCostPrice) {
+        inventoryList.updateCostPrice(drinkToEdit, newCostPrice);
+        indicateDrinkAttributesChanged(drinkToEdit);
+    }
+
+    @Override
+    public void updateTags(Drink drinkToEdit, Set<Tag> newTags) {
+        inventoryList.updateTags(drinkToEdit, newTags);
+        indicateDrinkAttributesChanged(drinkToEdit);
     }
 
 }

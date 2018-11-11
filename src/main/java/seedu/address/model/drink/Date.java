@@ -15,7 +15,7 @@ import java.time.format.ResolverStyle;
  */
 public class Date {
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Date should be in this format DD/MM/YYYY or D/MM/YYYY or DD/M/YYYY";
+            "Date should be in this format DD/MM/YYYY or D/MM/YYYY";
     public static final String MESSAGE_NON_EXISTING_DATE =
             "Please enter a date that exists";
     public static final String DATE_VALIDATION_REGEX =
@@ -52,10 +52,23 @@ public class Date {
     }
 
     /**
-     * Returns true if a given string is a valid date value.
+     * Returns true if a given string is in a valid date format.
      */
     public static boolean isValidDate(String test) {
         return test.matches(DATE_VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if a given string is a real existing date
+     */
+    public static boolean isExistingDate(String test) {
+        LocalDate tester;
+        try {
+            tester = LocalDate.parse(test, FORMAT);
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -101,4 +114,29 @@ public class Date {
     public int hashCode() {
         return date.hashCode();
     }
+
+    private void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+
+    public Date getDateSixDaysBefore() {
+        setDate(date.minusDays(6));
+
+        return this;
+    }
+
+    public Date getDateTwentyNineDaysBefore() {
+        setDate(date.minusDays(29));
+
+        return this;
+    }
+
+    /**
+     * Returns true is this date is between the {@code start} and {@code end} Dates, inclusive
+     */
+    public boolean isBetween(Date start, Date end) {
+        return (this.compareTo(start) >= 0) && (this.compareTo(end) <= 0);
+    }
+
 }

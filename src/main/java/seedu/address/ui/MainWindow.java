@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -15,10 +16,14 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.DrinkAttributeChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.InventoryPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.StopUiEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.drink.Drink;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -34,15 +39,22 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    //private PersonListPanel personListPanel;
+    private TransactionsPanel transactionsPanel;
+    private DrinkDetailPane drinkDetailPane;
     private DrinkListPanel drinkListPanel;
+    private BatchListPanel batchListPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
 
+    // @FXML
+    // private StackPane transactionsPanelPlaceholder;
+
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane drinkDetailPanePlaceholder;
+
+    @FXML
+    private StackPane transactionsPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -51,8 +63,10 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    //private StackPane personListPanelPlaceholder;
     private StackPane drinkListPanelPlaceholder;
+
+    @FXML
+    private StackPane batchListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -122,26 +136,49 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this loginWindow.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
-
-        //personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        //\personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        transactionsPanel = new TransactionsPanel(logic.getFilteredTransactionList());
+        transactionsPanelPlaceholder.getChildren().add(transactionsPanel.getRoot());
 
         drinkListPanel = new DrinkListPanel(logic.getFilteredDrinkList());
         drinkListPanelPlaceholder.getChildren().add(drinkListPanel.getRoot());
 
+        batchListPanel = new BatchListPanel(FXCollections.observableArrayList());
+        batchListPanelPlaceholder.getChildren().add(batchListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getInventoryListFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
+
+    @Subscribe
+    private void handleInventoryPanelSelectionChangedEvent(InventoryPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        // insert what to do here
+        drinkDetailPane = new DrinkDetailPane(event.getNewSelection());
+        drinkDetailPanePlaceholder.getChildren().add(drinkDetailPane.getRoot());
+        batchListPanel = new BatchListPanel(
+                event.getNewSelection().getObservableBatchList());
+        batchListPanelPlaceholder.getChildren().add(batchListPanel.getRoot());
+    }
+
+
+
+    @Subscribe
+    private void handleDrinkAttributeChangedEvent(DrinkAttributeChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        drinkListPanel = new DrinkListPanel(logic.getFilteredDrinkList());
+        drinkListPanelPlaceholder.getChildren().add(drinkListPanel.getRoot());
+        batchListPanel = new BatchListPanel(FXCollections.observableArrayList());
+        batchListPanelPlaceholder.getChildren().add(batchListPanel.getRoot());
+        drinkDetailPane = new DrinkDetailPane(new Drink(null));
+        drinkDetailPanePlaceholder.getChildren().add(drinkDetailPane.getRoot());
+    }
+
 
     void hide() {
         primaryStage.hide();
@@ -192,20 +229,19 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleExit() {
+        raise (new StopUiEvent ());
         raise(new ExitAppRequestEvent());
     }
-
-    //public PersonListPanel getPersonListPanel() {
-    //    return personListPanel;
-    //}
 
     public DrinkListPanel getDrinkListPanel() {
         return drinkListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
+
+    public TransactionsPanel getTransactionsPanel() {
+        return transactionsPanel;
     }
+
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {

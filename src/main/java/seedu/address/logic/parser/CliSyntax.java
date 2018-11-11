@@ -5,10 +5,6 @@ package seedu.address.logic.parser;
  */
 public class CliSyntax {
 
-    /* Prefix definitions */
-    public static final Prefix PREFIX_NAME = new Prefix("n/");
-
-
     /* Common prefix*/
     public static final Prefix PREFIX_DRINK_NAME = new Prefix ("n/");
 
@@ -29,5 +25,11 @@ public class CliSyntax {
     public static final Prefix PREFIX_AUTHENTICATION_LEVEL = new Prefix("a/");
     public static final Prefix PREFIX_OLD_PASSWORD = new Prefix("o/");
     public static final Prefix PREFIX_NEW_PASSWORD = new Prefix("n/");
+
+    /*accountant selection of time period*/
+
+    public static final String HYPHEN_DAY = "";
+    public static final String HYPHEN_WEEK = "-w";
+    public static final String HYPHEN_MONTH = "-m";
 
 }

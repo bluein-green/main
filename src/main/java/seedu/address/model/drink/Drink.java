@@ -7,6 +7,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.drink.exceptions.EmptyBatchListException;
+import seedu.address.model.drink.exceptions.InsufficientQuantityException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -22,7 +26,7 @@ public class Drink {
     private Price retailPrice;
     private UniqueBatchList uniqueBatchList;
     private Quantity quantity;
-    private final Set<Tag> tags = new HashSet<>();
+    private Set<Tag> tags = new HashSet<>();
 
     /**
      * Constructs a Drink for the use of adding new drink into inventory.
@@ -38,18 +42,32 @@ public class Drink {
         this.tags.addAll(tags);
     }
 
-    /**
-     * Every field must be present and not null.
-     */
-    public Drink(Name name, Price costPrice, Price retailPrice, Quantity quantity, Set<Tag> tags) {
-        requireAllNonNull(name, costPrice, retailPrice, quantity, tags);
+    public Drink(Name name, Price costPrice, Price retailPrice) {
+        requireAllNonNull(name, costPrice, retailPrice);
         this.name = name;
         this.costPrice = costPrice;
         this.retailPrice = retailPrice;
-        this.quantity = quantity;
+        uniqueBatchList = new UniqueBatchList();
+        quantity = new Quantity("0");
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Drink(Name name, Price costPrice, Price retailPrice, UniqueBatchList batchList, Set<Tag> tags) {
+        requireAllNonNull(name, costPrice, retailPrice, batchList, tags);
+        this.name = name;
+        this.costPrice = costPrice;
+        this.retailPrice = retailPrice;
+        this.uniqueBatchList = batchList;
+        this.quantity = uniqueBatchList.getTotalQuantity();
         this.tags.addAll(tags);
     }
 
+    /**
+     * Constructs a Drink for the use of buying and selling.
+     * Hence, fields other than name are initialised to default values.
+     */
     public Drink(Name name) {
         this.name = name;
         this.costPrice = new Price("0");
@@ -89,6 +107,10 @@ public class Drink {
         this.quantity = quantity;
     }
 
+    public void updateQuantity() {
+        this.quantity = uniqueBatchList.getTotalQuantity();
+    }
+
     public UniqueBatchList getUniqueBatchList() {
         return uniqueBatchList;
     }
@@ -105,6 +127,10 @@ public class Drink {
         return Collections.unmodifiableSet(tags);
     }
 
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
     /**
      * Returns true if both persons of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two persons.
@@ -116,6 +142,46 @@ public class Drink {
 
         return otherDrink != null
                 && otherDrink.getName().equals(getName());
+    }
+
+    /**
+     * Gets the date of the earliest imported batch
+     * @return a Batch Date object
+     */
+    public BatchDate getEarliestBatchDate() {
+        try {
+            return uniqueBatchList.getEarliestBatchDate();
+        } catch (EmptyBatchListException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Gets the date of the earliest imported batch
+     * @return a Batch Date object
+     */
+    public BatchDate getLatestBatchDate() {
+        try {
+            return uniqueBatchList.getLatestBatchDate();
+        } catch (EmptyBatchListException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Gets the number of batches of the current drink
+     * @return a quantity expressed as an integer
+     */
+    public int getNumberBatches() {
+        return uniqueBatchList.getNumberBatches();
+    }
+
+    public ObservableList<Batch> getObservableBatchList() {
+        try {
+            return uniqueBatchList.asUnmodifiableObservableList();
+        } catch (EmptyBatchListException e) {
+            return FXCollections.observableArrayList();
+        }
     }
 
     /**
@@ -134,6 +200,10 @@ public class Drink {
 
         Drink otherDrink = (Drink) other;
         return otherDrink.getName().equals(getName())
+                && otherDrink.getRetailPrice().equals(getRetailPrice())
+                && otherDrink.getCostPrice().equals(getCostPrice())
+                && otherDrink.getQuantity().equals(getQuantity())
+                // && otherDrink.getUniqueBatchList().equals(getUniqueBatchList())
                 && otherDrink.getTags().equals(getTags());
     }
 
@@ -146,26 +216,35 @@ public class Drink {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
+        builder.append ("Drink name: ")
+                .append (getName ())
+                .append ("\nCost price: ")
+                .append (getCostPrice ())
+                .append (" Selling price: ")
+                .append (getRetailPrice ())
                 .append(", Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
 
-
     /**
      * Decreases the quantity of the drink, using {@code quantity} as the value to decrease
      */
-    public void decreaseQuantity(Quantity quantity) {
-        //uniqueBatchList.updateBatchTransaction();
+    public void decreaseQuantity(Quantity quantity) throws InsufficientQuantityException {
+        this.uniqueBatchList.updateBatchTransaction(quantity);
+        updateQuantity();
     }
 
     /**
      * Increases the quantity of the drink, using {@code quantity} as the value to increase
      */
     public void increaseQuantity(Quantity quantity) {
-        // Batch batch = new Batch
-
+        BatchId tempId = new BatchId();
+        BatchPrice tempPrice = new BatchPrice(this.getCostPrice().toString());
+        BatchQuantity tempQuantity = new BatchQuantity(quantity.toString());
+        Batch toAdd = new Batch(tempId, tempQuantity);
+        this.uniqueBatchList.addBatch(toAdd);
+        updateQuantity();
     }
 }
 

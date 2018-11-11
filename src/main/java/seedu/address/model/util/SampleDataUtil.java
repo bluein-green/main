@@ -1,51 +1,184 @@
 package seedu.address.model.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.InventoryList;
+import seedu.address.model.ReadOnlyInventoryList;
+import seedu.address.model.drink.Batch;
+import seedu.address.model.drink.Date;
+import seedu.address.model.drink.Drink;
+import seedu.address.model.drink.Name;
+import seedu.address.model.drink.Price;
+import seedu.address.model.drink.Quantity;
+import seedu.address.model.drink.UniqueBatchList;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
+import seedu.address.model.transaction.Transaction;
+import seedu.address.model.transaction.TransactionId;
+import seedu.address.model.transaction.TransactionList;
+import seedu.address.model.transaction.TransactionType;
 
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
 public class SampleDataUtil {
-    public static Person[] getSamplePersons() {
-        return new Person[] {
-            new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"),
-                getTagSet("friends")),
-            new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                getTagSet("colleagues", "friends")),
-            new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                getTagSet("neighbours")),
-            new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                getTagSet("family")),
-            new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                new Address("Blk 47 Tampines Street 20, #17-35"),
-                getTagSet("classmates")),
-            new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                new Address("Blk 45 Aljunied Street 85, #11-31"),
-                getTagSet("colleagues"))
+
+    /**
+     * Initialising sample drinks for use
+     */
+    // Coke
+    public static final Batch COKE1 = new SampleBatchBuilder().withId("0001").withQuantity("10")
+            .withDate("01/10/2018").build();
+    public static final Batch COKE2 = new SampleBatchBuilder().withId("0002").withQuantity("20")
+            .withDate("19/10/2018").build();
+    public static final Batch COKE3 = new SampleBatchBuilder().withId("0003").withQuantity("30")
+            .withDate("11/11/2018").build();
+    //Green Tea
+    public static final Batch GT1 = new SampleBatchBuilder().withId("0004").withQuantity("10")
+            .withDate("03/10/2018").build();
+    public static final Batch GT2 = new SampleBatchBuilder().withId("0005").withQuantity("20")
+            .withDate("17/10/2018").build();
+    public static final Batch GT3 = new SampleBatchBuilder().withId("0006").withQuantity("40")
+            .withDate("10/11/2018").build();
+    //Sprite
+    public static final Batch SPRITE1 = new SampleBatchBuilder().withId("0007").withQuantity("30")
+            .withDate("04/10/2018").build();
+    public static final Batch SPRITE2 = new SampleBatchBuilder().withId("0008").withQuantity("20")
+            .withDate("20/10/2018").build();
+    public static final Batch SPRITE3 = new SampleBatchBuilder().withId("0009").withQuantity("40")
+            .withDate("7/11/2018").build();
+    //Milk Coffee
+    public static final Batch MC1 = new SampleBatchBuilder().withId("0010").withQuantity("10")
+            .withDate("01/11/2018").build();
+    public static final Batch MC2 = new SampleBatchBuilder().withId("0011").withQuantity("30")
+            .withDate("02/11/2018").build();
+    public static final Batch MC3 = new SampleBatchBuilder().withId("0012").withQuantity("40")
+            .withDate("20/11/2018").build();
+    //Milk Tea
+    public static final Batch MT1 = new SampleBatchBuilder().withId("0013").withQuantity("60")
+            .withDate("01/11/2018").build();
+    public static final Batch MT2 = new SampleBatchBuilder().withId("0014").withQuantity("20")
+            .withDate("02/11/2018").build();
+    public static final Batch MT3 = new SampleBatchBuilder().withId("0015").withQuantity("40")
+            .withDate("20/11/2018").build();
+
+
+    public static final Transaction BUY_COKE_1 = new Transaction(TransactionType.PURCHASE, new Date("01/10/2018"),
+            new Drink(new Name("Coke")), new Quantity("30"), new Price("576"), new TransactionId("10923"));
+
+    public static final Transaction SALE_COKE_1 = new Transaction(TransactionType.SALE, new Date("15/10/2018"),
+            new Drink(new Name("Coke")), new Quantity("10"), new Price("360"), new TransactionId("12305"));
+
+    public static final Transaction BUY_COKE_2 = new Transaction(TransactionType.PURCHASE, new Date("19/10/2018"),
+            new Drink(new Name("Coke")), new Quantity("10"), new Price("192"), new TransactionId("14203"));
+    public static final Transaction BUY_COKE_3 = new Transaction(TransactionType.PURCHASE, new Date("19/10/2018"),
+            new Drink(new Name("Coke")), new Quantity("10"), new Price("192"), new TransactionId("14593"));
+
+    public static final Transaction SALE_COKE_2 = new Transaction(TransactionType.SALE, new Date("25/10/2018"),
+            new Drink(new Name("Coke")), new Quantity("10"), new Price("360"), new TransactionId("16550"));
+
+    public static final Transaction BUY_COKE_4 = new Transaction(TransactionType.PURCHASE, new Date("11/11/2018"),
+            new Drink(new Name("Coke")), new Quantity("30"), new Price("576"), new TransactionId("20395"));
+
+    // Green Tea Transactions
+    public static final Transaction BUY_GT_1 = new Transaction(TransactionType.PURCHASE, new Date("03/10/2018"),
+            new Drink(new Name("Green Tea")), new Quantity("20"), new Price("336"), new TransactionId("11232"));
+
+    public static final Transaction BUY_GT_2 = new Transaction(TransactionType.PURCHASE, new Date("17/10/2018"),
+            new Drink(new Name("Green Tea")), new Quantity("20"), new Price("336"), new TransactionId("13213"));
+
+    public static final Transaction SALE_GT_1 = new Transaction(TransactionType.SALE, new Date("8/11/2018"),
+            new Drink(new Name("Green Tea")), new Quantity("10"), new Price("360"), new TransactionId("11232"));
+
+    public static final Transaction BUY_GT_3 = new Transaction(TransactionType.PURCHASE, new Date("10/11/2018"),
+            new Drink(new Name("Green Tea")), new Quantity("40"), new Price("672"), new TransactionId("19933"));
+
+    // Sprite Transactions
+    public static final Transaction BUY_SPRITE_1 = new Transaction(TransactionType.PURCHASE, new Date("4/10/2018"),
+            new Drink(new Name("Sprite")), new Quantity("40"), new Price("672"), new TransactionId("12211"));
+
+    public static final Transaction BUY_SPRITE_2 = new Transaction(TransactionType.PURCHASE, new Date("20/10/2018"),
+            new Drink(new Name("Sprite")), new Quantity("20"), new Price("336"), new TransactionId("15302"));
+
+    public static final Transaction SALE_SPRITE_1 = new Transaction(TransactionType.SALE, new Date("25/10/2018"),
+            new Drink(new Name("Sprite")), new Quantity("10"), new Price("360"), new TransactionId("19201"));
+
+    public static final Transaction BUY_SPRITE_3 = new Transaction(TransactionType.PURCHASE, new Date("7/11/2018"),
+            new Drink(new Name("Sprite")), new Quantity("40"), new Price("336"), new TransactionId("20121"));
+
+    private static final UniqueBatchList cokeBatches = new SampleBatchListBuilder().buildBatchList(COKE1, COKE2, COKE3);
+    private static final UniqueBatchList greenTeaBatches = new SampleBatchListBuilder().buildBatchList(GT1, GT2, GT3);
+    private static final UniqueBatchList spriteBatches =
+            new SampleBatchListBuilder().buildBatchList(SPRITE1, SPRITE2, SPRITE3);
+    private static final UniqueBatchList milkCoffeeBatches = new SampleBatchListBuilder().buildBatchList(MC1, MC2, MC3);
+    private static final UniqueBatchList milkTeaBatches = new SampleBatchListBuilder().buildBatchList(MT1, MT2, MT3);
+
+
+    public static Drink[] getSampleDrinks() {
+        return new Drink[]{
+            new Drink(new Name("Coke"), new Price("19.2"), new Price("36"), cokeBatches,
+                    getTagSet("Popular")),
+            new Drink(new Name("Green Tea"), new Price("16.8"), new Price("36"), greenTeaBatches,
+                    getTagSet("Popular")),
+            new Drink(new Name("Sprite"), new Price("16.8"), new Price("36"), spriteBatches,
+                    getTagSet("Popular")),
+            new Drink(new Name("Milk Coffee"), new Price("24"), new Price("43.2"), milkCoffeeBatches,
+                    getTagSet()),
+            new Drink(new Name("Milk Tea"), new Price("24"), new Price("43.2"), milkTeaBatches, getTagSet())
         };
     }
 
-    public static ReadOnlyAddressBook getSampleAddressBook() {
-        AddressBook sampleAb = new AddressBook();
-        for (Person samplePerson : getSamplePersons()) {
-            sampleAb.addPerson(samplePerson);
+    public static ReadOnlyInventoryList getSampleInventoryList() {
+        InventoryList sampleIl = new InventoryList();
+        for (Drink sampleDrink : getSampleDrinks()) {
+            sampleIl.addDrink(sampleDrink);
         }
-        return sampleAb;
+        return sampleIl;
+    }
+
+    /**
+     * Initialising sample transactions for use
+     */
+    // Coke
+    //Green Tea
+    //Sprite
+    //Milk Coffee
+    //Milk Tea
+
+    // TransactionType transactionType, Date transactionDate, Drink drinkTransacted,
+    // Quantity quantityTransacted, Price amountMoney, long id
+    // Coke Transactions
+
+
+
+
+
+
+
+
+    private static List<Transaction> getSampleTransactions() {
+        return new ArrayList<>(Arrays.asList(
+                BUY_COKE_1, SALE_COKE_1, BUY_COKE_2, BUY_COKE_3, SALE_COKE_2, BUY_COKE_4,
+                BUY_GT_1, BUY_GT_2, SALE_GT_1, BUY_GT_3,
+                BUY_SPRITE_1, BUY_SPRITE_2, SALE_SPRITE_1, BUY_SPRITE_3));
+    }
+
+
+    public static ReadOnlyTransactionList getSampleTransactionList() {
+        TransactionList sampleTl = new TransactionList();
+
+        List<Transaction> transactions = getSampleTransactions();
+        transactions.sort((t1, t2) -> t1.getTransactionDate().compareTo(t2.getTransactionDate()));
+
+        for (Transaction transaction : transactions) {
+            sampleTl.addTransaction(transaction);
+        }
+
+        return sampleTl;
     }
 
     /**

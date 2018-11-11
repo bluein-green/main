@@ -9,13 +9,14 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import seedu.address.analysis.Analysis;
-import seedu.address.analysis.AnalysisManager;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LoginInfo;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.InventoryListChangedEvent;
+import seedu.address.commons.events.model.TransactionListChangedEvent;
 import seedu.address.model.drink.Drink;
+import seedu.address.model.transaction.ReadOnlyTransactionList;
+import seedu.address.model.transaction.Transaction;
 import seedu.address.model.transaction.TransactionList;
 import seedu.address.model.user.Password;
 import seedu.address.model.user.UserName;
@@ -29,26 +30,27 @@ public class ModelManager extends ComponentManager implements Model {
     protected LoginInfoManager loginInfoManager;
     protected final FilteredList<Drink> filteredDrinks;
     protected final InventoryList inventoryList;
+    protected final FilteredList<Transaction> filteredTransactions;
     protected final TransactionList transactionList;
-    protected final Analysis analysis;
 
     /**
      * Initializes a ModelManager with the given inventoryList, userPrefs and transactionList
      */
-    public ModelManager(ReadOnlyInventoryList inventoryList, UserPrefs userPrefs, LoginInfoManager loginInfoManager,
-                        TransactionList transactionList) {
+    public ModelManager(ReadOnlyInventoryList readOnlyInventoryList, UserPrefs userPrefs,
+                        LoginInfoManager loginInfoManager, ReadOnlyTransactionList transactionList) {
+
         super();
-        requireAllNonNull(inventoryList, userPrefs);
+        requireAllNonNull(readOnlyInventoryList, userPrefs);
+        logger.fine("Initializing with inventory list: " + readOnlyInventoryList + " and user prefs " + userPrefs);
 
-        logger.fine("Initializing with inventory list: " + inventoryList + " and user prefs " + userPrefs);
-
-        this.inventoryList = new InventoryList(inventoryList);
+        inventoryList = new InventoryList(readOnlyInventoryList);
         filteredDrinks = new FilteredList<>(inventoryList.getDrinkList());
         this.loginInfoManager = loginInfoManager;
-        this.transactionList = transactionList;
-        analysis = new AnalysisManager(transactionList);
-        // TODO: transaction manager, facade for transactions
+        this.transactionList = new TransactionList(transactionList);
+        filteredTransactions = new FilteredList<>(this.transactionList.getTransactionList());
     }
+
+
 
     public ModelManager() {
         this(new InventoryList(), new UserPrefs(), new LoginInfoManager(), new TransactionList());
@@ -68,7 +70,7 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Raises an event to indicate the model has changed
      */
-    private void indicateInventoryListChanged() {
+    protected void indicateInventoryListChanged() {
         raise(new InventoryListChangedEvent(inventoryList));
     }
 
@@ -78,33 +80,6 @@ public class ModelManager extends ComponentManager implements Model {
         return inventoryList.hasDrink(drink);
     }
 
-    @Override
-    public void deleteDrink(Drink target) {
-        inventoryList.removeDrink(target);
-        indicateInventoryListChanged();
-    }
-
-    @Override
-    public void addDrink(Drink drink) {
-        inventoryList.addDrink(drink);
-        updateFilteredDrinkList(PREDICATE_SHOW_ALL_DRINKS);
-        indicateInventoryListChanged();
-    }
-
-    /*
-    @Override
-    public void updateDrink(Drink target, Drink editedDrink) {
-        requireAllNonNull(target, editedDrink);
-
-        inventoryList.updateDrink(target, editedDrink);
-        indicateInventoryListChanged();
-    }
-    */
-
-    private Drink findDrinkByName(Drink drink) {
-        Drink actualDrinkRef = inventoryList.findDrinkByName(drink);
-        return actualDrinkRef;
-    }
 
     //=========== Filtered Drink List Accessors =============================================================
 
@@ -122,6 +97,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredDrinks.setPredicate(predicate);
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -141,10 +117,30 @@ public class ModelManager extends ComponentManager implements Model {
                 && inventoryList.equals(other.inventoryList);
     }
 
-    // ========== stockTaker commands ====================================
+    // ========== common commands ====================================
+    @Override
+    public ReadOnlyTransactionList getTransactionList() {
+        return transactionList;
+    }
 
+    // ========== transactions  =================================================
+    @Override
+    public ObservableList<Transaction> getFilteredTransactionList() {
+        return FXCollections.unmodifiableObservableList(filteredTransactions);
+    }
 
-    // ========== Accountant commands =================================================
+    @Override
+    public void updateFilteredTransactionList(Predicate<Transaction> predicate) {
+        requireNonNull(predicate);
+        filteredTransactions.setPredicate(predicate);
+    }
+
+    /**
+     * Raises an event to indicate the transactions have changed
+     */
+    protected void indicateTransactionListChanged() {
+        raise(new TransactionListChangedEvent(transactionList));
+    }
 
 
     //=========== Login feature command ==============================================
@@ -163,5 +159,6 @@ public class ModelManager extends ComponentManager implements Model {
     public boolean isUserNameExist(UserName userName) {
         return loginInfoManager.isUserNameExist(userName);
     }
+
 
 }

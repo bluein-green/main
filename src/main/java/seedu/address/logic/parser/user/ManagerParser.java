@@ -7,13 +7,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ViewTransactionsCommand;
+import seedu.address.logic.commands.manager.AddDrinkCommand;
+import seedu.address.logic.commands.manager.DeleteCommand;
 import seedu.address.logic.commands.user.ChangePasswordCommand;
 import seedu.address.logic.commands.user.CreateAccountCommand;
 import seedu.address.logic.commands.user.DeleteAccountCommand;
 import seedu.address.logic.commands.user.LogoutCommand;
+import seedu.address.logic.parser.DeleteCommandParser;
+import seedu.address.logic.parser.EditCommandParser;
+import seedu.address.logic.parser.FindCommandParser;
+import seedu.address.logic.parser.SelectCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.manager.AddDrinkCommandParser;
 
 /**
  * Parses user input.
@@ -43,11 +55,19 @@ public class ManagerParser {
         final String arguments = matcher.group("arguments");
 
         switch (commandWord) {
-        //case AddItemCommand.COMMAND_WORD:
-        //    return new AddDrinkCommandParser().parse(arguments);
+        //=====================drink command====================//
+        case AddDrinkCommand.COMMAND_WORD:
+            return new AddDrinkCommandParser ().parse(arguments);
 
+        case EditCommand.COMMAND_WORD:
+            return new EditCommandParser().parse(arguments);
+
+        case DeleteCommand.COMMAND_WORD:
+            return new DeleteCommandParser ().parse(arguments);
+        //====================login command=====================//
         case CreateAccountCommand.COMMAND_WORD:
             return new CreateAccountCommandParser().parse(arguments);
+
         case ChangePasswordCommand.COMMAND_WORD:
             return new ChangePasswordCommandParser().parse(arguments);
 
@@ -56,6 +76,18 @@ public class ManagerParser {
 
         case LogoutCommand.COMMAND_WORD:
             return new LogoutCommand ();
+        //==============command function command===================//
+        case SelectCommand.COMMAND_WORD:
+            return new SelectCommandParser().parse(arguments);
+
+        case FindCommand.COMMAND_WORD:
+            return new FindCommandParser ().parse(arguments);
+
+        case ListCommand.COMMAND_WORD:
+            return new ListCommand();
+
+        case ViewTransactionsCommand.COMMAND_WORD:
+            return new ViewTransactionsCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

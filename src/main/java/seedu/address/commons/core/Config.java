@@ -13,7 +13,7 @@ public class Config {
     public static final Path DEFAULT_CONFIG_FILE = Paths.get("config.json");
 
     // Config values customizable through config file
-    private String appTitle = "Address App";
+    private String appTitle = "Drink I/O";
     private Level logLevel = Level.INFO;
     private Path userPrefsFilePath = Paths.get("preferences.json");
     private Path userLoginInfoFilePath = Paths.get("loginInfoList.json");
@@ -45,11 +45,11 @@ public class Config {
         this.userPrefsFilePath = userPrefsFilePath;
     }
 
-    public Path getUserLoginInfoilePath() {
+    public Path getUserLoginInfoFilePath() {
         return userLoginInfoFilePath;
     }
 
-    public void setUserLoginInfoilePath(Path userLoginInfoFilePath) {
+    public void setUserLoginInfoFilePath(Path userLoginInfoFilePath) {
         this.userLoginInfoFilePath = userLoginInfoFilePath;
     };
 

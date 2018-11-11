@@ -1,3 +1,4 @@
+//@@author liu-tianhang
 package seedu.address.logic.parser.user;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -8,10 +9,21 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ViewTransactionsCommand;
 import seedu.address.logic.commands.accountant.AnalyseCostsCommand;
+import seedu.address.logic.commands.accountant.AnalyseProfitCommand;
+import seedu.address.logic.commands.accountant.AnalyseRevenueCommand;
 import seedu.address.logic.commands.user.ChangePasswordCommand;
 import seedu.address.logic.commands.user.LogoutCommand;
+import seedu.address.logic.parser.FindCommandParser;
+import seedu.address.logic.parser.SelectCommandParser;
+import seedu.address.logic.parser.accountant.AnalyseCostsCommandParser;
+import seedu.address.logic.parser.accountant.AnalyseProfitCommandParser;
+import seedu.address.logic.parser.accountant.AnalyseRevenueCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -44,20 +56,39 @@ public class AccountantParser {
         //===========login command========================//
         case ChangePasswordCommand.COMMAND_WORD:
             return new ChangePasswordCommandParser().parse(arguments);
-        //===========accountant only command=============//
 
+        case LogoutCommand.COMMAND_WORD:
+            return new LogoutCommand ();
+
+        //===========accountant only command=============//
         case AnalyseCostsCommand.COMMAND_WORD:
-            return new AnalyseCostsCommand();
+            return new AnalyseCostsCommandParser ().parse (arguments);
+
+        case AnalyseProfitCommand.COMMAND_WORD:
+            return new AnalyseProfitCommandParser ().parse (arguments);
+
+        case AnalyseRevenueCommand.COMMAND_WORD:
+            return new AnalyseRevenueCommandParser ().parse (arguments);
 
         //=======general command=================//
+        case SelectCommand.COMMAND_WORD:
+            return new SelectCommandParser ().parse(arguments);
+
+        case FindCommand.COMMAND_WORD:
+            return new FindCommandParser ().parse(arguments);
+
+        case ListCommand.COMMAND_WORD:
+            return new ListCommand();
+
+        case ViewTransactionsCommand.COMMAND_WORD:
+            return new ViewTransactionsCommand();
+
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
-        case LogoutCommand.COMMAND_WORD:
-            return new LogoutCommand ();
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

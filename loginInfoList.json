@@ -1,4 +1,4 @@
-{
+
   "loginInfoList" : [ {
     "userName" : {
       "userName" : "tester"
@@ -11,16 +11,6 @@
     }
   }, {
     "userName" : {
-      "userName" : "stockTaker"
-    },
-    "password" : {
-      "password" : "Gcf70h4aWQ1T9NMxE03XM3nq3nCmFGihnO4xMzHMgP0="
-    },
-    "authenticationLevel" : {
-      "authenticationLevel" : "STOCKTAKER"
-    }
-  }, {
-    "userName" : {
       "userName" : "manager"
     },
     "password" : {
@@ -28,6 +18,16 @@
     },
     "authenticationLevel" : {
       "authenticationLevel" : "MANAGER"
+    }
+  }, {
+    "userName" : {
+      "userName" : "stocktaker"
+    },
+    "password" : {
+      "password" : "Gcf70h4aWQ1T9NMxE03XM3nq3nCmFGihnO4xMzHMgP0="
+    },
+    "authenticationLevel" : {
+      "authenticationLevel" : "STOCKTAKER"
     }
   }, {
     "userName" : {

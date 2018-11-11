@@ -9,25 +9,22 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 public class Batch {
     private final BatchId batchId;
     private BatchQuantity batchQuantity;
-    private final BatchPrice batchPrice;
     private final BatchDate batchDate;
 
-    public Batch(BatchId id, BatchQuantity quantity, BatchPrice price, BatchDate date) {
-        requireAllNonNull(id, quantity, price, date);
+    public Batch(BatchId id, BatchQuantity quantity, BatchDate date) {
+        requireAllNonNull(id, quantity, date);
         this.batchId = id;
         this.batchQuantity = quantity;
-        this.batchPrice = price;
         this.batchDate = date;
     }
 
     /**
      * Alternative constructor for the batch class, with the date attribute filled by the current date
      */
-    public Batch(BatchId id, BatchQuantity quantity, BatchPrice price) {
-        requireAllNonNull(id, quantity, price);
+    public Batch(BatchId id, BatchQuantity quantity) {
+        requireAllNonNull(id, quantity);
         this.batchId = id;
         this.batchQuantity = quantity;
-        this.batchPrice = price;
         this.batchDate = new BatchDate();
     }
 
@@ -39,9 +36,6 @@ public class Batch {
         return batchQuantity;
     }
 
-    public BatchPrice getBatchPrice() {
-        return batchPrice;
-    }
 
     public BatchDate getBatchDate() {
         return batchDate;
@@ -49,6 +43,10 @@ public class Batch {
 
     public void decreaseBatchQuantity(int value) {
         batchQuantity.decreaseValue(value);
+    }
+
+    public void increaseBatchQuantity(int value) {
+        batchQuantity.increaseValue(value);
     }
 
     /**
@@ -72,6 +70,9 @@ public class Batch {
         return this.batchDate.compareTo(otherBatch.getBatchDate());
     }
 
+    public boolean isSameDate(Batch otherBatch) {
+        return this.batchDate.equals(otherBatch.batchDate);
+    }
 
     /**
      * Returns true if both batches have the same identity and data fields.
@@ -90,7 +91,6 @@ public class Batch {
         Batch otherBatch = (Batch) other;
         return otherBatch.getBatchId().equals(getBatchId())
                 && otherBatch.getBatchDate().equals(getBatchDate())
-                && otherBatch.getBatchPrice().equals(getBatchPrice())
                 && otherBatch.getBatchQuantity().equals(getBatchQuantity());
     }
 
@@ -101,8 +101,6 @@ public class Batch {
                 .append(getBatchId().toString())
                 .append(" Batch Quantity: ")
                 .append(getBatchQuantity().toString())
-                .append(" Batch Price: $")
-                .append(getBatchPrice().toString())
                 .append(" Batch Date: ")
                 .append(getBatchDate().toString());
         return builder.toString();

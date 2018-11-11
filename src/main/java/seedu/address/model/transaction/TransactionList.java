@@ -3,27 +3,26 @@ package seedu.address.model.transaction;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.model.drink.Date;
 
 /**
  * Represents a list of transactions for (currently) eternity, until cleared.
  */
-public class TransactionList {
+public class TransactionList implements ReadOnlyTransactionList {
 
-    private List<Transaction> transactions;
+    private ObservableList<Transaction> transactions = FXCollections.observableArrayList();
     private Date lastUpdateDate;
 
     public TransactionList() {
-        transactions = new ArrayList<>();
+        lastUpdateDate = new Date();
     }
 
     /**
      * Creates a TransactionList using the transactions in the {@code toBeCopied}
      */
-    public TransactionList(TransactionList toBeCopied) {
+    public TransactionList(ReadOnlyTransactionList toBeCopied) {
         this();
         resetData(toBeCopied);
     }
@@ -31,31 +30,28 @@ public class TransactionList {
     /**
      * Resets the existing data of this {@code TransactionList} with {@code newData}.
      */
-    public void resetData(TransactionList newData) {
+    public void resetData(ReadOnlyTransactionList newData) {
         requireNonNull(newData);
 
-        setTransactions(newData.getTransactions());
+        setTransactions(newData.getTransactionList());
     }
 
     /**
      * Replaces the contents of the inventory list with {@code drinks}.
      * {@code drinks} must not contain duplicate drinks.
      */
-    public void setTransactions(List<Transaction> transactions) {
+    public void setTransactions(ObservableList<Transaction> transactions) {
         requireAllNonNull(transactions);
 
         this.transactions = transactions;
     }
 
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
 
     /**
      * Adds {@code transaction} to the list of transactions
-     * Guarantees: transaction is accurately generated.
      */
     public void addTransaction(Transaction transaction) {
+        requireNonNull(transaction);
         transactions.add(transaction);
         updateLastUpdateDate();
     }
@@ -65,13 +61,30 @@ public class TransactionList {
      */
     private void updateLastUpdateDate() {
         lastUpdateDate = new Date();
-        // TODO: STUB
+    }
+
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        transactions.forEach(builder::append);
-        return builder.toString();
+        if (transactions.size() == 1) {
+            return transactions.size() + " transaction";
+        } else {
+            return transactions.size() + " transactions";
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TransactionList // instanceof handles nulls
+                && transactions.equals(((TransactionList) other).transactions));
+    }
+
+    @Override
+    public ObservableList<Transaction> getTransactionList() {
+        return transactions;
     }
 }

@@ -6,7 +6,7 @@ import static java.util.Objects.requireNonNull;
  * Represents the possible transaction types recorded in a transaction.
  */
 public enum TransactionType {
-    SALE("SALE"), IMPORT("IMPORT");
+    SALE("SALE"), PURCHASE("PURCHASE");
 
     private String value;
 
@@ -24,5 +24,6 @@ public enum TransactionType {
         return value;
     }
 
+    // TODO: implement a predicate to filter based on type
 
 }
