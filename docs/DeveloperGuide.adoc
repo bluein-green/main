@@ -201,34 +201,34 @@ image::DeletePersonSdForLogic.png[width="800"]
 === Model component
 
 .Structure of the Model Component
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagram_new.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the InventoryList data.
+* exposes an unmodifiable `ObservableList<Drink>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the TransactionList data.
+* exposes an unmodifiable `ObservableList<Transaction>` that can be observed
 * does not depend on any of the other three components.
 
-[NOTE]
-As a more OOP model, we can store a `Tag` list in `Address Book`, which `Person` can reference. This would allow `Address Book` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object. An example of how such a model may look like is given below. +
- +
-image:ModelClassBetterOopDiagram.png[width="800"]
 
 [[Design-Storage]]
 === Storage component
 
 .Structure of the Storage Component
-image::StorageClassDiagram.png[width="800"]
+image::StorageClassDiagram_new.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save `UserPref` objects in json format and read them back.
+* can save the `LoginInfo` objects in json format and read them back.
+* can save the Inventory List data in xml format and read it back.
+* can save the Transaction List data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -240,18 +240,125 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::analyses[]
-=== Analyses of profits and quantities sold in the company
+=== Analyses of costs, revenue and profit in the company over periods of time
 ==== Implementation
-To facilitate the analyses of total profit, revenue and costs of the company, as well as the quantities of drinks sold, transactions (sales and imports) are logged using `Transaction`. They will be logged when the drink stock increases due to import (`TransactionType` is `IMPORT`), or when they decrease due to a sale (`TransactionType` is `SALE`). These transactions are stored into a list of transactions, in `TransactionList`.
+To facilitate the analyses of total profit, revenue and costs of the company over various periods of time,
+transactions (sales and purchases) are logged using `Transaction` s.
+They will be logged when the drink stock increases due to a purchase (`TransactionType` is `PURCHASE`),
+or when they decrease due to a sale (`TransactionType` is `SALE`).
+These transactions are stored into a list of transactions, in `TransactionList`.
 
-Analyses are conducted in `Analysis`. The following operations are implemented for the analyses of profit, revenue and costs:
-* `Analysis#analyseProfit()`
-* `Analysis#analyseCost()`
-* `Analysis#analyseRevenue()`
+Analyses are conducted in `AnalysisManager`, with the API exposed in `Analysis`.
+The following operations are implemented for the analyses of profit, revenue and costs:
 
-The methods that enable the analyses of quantities sold are:
-* `Analysis#analyseQuantitiesSold(Drink drink)`
-* <to be added>
+* `Analysis#analyseCost(AnalysisPeriodType period)`
+* `Analysis#analyseRevenue(AnalysisPeriodType period)`
+* `Analysis#analyseProfit(AnalysisPeriodType period)`
+
+The implementation of these operations are elaborated in the below sub-sections.
+
+==== Indicating the analysis period with `AnalysisPeriodType`
+`AnalysisPeriodType` is an enum class that denotes the period for analysis:
+
+* in the current day
+* within the past 7 days (including the current day)
+* within the past 30 days (including the current day)
+
+These are indicated respectively as:
+
+* `AnalysisPeriodType.DAY`
+* `AnalysisPeriodType.WEEK`
+* `AnalysisPeriodType.MONTH`.
+
+A user may enter an analysis command with additional time period parameters.
+For the period of a day, no parameter is indicated.
+For the period of 7 days, `-w` is appended to the command. (e.g. `costs -w`)
+For the period of 30 days, `-m` is appended to the command. (e.g. `costs -m`)
+
+The following is the sequence of steps when the user enters an analysis command with a time period:
+
+*Step 1.* User enters an analysis command (e.g. AnalyseCostsCommand). +
+*Step 2.* The appropriate parser parses the time period parameter, and assigns the respective `AnalysisPeriodType`
+value to the analysis command. +
+*Step 3.* The analysis command is executed, and the `AnalysisPeriodType` value is passed to the `ModelManager`. +
+*Step 4.* In the `ModelManager`, the relevant Predicate for the time period is retrieved.
+
+The available Predicates corresponding to each `AnalysisPeriodType` are:
+
+* `DAY`: `TransactionInADayPredicate`
+* `WEEK`: `TransactionInSevenDaysPredicate`
+* `MONTH`: `TransactionInThirtyDaysPredicate`
+
+These are retrieved using `AnalysisPeriodType#getPeriodFilterPredicate()`.
+
+*Step 5.* The Predicate retrieved is passed to the filtered transaction list.
+This is in order to filter the transactions by their dates such that
+the filtered transaction list only contains transactions with dates within the relevant period.
+
+`FilteredList<Transaction>` handles the filtering using the given predicate.
+
+
+// INSERT DIAGRAM!!!!!!
+
+
+==== Implementation of `Analysis#analyseCost()`
+The actual analysis of costs continues from the the filtering of the filtered transaction list.
+This section focuses on the actual computation of the costs incurred by the company.
+
+*Step 1.* In addition to passing the analysis period Predicate, a `PurchaseTransactionPredicate` is
+also passed to the filtered transaction list simultaneously. +
+
+This filters the list further, leaving only the `TransactionType.PURCHASE` transactions, which contribute
+to the costs of the company. +
+
+Overall, the filtered transaction list will also be updated in the UI.
+
+*Step 2.* `ModelManager` passes control to the `AnalysisManager`. +
+*Step 3.* In `AnalysisManager`, the helper method `AnalysisManager#calculateTotalCost()` is called
+to compute the total costs of the filtered transactions.
+
+It iterates through the filtered transaction list, and checks the `Transaction` 's `TransactionType`
+as a precuation. If the `TransactionType` is `PURCHASE`, the `amountMoney` transacted is obtained and
+added to a sum of costs. The sum of costs is then wrapped in a `Price` object and returned to the calling function.
+
+// insert diagram!
+
+
+==== Implementation of `Analysis#analyseRevenue()`
+The implementation of the analysis of revenue is similar to that of costs. However, a `SaleTransactionPredicate`
+is passed to the filtered transaction list instead.
+
+In *Step 3*, the helper method `AnalysisManager#calculateTotalRevenue()` is called. It iterates
+through the filtered transaction list, and checks if the `Transaction` 's `TransactionType` is
+`SALE`. If so, the `amountMoney` transacted is added to the sum of revenues. The sum of revenues
+is then wrapped in a `Price` object and returned to the calling function.
+
+==== Implementation of `Analysis#analyseProfit()`
+The analysis of profit continues from the filtering of the filtered transaction list by period.
+This section focuses on the actual computation of the profit earned by the company.
+
+*Step 1.* `ModelManager` passes control to the `AnalysisManager`. No additional filtering is done. +
+*Step 2.* In `AnalysisManager`, the helper method `AnalysisManager#calculateTotalProfit()` is called
+to compute the total profit of the filtered transactions.
+
+It iterates through the filtered transaction list, and checks the `Transaction` 's `TransactionType`.
+
+* If the `TransactionType` is `PURCHASE`, the `amountMoney` transacted is obtained and added to a sum of costs.
+* If the `TransactionType` is `SALE`, the `amountMoney` transacted is obtained and added to a sum of revenues.
+
+*Step 3.* Total profit is calculated using the formula: "profit = revenue - cost".
+This total profit value is checked to determine whether it is negative.
+
+* If total profit is positive or zero, it is wrapped in a `Price` object and returned to the calling function.
+* If the total profit is negative, a special `NegativePrice` object is used to wrap the value.
+**
+
+The sum of costs is then wrapped in a `Price` object and returned to the calling function.
+
+
+
+
+
 
 Internally, `Analysis#analyseProfit()` calls `Analysis#analyseCost()` and `Analysis#analyseRevenue()` to calculate the profit, using the formula “profit = revenue - cost”.
 
@@ -331,6 +438,7 @@ image::LoginUMLDiagram/ReLoginEvent_sequence_diagram.png[width="800"]
 ** Pros: Have serialized code in original ab4.
 ** Cons: It has many rule to set before implementation.
 //end::login[]
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
