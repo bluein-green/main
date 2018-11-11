@@ -34,7 +34,8 @@ public class XmlSerializableTransactionList {
      */
     public XmlSerializableTransactionList(ReadOnlyTransactionList src) {
         this();
-        transactions.addAll(src.getTransactionList().stream().map(XmlAdaptedTransaction::new).collect(Collectors.toList()));
+        transactions.addAll(src.getTransactionList().stream().map(XmlAdaptedTransaction::new)
+                .collect(Collectors.toList()));
     }
 
     /**

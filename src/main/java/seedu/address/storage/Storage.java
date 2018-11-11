@@ -12,8 +12,6 @@ import seedu.address.model.LoginInfoManager;
 import seedu.address.model.ReadOnlyInventoryList;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.transaction.ReadOnlyTransactionList;
-import seedu.address.model.transaction.Transaction;
-import seedu.address.model.transaction.TransactionList;
 import seedu.address.storage.logininfo.LoginInfoStorage;
 import seedu.address.storage.transactions.TransactionListStorage;
 

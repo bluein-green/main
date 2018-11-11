@@ -16,10 +16,6 @@ public class TransactionListChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "number of transactions: " + "TBC";
+        return "number of transactions: " + data.getTransactionList().size();
     }
-
-//    public ObservableList<Transaction> getData() {
-//        return data;
-//    }
 }

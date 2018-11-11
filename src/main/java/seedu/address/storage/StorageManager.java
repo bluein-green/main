@@ -17,7 +17,6 @@ import seedu.address.model.LoginInfoManager;
 import seedu.address.model.ReadOnlyInventoryList;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.transaction.ReadOnlyTransactionList;
-import seedu.address.model.transaction.TransactionList;
 import seedu.address.storage.logininfo.LoginInfoStorage;
 import seedu.address.storage.transactions.TransactionListStorage;
 
@@ -46,17 +45,17 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public Path getLoginInfoFilePath() {
-        return loginInfoStorage.getLoginInfoFilePath ();
+        return loginInfoStorage.getLoginInfoFilePath();
     }
 
     @Override
     public Optional<LoginInfoManager> readLoginInfo() throws DataConversionException, IOException {
-        return loginInfoStorage.readLoginInfo ();
+        return loginInfoStorage.readLoginInfo();
     }
 
     @Override
     public void saveLoginInfo(LoginInfoManager loginInfoManager) throws IOException {
-        loginInfoStorage.saveLoginInfo (loginInfoManager);
+        loginInfoStorage.saveLoginInfo(loginInfoManager);
     }
     // ================ UserPrefs methods ==============================
 

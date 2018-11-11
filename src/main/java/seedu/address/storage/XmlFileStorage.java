@@ -55,7 +55,8 @@ public class XmlFileStorage {
     /**
      * Returns inventory list in the file or an empty address book
      */
-    public static XmlSerializableTransactionList loadTransactionDataFromSaveFile(Path file) throws DataConversionException,
+    public static XmlSerializableTransactionList loadTransactionDataFromSaveFile(Path file)
+            throws DataConversionException,
             FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableTransactionList.class);

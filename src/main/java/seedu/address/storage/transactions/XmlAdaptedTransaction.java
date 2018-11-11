@@ -13,7 +13,6 @@ import seedu.address.model.drink.Quantity;
 import seedu.address.model.transaction.Transaction;
 import seedu.address.model.transaction.TransactionId;
 import seedu.address.model.transaction.TransactionType;
-import seedu.address.storage.XmlAdaptedDrink;
 
 /**
  * JAXB-friendly version of the Transaction.
@@ -76,14 +75,16 @@ public class XmlAdaptedTransaction {
      */
     public Transaction toModelType() throws IllegalValueException {
         if (transactionType == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, TransactionType.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    TransactionType.class.getSimpleName()));
         }
 
         final TransactionType modelTransactionType = TransactionType.valueOf(transactionType);
 
 
         if (transactionDate == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Date.class.getSimpleName()));
         }
         if (!Date.isValidDate(transactionDate)) {
             throw new IllegalValueException(Date.MESSAGE_DATE_CONSTRAINTS);
@@ -100,9 +101,9 @@ public class XmlAdaptedTransaction {
         final Drink modelDrinkTransacted = new Drink(new Name(drinkTransacted));
 
 
-
         if (quantityTransacted == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Quantity.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Quantity.class.getSimpleName()));
         }
         if (!Quantity.isValidQuantity(quantityTransacted)) {
             throw new IllegalValueException(Quantity.MESSAGE_QUANTITY_CONSTRAINTS);
@@ -120,15 +121,16 @@ public class XmlAdaptedTransaction {
 
 
         if (id == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, TransactionId.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    TransactionId.class.getSimpleName()));
         }
         if (!TransactionId.isValidTransactionId(id)) {
             throw new IllegalValueException(TransactionId.MESSAGE_TRANSACTION_ID_CONSTRAINTS);
         }
         final TransactionId modelTransactionId = new TransactionId(id);
 
-        return new Transaction(modelTransactionType, modelTransactionDate, modelDrinkTransacted, modelQuantityTransactied,
-                modelAmountMoney, modelTransactionId);
+        return new Transaction(modelTransactionType, modelTransactionDate, modelDrinkTransacted,
+                modelQuantityTransactied, modelAmountMoney, modelTransactionId);
     }
 
     @Override

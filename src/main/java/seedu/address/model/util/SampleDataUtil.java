@@ -66,47 +66,7 @@ public class SampleDataUtil {
     public static final Batch MT3 = new SampleBatchBuilder().withId("0015").withQuantity("40")
             .withDate("20/11/2018").build();
 
-    private static final UniqueBatchList cokeBatches = new SampleBatchListBuilder().buildBatchList(COKE1, COKE2, COKE3);
-    private static final UniqueBatchList greenTeaBatches = new SampleBatchListBuilder().buildBatchList(GT1, GT2, GT3);
-    private static final UniqueBatchList spriteBatches =
-            new SampleBatchListBuilder().buildBatchList(SPRITE1, SPRITE2, SPRITE3);
-    private static final UniqueBatchList milkCoffeeBatches = new SampleBatchListBuilder().buildBatchList(MC1, MC2, MC3);
-    private static final UniqueBatchList milkTeaBatches = new SampleBatchListBuilder().buildBatchList(MT1, MT2, MT3);
 
-    public static Drink[] getSampleDrinks() {
-        return new Drink[] {
-                new Drink(new Name("Coke"), new Price("19.2"), new Price("36"), cokeBatches,
-                        getTagSet("Popular")),
-                new Drink(new Name("Green Tea"), new Price("16.8"), new Price("36"), greenTeaBatches ,
-                        getTagSet("Popular")),
-                new Drink(new Name("Sprite"), new Price("16.8"), new Price("36"), spriteBatches ,
-                        getTagSet("Popular")),
-                new Drink(new Name("Milk Coffee"), new Price("24"), new Price("43.2"), milkCoffeeBatches,
-                        getTagSet()),
-                new Drink(new Name("Milk Tea"), new Price("24"), new Price("43.2"), milkTeaBatches, getTagSet())
-        };
-    }
-
-    public static ReadOnlyInventoryList getSampleInventoryList() {
-        InventoryList sampleIl = new InventoryList();
-        for (Drink sampleDrink : getSampleDrinks()) {
-            sampleIl.addDrink(sampleDrink);
-        }
-        return sampleIl;
-    }
-
-    /**
-     * Initialising sample transactions for use
-     */
-    // Coke
-    //Green Tea
-    //Sprite
-    //Milk Coffee
-    //Milk Tea
-
-    // TransactionType transactionType, Date transactionDate, Drink drinkTransacted,
-    // Quantity quantityTransacted, Price amountMoney, long id
-    // Coke Transactions
     public static final Transaction BUY_COKE_1 = new Transaction(TransactionType.PURCHASE, new Date("01/10/2018"),
             new Drink(new Name("Coke")), new Quantity("30"), new Price("576"), new TransactionId("10923"));
 
@@ -136,6 +96,50 @@ public class SampleDataUtil {
 
     public static final Transaction BUY_GT_3 = new Transaction(TransactionType.PURCHASE, new Date("10/11/2018"),
             new Drink(new Name("Green Tea")), new Quantity("40"), new Price("672"), new TransactionId("19933"));
+
+
+    private static final UniqueBatchList cokeBatches = new SampleBatchListBuilder().buildBatchList(COKE1, COKE2, COKE3);
+    private static final UniqueBatchList greenTeaBatches = new SampleBatchListBuilder().buildBatchList(GT1, GT2, GT3);
+    private static final UniqueBatchList spriteBatches =
+            new SampleBatchListBuilder().buildBatchList(SPRITE1, SPRITE2, SPRITE3);
+    private static final UniqueBatchList milkCoffeeBatches = new SampleBatchListBuilder().buildBatchList(MC1, MC2, MC3);
+    private static final UniqueBatchList milkTeaBatches = new SampleBatchListBuilder().buildBatchList(MT1, MT2, MT3);
+
+
+    public static Drink[] getSampleDrinks() {
+        return new Drink[]{
+            new Drink(new Name("Coke"), new Price("19.2"), new Price("36"), cokeBatches,
+                    getTagSet("Popular")),
+            new Drink(new Name("Green Tea"), new Price("16.8"), new Price("36"), greenTeaBatches,
+                    getTagSet("Popular")),
+            new Drink(new Name("Sprite"), new Price("16.8"), new Price("36"), spriteBatches,
+                    getTagSet("Popular")),
+            new Drink(new Name("Milk Coffee"), new Price("24"), new Price("43.2"), milkCoffeeBatches,
+                    getTagSet()),
+            new Drink(new Name("Milk Tea"), new Price("24"), new Price("43.2"), milkTeaBatches, getTagSet())
+        };
+    }
+
+    public static ReadOnlyInventoryList getSampleInventoryList() {
+        InventoryList sampleIl = new InventoryList();
+        for (Drink sampleDrink : getSampleDrinks()) {
+            sampleIl.addDrink(sampleDrink);
+        }
+        return sampleIl;
+    }
+
+    /**
+     * Initialising sample transactions for use
+     */
+    // Coke
+    //Green Tea
+    //Sprite
+    //Milk Coffee
+    //Milk Tea
+
+    // TransactionType transactionType, Date transactionDate, Drink drinkTransacted,
+    // Quantity quantityTransacted, Price amountMoney, long id
+    // Coke Transactions
 
 
     private static List<Transaction> getSampleTransactions() {

@@ -79,7 +79,8 @@ public class MainApp extends Application {
         loginInfoList = initLoginInfo(loginInfoStorage);
         loginPathPath = config.getLoginPagePath().toString();
         InventoryListStorage inventoryListStorage = new XmlInventoryListStorage(userPrefs.getInventoryListFilePath());
-        TransactionListStorage transactionListStorage = new XmlTransactionListStorage(userPrefs.getTransactionListFilePath());
+        TransactionListStorage transactionListStorage =
+                new XmlTransactionListStorage(userPrefs.getTransactionListFilePath());
         storage = new StorageManager(inventoryListStorage, userPrefsStorage, loginInfoStorage, transactionListStorage);
 
         inventoryListInitializer = new InventoryListInitializer(config, storage, userPrefs, loginInfoList);

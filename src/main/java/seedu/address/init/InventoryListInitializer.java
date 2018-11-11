@@ -120,10 +120,12 @@ public class InventoryListInitializer {
             }
             initialTransactionData = transactionListOptional.orElseGet(SampleDataUtil::getSampleTransactionList);
         } catch (DataConversionException e) {
-            logger.warning("Transaction data file not in the correct format. Will be starting with an empty Transaction List");
+            logger.warning("Transaction data file not in the correct format."
+                    + " Will be starting with an empty Transaction List");
             initialTransactionData = new TransactionList();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the transaction datafile. Will be starting with an empty Transaction List");
+            logger.warning("Problem while reading from the transaction datafile."
+                    + "Will be starting with an empty Transaction List");
             initialTransactionData = new TransactionList();
         }
 
