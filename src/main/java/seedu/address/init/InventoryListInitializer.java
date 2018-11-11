@@ -112,7 +112,6 @@ public class InventoryListInitializer {
             initialData = new InventoryList();
         }
 
-        // TODO:
         try {
             transactionListOptional = storage.readTransactionList();
             if (!transactionListOptional.isPresent()) {

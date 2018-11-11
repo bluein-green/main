@@ -46,11 +46,11 @@ public class SampleDataUtil {
             .withDate("10/11/2018").build();
     //Sprite
     public static final Batch SPRITE1 = new SampleBatchBuilder().withId("0007").withQuantity("30")
-            .withDate("01/11/2018").build();
+            .withDate("04/10/2018").build();
     public static final Batch SPRITE2 = new SampleBatchBuilder().withId("0008").withQuantity("20")
-            .withDate("02/11/2018").build();
+            .withDate("20/10/2018").build();
     public static final Batch SPRITE3 = new SampleBatchBuilder().withId("0009").withQuantity("40")
-            .withDate("20/11/2018").build();
+            .withDate("7/11/2018").build();
     //Milk Coffee
     public static final Batch MC1 = new SampleBatchBuilder().withId("0010").withQuantity("10")
             .withDate("01/11/2018").build();
@@ -97,6 +97,18 @@ public class SampleDataUtil {
     public static final Transaction BUY_GT_3 = new Transaction(TransactionType.PURCHASE, new Date("10/11/2018"),
             new Drink(new Name("Green Tea")), new Quantity("40"), new Price("672"), new TransactionId("19933"));
 
+    // Sprite Transactions
+    public static final Transaction BUY_SPRITE_1 = new Transaction(TransactionType.PURCHASE, new Date("4/10/2018"),
+            new Drink(new Name("Sprite")), new Quantity("40"), new Price("672"), new TransactionId("12211"));
+
+    public static final Transaction BUY_SPRITE_2 = new Transaction(TransactionType.PURCHASE, new Date("20/10/2018"),
+            new Drink(new Name("Sprite")), new Quantity("20"), new Price("336"), new TransactionId("15302"));
+
+    public static final Transaction SALE_SPRITE_1 = new Transaction(TransactionType.SALE, new Date("25/10/2018"),
+            new Drink(new Name("Sprite")), new Quantity("10"), new Price("360"), new TransactionId("19201"));
+
+    public static final Transaction BUY_SPRITE_3 = new Transaction(TransactionType.PURCHASE, new Date("7/11/2018"),
+            new Drink(new Name("Sprite")), new Quantity("40"), new Price("336"), new TransactionId("20121"));
 
     private static final UniqueBatchList cokeBatches = new SampleBatchListBuilder().buildBatchList(COKE1, COKE2, COKE3);
     private static final UniqueBatchList greenTeaBatches = new SampleBatchListBuilder().buildBatchList(GT1, GT2, GT3);
@@ -142,10 +154,17 @@ public class SampleDataUtil {
     // Coke Transactions
 
 
+
+
+
+
+
+
     private static List<Transaction> getSampleTransactions() {
         return new ArrayList<>(Arrays.asList(
                 BUY_COKE_1, SALE_COKE_1, BUY_COKE_2, BUY_COKE_3, SALE_COKE_2, BUY_COKE_4,
-                BUY_GT_1, BUY_GT_2, SALE_GT_1, BUY_GT_3));
+                BUY_GT_1, BUY_GT_2, SALE_GT_1, BUY_GT_3,
+                BUY_SPRITE_1, BUY_SPRITE_2, SALE_SPRITE_1, BUY_SPRITE_3));
     }
 
 
