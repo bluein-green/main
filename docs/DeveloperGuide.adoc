@@ -368,7 +368,7 @@ the transactions by different facets.
 *** Enhances reusability especially of the `updateFilteredTransactionList(Predicate predicate)` method.
 *** Allows the transaction list panel in the UI to be updated automatically.
 
-* Cons: We must ensure that the implementation of each Predicate is correct.
+** Cons: We must ensure that the implementation of each Predicate is correct.
 
 * *Alternative:* Loop through all transactions in the `TransactionList`, and check if the transaction date
 is within the desired time period
