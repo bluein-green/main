@@ -27,7 +27,8 @@ a day, the past 7 days (including the current day), the past 30 days (including 
 ** _Justification_: This feature enables the accountants in a small company to calculate the company's sales performance quickly.
 It also allows the company to keep track of its finances simultaneously with its inventory.
 ** _Highlights_: This feature required the building of new classes to record the transactions: a `Transaction` class, and a `TransactionList` class to hold the `Transaction` s.
-The optimisation of the code using `Predicate` s to filter the list of transactions by date challenged me to utilise  
+I was also challenged to optimise the code by using `Predicate` s to filter the list of transactions by date and `TransactionType`.
+This filtered list of transactions is then used for the computation of the sales figures.
 
 * *Code contributed*: [https://nuscs2113-ay1819s1.github.io/dashboard/#=undefined&search=bluein-green[Functional and test code]]
 * *Other contributions*:
