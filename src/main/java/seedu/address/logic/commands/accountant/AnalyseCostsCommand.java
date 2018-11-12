@@ -5,13 +5,17 @@ import static seedu.address.logic.parser.CliSyntax.HYPHEN_DAY;
 import static seedu.address.logic.parser.CliSyntax.HYPHEN_MONTH;
 import static seedu.address.logic.parser.CliSyntax.HYPHEN_WEEK;
 
+import java.util.function.Predicate;
+
 import seedu.address.analysis.AnalysisPeriodType;
+import seedu.address.analysis.TransactionPeriodPredicate;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.drink.Price;
+import seedu.address.model.transaction.Transaction;
 import seedu.address.model.user.accountant.AccountantModel;
 
 /**
@@ -29,13 +33,13 @@ public class AnalyseCostsCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Total costs: $%1$s";
 
-    private AnalysisPeriodType period;
+    private TransactionPeriodPredicate periodToFilterBy;
 
     /**
      * Creates an AnalyseCostsCommand to compute total costs incurred.
      */
-    public AnalyseCostsCommand(AnalysisPeriodType period) {
-        this.period = period;
+    public AnalyseCostsCommand(TransactionPeriodPredicate periodToFilterBy) {
+        this.periodToFilterBy = periodToFilterBy;
     }
 
     @Override
@@ -45,7 +49,7 @@ public class AnalyseCostsCommand extends Command {
 
         AccountantModel accountantModel = (AccountantModel) model;
 
-        Price totalCosts = accountantModel.analyseCosts(period);
+        Price totalCosts = accountantModel.analyseCosts(periodToFilterBy);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, totalCosts));
     }
