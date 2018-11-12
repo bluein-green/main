@@ -1,6 +1,5 @@
 package seedu.address.model.user.accountant;
 
-import seedu.address.analysis.AnalysisPeriodType;
 import seedu.address.analysis.TransactionPeriodPredicate;
 import seedu.address.model.Model;
 import seedu.address.model.drink.Price;

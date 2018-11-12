@@ -4,7 +4,6 @@ import java.util.Set;
 
 import seedu.address.analysis.Analysis;
 import seedu.address.analysis.AnalysisManager;
-import seedu.address.analysis.AnalysisPeriodType;
 import seedu.address.analysis.PurchaseTransactionPredicate;
 import seedu.address.analysis.SaleTransactionPredicate;
 import seedu.address.analysis.TransactionPeriodPredicate;

@@ -1,12 +1,10 @@
 package seedu.address.analysis;
 
-import java.util.function.Predicate;
-
 import seedu.address.model.drink.Date;
 import seedu.address.model.transaction.Transaction;
 
 /**
- *  ToDO: fill up this
+ * ToDO: fill up this
  */
 public class TransactionInThirtyDaysPredicate extends TransactionPeriodPredicate {
     @Override

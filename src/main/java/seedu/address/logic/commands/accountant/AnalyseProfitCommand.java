@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.HYPHEN_DAY;
 import static seedu.address.logic.parser.CliSyntax.HYPHEN_MONTH;
 import static seedu.address.logic.parser.CliSyntax.HYPHEN_WEEK;
 
-import seedu.address.analysis.AnalysisPeriodType;
 import seedu.address.analysis.TransactionPeriodPredicate;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
