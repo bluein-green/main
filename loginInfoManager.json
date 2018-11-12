@@ -1,6 +1,16 @@
 {
   "loginInfoList" : [ {
     "userName" : {
+      "userName" : "tianhang"
+    },
+    "password" : {
+      "password" : "Gcf70h4aWQ1T9NMxE03XM3nq3nCmFGihnO4xMzHMgP0="
+    },
+    "authenticationLevel" : {
+      "authenticationLevel" : "ADMIN"
+    }
+  }, {
+    "userName" : {
       "userName" : "tester"
     },
     "password" : {
@@ -11,30 +21,10 @@
     }
   }, {
     "userName" : {
-      "userName" : "manager"
+      "userName" : "bla"
     },
     "password" : {
-      "password" : "Gcf70h4aWQ1T9NMxE03XM3nq3nCmFGihnO4xMzHMgP0="
-    },
-    "authenticationLevel" : {
-      "authenticationLevel" : "MANAGER"
-    }
-  }, {
-    "userName" : {
-      "userName" : "stocktaker"
-    },
-    "password" : {
-      "password" : "Gcf70h4aWQ1T9NMxE03XM3nq3nCmFGihnO4xMzHMgP0="
-    },
-    "authenticationLevel" : {
-      "authenticationLevel" : "STOCKTAKER"
-    }
-  }, {
-    "userName" : {
-      "userName" : "accountant"
-    },
-    "password" : {
-      "password" : "Gcf70h4aWQ1T9NMxE03XM3nq3nCmFGihnO4xMzHMgP0="
+      "password" : "fcZGTS/iFhX76g2TSN0Xwco2kKX6jThyljIAHUj540w="
     },
     "authenticationLevel" : {
       "authenticationLevel" : "ACCOUNTANT"
