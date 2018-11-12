@@ -7,6 +7,8 @@
 
 
 == Overview
+As part of a semester-long
+
 In the CS2113T Software Engineering and Object-Oriented Programming module,
 I collaborated with three other students for a group project to enhance
 an existing Address Book application. My group decided to morph the
