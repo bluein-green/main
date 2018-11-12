@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2113T-W12-4`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -281,7 +281,7 @@ The following is the sequence of steps when the user enters an analysis command 
 *Step 2.* The appropriate parser parses the time period parameter, and assigns the respective `AnalysisPeriodType`
 value to the analysis command. +
 *Step 3.* The analysis command is executed, and the `AnalysisPeriodType` value is passed to the `ModelManager`. +
-*Step 4.* In the `ModelManager`, the relevant Predicate for the time period is retrieved.
+*Step 4.* In the appropriate `ModelManager` (Accountant or Manager), the relevant Predicate for the time period is retrieved.
 
 The available Predicates corresponding to each `AnalysisPeriodType` are:
 
@@ -359,7 +359,7 @@ It is then returned to the calling function.
 ==== Design Considerations
 Aspect: Filtering the transactions by date
 
-* *Current implementation:* Passes a predicate to the filtered transaction list, before performing analyses using that list
+* *Current implementation:* Pass predicates to the filtered transaction list, before performing analyses using that list
 ** Pros:
 *** Extensible as more Predicates can be created and passed to the filtered transaction list to filter
 the transactions by different facets.
