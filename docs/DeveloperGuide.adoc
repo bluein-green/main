@@ -946,4 +946,21 @@ _{ more test cases ... }_
 .. Test case: 'sell n/NAME q/12', where NAME is the name of a drink that is in the inventory, and its quantity is less than 12. +
    Expected: The message "Insufficient quantity in stock to perform operation" is displayed.
 
-=== 
+=== Analysing costs
+. Analyse costs over a period of a day
+
+.. Prerequisites: There must be at least one transaction in the transaction list.
+.. Test case: `costs` +
+   Expected: The total cost incurred *in a day* is calculated and shown. The `PURCHASE` transactions are listed in the transaction list.
+
+. Analyse costs over a period of 7 days (including current day)
+
+.. Prerequisites: There must be at least one transaction in the transaction list.
+.. Test case: `costs` +
+   Expected: The total cost incurred *in 7 days* is calculated and shown. The `PURCHASE` transactions are listed in the transaction list.
+
+. Analyse costs over a period of 30 days (including current day)
+
+.. Prerequisites: There must be at least one transaction in the transaction list.
+.. Test case: `costs` +
+   Expected: The total cost incurred *in 30 days* is calculated and shown. The `PURCHASE` transactions are listed in the transaction list.
