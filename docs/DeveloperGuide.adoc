@@ -998,3 +998,7 @@ _{ more test cases ... }_
 .. Test case: `profit -m` +
    Expected: The total profit earned *in 30 days* is calculated and shown. The `SALE` and `PURCHASE` transactions within the time period are listed in the transaction list.
 
+=======
+.. Test case: `costs` +
+   Expected: The total cost incurred *in 30 days* is calculated and shown. The `PURCHASE` transactions are listed in the transaction list.
+>>>>>>> 894b522c2341752d7fac6dc2e8311d95c43bb90d
